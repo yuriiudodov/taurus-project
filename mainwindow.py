@@ -11,9 +11,11 @@ from PySide6.QtWidgets import QApplication, QMainWindow, QDialog
 from sqlalchemy import create_engine
 
 from ui_form import Ui_MainWindow
-DB_PATH = 'MainDatabaseVet'
-TABLE_ROW_LIMIT = 10
-vet_db_connection = create_engine(f'sqlite:///{DB_PATH}').connect()
+class vet_db:
+    DB_PATH = 'MainDatabaseVet'
+    TABLE_ROW_LIMIT = 10
+    vet_db_connection = create_engine(f'sqlite:///{DB_PATH}').connect()
+
 class MainWindow(QMainWindow):
     def __init__(self, parent=None):
         super().__init__(parent)

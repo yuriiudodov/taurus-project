@@ -19,13 +19,13 @@ from PySide6.QtWidgets import (QApplication, QMainWindow, QMenuBar, QPushButton,
                                QSizePolicy, QStatusBar, QWidget, QDialog)
 
 import ui_dialog_open #открыть новое окно из файла интерфейса
-import manage_households
+import ui_manage_households
 
 
 class Ui_MainWindow(object):
     def open_households_rus(self):#RUS open households window
         self.window=QDialog()
-        self.ui=manage_households.Ui_Dialog()
+        self.ui=ui_manage_households.Ui_Dialog()
         self.ui.setupUi(self.window)
         self.window.show()
     def open_dialog_rus(self): #открыть новое окно из файла интерфейса

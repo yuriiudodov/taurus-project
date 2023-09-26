@@ -18,8 +18,19 @@ from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
 from PySide6.QtWidgets import (QApplication, QDialog, QHeaderView, QLabel,
     QPushButton, QSizePolicy, QTableWidget, QTableWidgetItem,
     QWidget)
+import pandas as pd
+from sqlalchemy import create_engine
+
+
 
 class Ui_Dialog(object):
+    def __init__(self):
+        super().__init__()
+
+    def get_data_db(self, table_name, db_connection):
+        data = pd.read_sql(f'SELECT * FROM {table_name}', db_connection)
+
+
     def setupUi(self, Dialog):
         if not Dialog.objectName():
             Dialog.setObjectName(u"Dialog")
@@ -41,6 +52,19 @@ class Ui_Dialog(object):
         self.refreshButton.setGeometry(QRect(40, 260, 80, 24))
 
         self.retranslateUi(Dialog)
+        DB_PATH = 'MainDatabaseVet'#vremennoe reshenie
+        TABLE_ROW_LIMIT = 10
+        vet_db_connection = create_engine(f'sqlite:///{DB_PATH}').connect()
+
+        data_for_table=self.get_data_db(self, vet_db_connection, "city")
+        self.citiesWidget.setColumnCount(3)
+        self.citiesWidget.setRowCount(len(data_for_table))
+
+        for col_num in range(0,2):
+            for row_num in range(0,len(data_for_table)):
+                self.citiesWidget.setItem(row_num, col_num, QTableWidgetItem(data_for_table.loc[row_num, col_num]))
+
+
 
         QMetaObject.connectSlotsByName(Dialog)
     # setupUi
