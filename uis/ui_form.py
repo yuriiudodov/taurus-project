@@ -53,7 +53,7 @@ class Ui_MainWindow(object):
         self.label = QLabel(self.centralwidget)
         self.label.setObjectName(u"label")
         self.label.setGeometry(QRect(-10, -10, 451, 361))
-        self.label.setPixmap(QPixmap(u"./resources/2212_Zodiac_Taurus_Blog_Header_1200x628_EN.png"))
+        self.label.setPixmap(QPixmap(u"../resources/2212_Zodiac_Taurus_Blog_Header_1200x628_EN.png"))
         self.label_2 = QLabel(self.centralwidget)
         self.label_2.setObjectName(u"label_2")
         self.label_2.setGeometry(QRect(430, 40, 171, 101))
