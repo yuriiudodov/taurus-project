@@ -7,8 +7,13 @@ from PySide6.QtWidgets import QApplication, QMainWindow, QDialog
 # You need to run the following command to generate the ui_form.py file
 #     pyside6-uic form.ui -o ui_form.py, or
 #     pyside2-uic form.ui -o ui_form.py
-from ui_form import Ui_MainWindow
 
+from sqlalchemy import create_engine
+
+from ui_form import Ui_MainWindow
+DB_PATH = 'MainDatabaseVet'
+TABLE_ROW_LIMIT = 10
+vet_db_connection = create_engine(f'sqlite:///{DB_PATH}').connect()
 class MainWindow(QMainWindow):
     def __init__(self, parent=None):
         super().__init__(parent)

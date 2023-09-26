@@ -18,12 +18,17 @@ from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
 from PySide6.QtWidgets import (QApplication, QMainWindow, QMenuBar, QPushButton,
                                QSizePolicy, QStatusBar, QWidget, QDialog)
 
-import ui_dialog_open
+import ui_dialog_open #открыть новое окно из файла интерфейса
+import manage_households
 
 
 class Ui_MainWindow(object):
-
-    def open_dialog_rus(self):
+    def open_households_rus(self):#RUS open households window
+        self.window=QDialog()
+        self.ui=manage_households.Ui_Dialog()
+        self.ui.setupUi(self.window)
+        self.window.show()
+    def open_dialog_rus(self): #открыть новое окно из файла интерфейса
         self.window = QDialog()
         self.ui=ui_dialog_open.Ui_Dialog()
         self.ui.setupUi(self.window)
@@ -35,7 +40,7 @@ class Ui_MainWindow(object):
         MainWindow.resize(800, 600)
         self.centralwidget = QWidget(MainWindow)
         self.centralwidget.setObjectName(u"centralwidget")
-        self.pushButton = QPushButton(self.centralwidget)
+        self.pushButton = QPushButton(self.centralwidget, clicked=lambda: self.open_households_rus())
         self.pushButton.setObjectName(u"pushButton")
         self.pushButton.setGeometry(QRect(130, 420, 111, 24))
         self.warning_button = QPushButton(self.centralwidget, clicked=lambda: self.open_dialog_rus())
