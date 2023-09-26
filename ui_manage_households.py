@@ -56,7 +56,8 @@ class Ui_Dialog(object):
         TABLE_ROW_LIMIT = 10
         vet_db_connection = create_engine(f'sqlite:///{DB_PATH}').connect()
 
-        data_for_table=self.get_data_db(self, vet_db_connection, "city")
+        #data_for_table=self.get_data_db(self, vet_db_connection, "city")
+        data_for_table=pd.read_sql(f'SELECT * FROM city', vet_db_connection)
         self.citiesWidget.setColumnCount(3)
         self.citiesWidget.setRowCount(len(data_for_table))
 
