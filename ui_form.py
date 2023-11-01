@@ -44,7 +44,7 @@ class Ui_MainWindow(object):
         self.ui.setupUi(self.window)
         self.window.show()
 
-    def open_dialog_rus(self):  # открыть новое окно из файла интерфейса
+    def open_db_edit_rus(self):  # открыть новое окно из файла интерфейса
         self.window = QDialog()
         self.ui = ui_dialog_open.Ui_Dialog()
         self.ui.setupUi(self.window)
@@ -58,7 +58,7 @@ class Ui_MainWindow(object):
         self.pushButton = QPushButton(self.centralwidget, clicked=lambda: self.open_households_rus())
         self.pushButton.setObjectName(u"pushButton")
         self.pushButton.setGeometry(QRect(80, 450, 201, 24))
-        self.warning_button = QPushButton(self.centralwidget, clicked=lambda: self.open_dialog_rus())
+        self.warning_button = QPushButton(self.centralwidget, clicked=lambda: self.open_db_edit_rus())
         self.warning_button.setObjectName(u"warning_button")
         self.warning_button.setGeometry(QRect(490, 430, 151, 71))
         self.label = QLabel(self.centralwidget)

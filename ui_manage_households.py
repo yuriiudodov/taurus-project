@@ -23,7 +23,7 @@ from PySide6.QtWidgets import (QApplication, QDialog, QHeaderView, QLabel,
     QPushButton, QSizePolicy, QTableWidget, QTableWidgetItem,
     QWidget)
 import pandas as pd
-from sqlalchemy import create_engine
+from sqlalchemy import create_engine, text
 
 
 class Ui_Dialog(object):
@@ -31,7 +31,7 @@ class Ui_Dialog(object):
         super().__init__()
 
     def get_data_db(self, table_name, db_connection):
-        data = pd.read_sql(f'SELECT * FROM {table_name}', db_connection)
+        data = pd.read_sql(text(f'SELECT * FROM {table_name}'), db_connection)
 
 
     def setupUi(self, Dialog):
@@ -62,25 +62,26 @@ class Ui_Dialog(object):
         vet_db_connection = create_engine(f'sqlite:///{DB_PATH}').connect()
 
         data_for_table=self.get_data_db( "city", vet_db_connection)
-        data_for_table=pd.read_sql(f'SELECT name, belongs_to_settlement FROM city', vet_db_connection)
+        data_for_table=pd.read_sql(text(f'SELECT city.name, settlement.name FROM city LEFT JOIN settlement ON city.belongs_to_settlement = settlement.pk'), vet_db_connection)
         self.citiesWidget.setColumnCount(2)
         self.citiesWidget.setRowCount(len(data_for_table))
-        display(data_for_table)
-        for col_num in range(0,1):
+
+        for col_num in range(len(data_for_table.columns)):
             for row_num in range(0,len(data_for_table)):
                 self.citiesWidget.setItem(row_num, col_num,QTableWidgetItem(data_for_table.iloc[row_num, col_num]))
         #household tables filling
 
         #data_for_table_2 = self.get_data_db("household", vet_db_connection)
-        #data_for_table_2 = pd.read_sql(f'SELECT * FROM household INNER JOIN city ON household.belongs_to_city = city.pk', vet_db_connection)
-        data_for_table_2 = pd.read_sql(f'SELECT household.owner, household.address, household.belongs_to_city FROM household'
-                                       f' RIGHT JOIN city WHERE city.pk=household.belongs_to_city', vet_db_connection)
-        #(f'SELECT  household.owner, household.address, city.name '
-        #f'INNER JOIN hosehold ON household.belongs_to_city=city.pk', vet_db_connection)
+        #data_for_table_2 = pd.read_sql(text(f'''SELECT * FROM household INNER JOIN city ON household.belongs_to_city = city.pk'''), vet_db_connection)
+        data_for_table_2 = pd.read_sql(text(f'''SELECT household.owner, household.address, city.name FROM city
+                                            LEFT JOIN household WHERE city.pk=household.belongs_to_city'''), vet_db_connection)
+        display(data_for_table_2)
+
         self.householdsWidget.setColumnCount(3)
         self.householdsWidget.setRowCount(len(data_for_table_2))
+        self.householdsWidget.setHorizontalHeaderLabels(data_for_table_2.columns)
         ##display(data_for_table_2)
-        for col_num in range(0, 2):
+        for col_num in range(data_for_table_2.columns.__len__()):
             for row_num in range(0, len(data_for_table_2)):
                 self.householdsWidget.setItem(row_num, col_num, QTableWidgetItem(data_for_table_2.iloc[row_num, col_num]))
 
