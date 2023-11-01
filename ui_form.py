@@ -55,7 +55,7 @@ class Ui_MainWindow(object):
         MainWindow.resize(800, 600)
         self.centralwidget = QWidget(MainWindow)
         self.centralwidget.setObjectName(u"centralwidget")
-        self.pushButton = QPushButton(self.centralwidget, clicked=lambda: self.open_dialog_rus())
+        self.pushButton = QPushButton(self.centralwidget, clicked=lambda: self.open_households_rus())
         self.pushButton.setObjectName(u"pushButton")
         self.pushButton.setGeometry(QRect(80, 450, 201, 24))
         self.warning_button = QPushButton(self.centralwidget, clicked=lambda: self.open_dialog_rus())
