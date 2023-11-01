@@ -70,14 +70,16 @@ class Ui_Dialog(object):
                 self.citiesWidget.setItem(row_num, col_num,QTableWidgetItem(data_for_table.iloc[row_num, col_num]))
         #household tables filling
 
-        data_for_table_2 = self.get_data_db("household", vet_db_connection)
-        data_for_table_2 = pd.read_sql(f'SELECT * FROM household INNER JOIN city ON household.belongs_to_city = city.pk', vet_db_connection)
+        #data_for_table_2 = self.get_data_db("household", vet_db_connection)
+        #data_for_table_2 = pd.read_sql(f'SELECT * FROM household INNER JOIN city ON household.belongs_to_city = city.pk', vet_db_connection)
+        data_for_table_2 = pd.read_sql(f'SELECT household.owner, household.address, household.belongs_to_city FROM household'
+                                       f' RIGHT JOIN city WHERE city.pk=household.belongs_to_city', vet_db_connection)
         #(f'SELECT  household.owner, household.address, city.name '
         #f'INNER JOIN hosehold ON household.belongs_to_city=city.pk', vet_db_connection)
-        self.householdsWidget.setColumnCount(4)
+        self.householdsWidget.setColumnCount(3)
         self.householdsWidget.setRowCount(len(data_for_table_2))
         display(data_for_table_2)
-        for col_num in range(0, 3):
+        for col_num in range(0, 2):
             for row_num in range(0, len(data_for_table_2)):
                 self.householdsWidget.setItem(row_num, col_num, QTableWidgetItem(data_for_table_2.iloc[row_num, col_num]))
 
