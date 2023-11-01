@@ -62,10 +62,11 @@ class Ui_Dialog(object):
         vet_db_connection = create_engine(f'sqlite:///{DB_PATH}').connect()
 
         data_for_table=self.get_data_db( "city", vet_db_connection)
-        data_for_table=pd.read_sql(f'SELECT * FROM city', vet_db_connection)
-        self.citiesWidget.setColumnCount(3)
+        data_for_table=pd.read_sql(f'SELECT name, belongs_to_settlement FROM city', vet_db_connection)
+        self.citiesWidget.setColumnCount(2)
         self.citiesWidget.setRowCount(len(data_for_table))
-        for col_num in range(0,2):
+        display(data_for_table)
+        for col_num in range(0,1):
             for row_num in range(0,len(data_for_table)):
                 self.citiesWidget.setItem(row_num, col_num,QTableWidgetItem(data_for_table.iloc[row_num, col_num]))
         #household tables filling
@@ -78,7 +79,7 @@ class Ui_Dialog(object):
         #f'INNER JOIN hosehold ON household.belongs_to_city=city.pk', vet_db_connection)
         self.householdsWidget.setColumnCount(3)
         self.householdsWidget.setRowCount(len(data_for_table_2))
-        display(data_for_table_2)
+        ##display(data_for_table_2)
         for col_num in range(0, 2):
             for row_num in range(0, len(data_for_table_2)):
                 self.householdsWidget.setItem(row_num, col_num, QTableWidgetItem(data_for_table_2.iloc[row_num, col_num]))
