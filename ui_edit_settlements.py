@@ -68,8 +68,9 @@ class Ui_Dialog(object):
                 self.settlementTableWidget.setItem(row_num, col_num, QTableWidgetItem(data_for_table.iloc[row_num, col_num]))
     # setupUi
 
-
-
+        #self.settlementTableWidget.itemClicked.connect(lambda:self.settlementLineEdit.setText(text(self.settlementTableWidget.item(self.settlementTableWidget.currentRow(),2))))
+        self.settlementTableWidget.itemClicked.connect(lambda: print(
+            self.settlementTableWidget.item(self.settlementTableWidget.currentRow(), 2)))
     def retranslateUi(self, Dialog):
         Dialog.setWindowTitle(QCoreApplication.translate("Dialog", u"Dialog", None))
         self.label.setText(QCoreApplication.translate("Dialog", u"Settlements", None))
