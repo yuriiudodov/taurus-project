@@ -58,7 +58,7 @@ class Ui_Dialog(object):
         DB_PATH = 'MainDatabaseVet'  # vremennoe reshenie
         TABLE_ROW_LIMIT = 10
         vet_db_connection = create_engine(f'sqlite:///{DB_PATH}').connect()
-        data_for_table = pd.read_sql(text(f'SELECT pk,name FROM settlement'),vet_db_connection)
+        data_for_table = pd.read_sql(text(f'SELECT pk,name FROM settlement'),vet_db_connection).astype(str)
         display(data_for_table)
         self.settlementTableWidget.setColumnCount(2)
         self.settlementTableWidget.setRowCount(len(data_for_table))
