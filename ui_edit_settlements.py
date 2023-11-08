@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
 import pandas as pd
+from IPython.display import display
 ################################################################################
 ## Form generated from reading UI file 'edit_settlements.ui'
 ##
@@ -52,10 +53,13 @@ class Ui_Dialog(object):
 
         QMetaObject.connectSlotsByName(Dialog)
 
+        #-----------------------------------------------------------------------------------
+
         DB_PATH = 'MainDatabaseVet'  # vremennoe reshenie
         TABLE_ROW_LIMIT = 10
         vet_db_connection = create_engine(f'sqlite:///{DB_PATH}').connect()
-        data_for_table = pd.read_sql(text(f'SELECT name FROM settlement'),vet_db_connection)
+        data_for_table = pd.read_sql(text(f'SELECT pk,name FROM settlement'),vet_db_connection)
+        display(data_for_table)
         self.settlementTableWidget.setColumnCount(2)
         self.settlementTableWidget.setRowCount(len(data_for_table))
 
@@ -63,6 +67,8 @@ class Ui_Dialog(object):
             for row_num in range(0, len(data_for_table)):
                 self.settlementTableWidget.setItem(row_num, col_num, QTableWidgetItem(data_for_table.iloc[row_num, col_num]))
     # setupUi
+
+
 
     def retranslateUi(self, Dialog):
         Dialog.setWindowTitle(QCoreApplication.translate("Dialog", u"Dialog", None))
