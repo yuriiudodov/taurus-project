@@ -80,7 +80,7 @@ class Ui_Dialog(object):
         self.settlementTableWidget.itemClicked.connect(lambda: self.settlementLineEdit.setText(
             self.settlementTableWidget.item(self.settlementTableWidget.currentRow(), 1).text()))
 
-        self.pushButtonSaveSettlement.clicked.connect(self.write_settlement_to_db(self.settlementTableWidget.item(self.settlementTableWidget.currentRow(),0),self.settlementTableWidget.item(self.settlementTableWidget.currentRow(),1)))
+
 
 
     def retranslateUi(self, Dialog):
