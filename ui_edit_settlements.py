@@ -25,7 +25,7 @@ from sqlalchemy import create_engine, text
 
 class Ui_Dialog(object):
 
-    def write_settlement_to_db(self, Item_pk, text_to_write):
+    def write_settlement_to_db(self, item_pk, text_to_write):
         print("vizvano")
 
 
@@ -42,7 +42,7 @@ class Ui_Dialog(object):
         self.settlementLineEdit = QLineEdit(Dialog)
         self.settlementLineEdit.setObjectName(u"settlementLineEdit")
         self.settlementLineEdit.setGeometry(QRect(12, 270, 201, 21))
-        self.pushButtonSaveSettlement = QPushButton(Dialog)
+        self.pushButtonSaveSettlement = QPushButton(Dialog, clicked=lambda:self.write_settlement_to_db(self.settlementTableWidget.item(self.settlementTableWidget.currentRow(),0),self.settlementTableWidget.item(self.settlementTableWidget.currentRow(),1)))
         self.pushButtonSaveSettlement.setObjectName(u"pushButton")
         self.pushButtonSaveSettlement.setGeometry(QRect(230, 270, 75, 24))
         self.pushButtonDeleteSettlement = QPushButton(Dialog, clicked=lambda: print("delete"))
