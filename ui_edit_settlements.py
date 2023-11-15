@@ -27,14 +27,17 @@ from sqlalchemy import create_engine, text
 
 class Ui_Dialog(object):
 
-    def write_settlement_to_db(self, item_pk, text_to_write): #Ne robit pochemu to
+    def write_settlement_to_db(self, item_pk, text_to_write): #Должна редачить имя выбранного в тейблвиджете населенного пункта
         DB_PATH = 'MainDatabaseVet'  # bezvremennoe reshenie
         VetDbConnnection = QSqlDatabase.addDatabase("QSQLITE")
+        VetDbConnnection.setDatabaseName(DB_PATH)
         VetDbConnnection.open()
         VetTableQuery = QSqlQuery()
         VetTableQuery.exec("""
-        INSERT INTO settlement(pk, name) VALUES(6, 'Тимашевский')
+        INSERT INTO settlement(name) VALUES(*) WHERE pk==*
         """)
+        VetTableQuery.bindValue("*", text_to_write)
+        VetTableQuery.bindValue("*", item_pk)
         VetDbConnnection.close()
 
     def setupUi(self, Dialog):
