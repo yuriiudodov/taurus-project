@@ -22,7 +22,13 @@ from PySide6.QtWidgets import (QApplication, QCheckBox, QDialog, QHeaderView,
 from sqlalchemy import create_engine, text
 
 
+
 class Ui_Dialog(object):
+
+    def write_settlement_to_db(self, Item_pk, text_to_write):
+        print("vizvano")
+
+
     def setupUi(self, Dialog):
         if not Dialog.objectName():
             Dialog.setObjectName(u"Dialog")
@@ -36,12 +42,12 @@ class Ui_Dialog(object):
         self.settlementLineEdit = QLineEdit(Dialog)
         self.settlementLineEdit.setObjectName(u"settlementLineEdit")
         self.settlementLineEdit.setGeometry(QRect(12, 270, 201, 21))
-        self.pushButton = QPushButton(Dialog)
-        self.pushButton.setObjectName(u"pushButton")
-        self.pushButton.setGeometry(QRect(230, 270, 75, 24))
-        self.pushButton_2 = QPushButton(Dialog)
-        self.pushButton_2.setObjectName(u"pushButton_2")
-        self.pushButton_2.setGeometry(QRect(410, 350, 111, 41))
+        self.pushButtonSaveSettlement = QPushButton(Dialog)
+        self.pushButtonSaveSettlement.setObjectName(u"pushButton")
+        self.pushButtonSaveSettlement.setGeometry(QRect(230, 270, 75, 24))
+        self.pushButtonDeleteSettlement = QPushButton(Dialog, clicked=lambda: print("delete"))
+        self.pushButtonDeleteSettlement.setObjectName(u"pushButton_2")
+        self.pushButtonDeleteSettlement.setGeometry(QRect(410, 350, 111, 41))
         self.checkBox = QCheckBox(Dialog)
         self.checkBox.setObjectName(u"checkBox")
         self.checkBox.setGeometry(QRect(410, 300, 161, 20))
@@ -69,13 +75,19 @@ class Ui_Dialog(object):
     # setupUi
 
         #self.settlementTableWidget.itemClicked.connect(lambda:self.settlementLineEdit.setText(text(self.settlementTableWidget.item(self.settlementTableWidget.currentRow(),2))))
-        self.settlementTableWidget.itemClicked.connect(lambda: print(
-            self.settlementTableWidget.item(self.settlementTableWidget.currentRow(), 2).text()))
+
+        #Yura connects for the UI
+        self.settlementTableWidget.itemClicked.connect(lambda: self.settlementLineEdit.setText(
+            self.settlementTableWidget.item(self.settlementTableWidget.currentRow(), 1).text()))
+
+        self.pushButtonSaveSettlement.clicked.connect(self.write_settlement_to_db(self.settlementTableWidget.item(self.settlementTableWidget.currentRow(),0),self.settlementTableWidget.item(self.settlementTableWidget.currentRow(),1)))
+
+
     def retranslateUi(self, Dialog):
         Dialog.setWindowTitle(QCoreApplication.translate("Dialog", u"Dialog", None))
         self.label.setText(QCoreApplication.translate("Dialog", u"Settlements", None))
-        self.pushButton.setText(QCoreApplication.translate("Dialog", u"\u0441\u043e\u0445\u0440\u0430\u043d\u0438\u0442\u044c", None))
-        self.pushButton_2.setText(QCoreApplication.translate("Dialog", u"\u0423\u0434\u0430\u043b\u0438\u0442\u044c", None))
+        self.pushButtonSaveSettlement.setText(QCoreApplication.translate("Dialog", u"\u0441\u043e\u0445\u0440\u0430\u043d\u0438\u0442\u044c", None))
+        self.pushButtonDeleteSettlement.setText(QCoreApplication.translate("Dialog", u"\u0423\u0434\u0430\u043b\u0438\u0442\u044c", None))
         self.checkBox.setText(QCoreApplication.translate("Dialog", u"\u043f\u043e\u0434\u0442\u0432\u0435\u0440\u0434\u0438\u0442\u0435 \u0443\u0434\u0430\u043b\u0435\u043d\u0438\u0435", None))
         self.label_2.setText(QCoreApplication.translate("Dialog", u"\u041f\u043e\u043b\u0435 \u0440\u0435\u0434\u0430\u043a\u0442\u0438\u0440\u043e\u0432\u0430\u043d\u0438\u044f", None))
     # retranslateUi
