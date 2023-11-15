@@ -28,16 +28,17 @@ from sqlalchemy import create_engine, text
 class Ui_Dialog(object):
 
     def write_settlement_to_db(self, item_pk, text_to_write): #Должна редачить имя выбранного в тейблвиджете населенного пункта
+        print(item_pk.text(), " ",text_to_write.text())
         DB_PATH = 'MainDatabaseVet'  # bezvremennoe reshenie
         VetDbConnnection = QSqlDatabase.addDatabase("QSQLITE")
         VetDbConnnection.setDatabaseName(DB_PATH)
         VetDbConnnection.open()
         VetTableQuery = QSqlQuery()
         VetTableQuery.prepare("""
-        UPDATE settlement SET name = * WHERE pk = *
+        UPDATE settlement SET name = :name WHERE pk = :pk
         """)
-        VetTableQuery.bindValue("*", text_to_write)
-        VetTableQuery.bindValue("*", item_pk)
+        VetTableQuery.bindValue(":name", text_to_write.text())
+        VetTableQuery.bindValue(":pk", item_pk.text())
         VetTableQuery.exec()
         VetDbConnnection.close()
 
@@ -54,7 +55,7 @@ class Ui_Dialog(object):
         self.settlementLineEdit = QLineEdit(Dialog)
         self.settlementLineEdit.setObjectName(u"settlementLineEdit")
         self.settlementLineEdit.setGeometry(QRect(12, 270, 201, 21))
-        self.pushButtonSaveSettlement = QPushButton(Dialog, clicked=lambda:self.write_settlement_to_db(self.settlementTableWidget.item(self.settlementTableWidget.currentRow(),0),self.settlementTableWidget.item(self.settlementTableWidget.currentRow(),1)))
+        self.pushButtonSaveSettlement = QPushButton(Dialog, clicked=lambda:self.write_settlement_to_db(self.settlementTableWidget.item(self.settlementTableWidget.currentRow(),0),self.settlementLineEdit))
         self.pushButtonSaveSettlement.setObjectName(u"pushButton")
         self.pushButtonSaveSettlement.setGeometry(QRect(230, 270, 75, 24))
         self.pushButtonDeleteSettlement = QPushButton(Dialog, clicked=lambda: print("delete"))
