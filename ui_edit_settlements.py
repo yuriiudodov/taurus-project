@@ -16,6 +16,7 @@ from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
     QFont, QFontDatabase, QGradient, QIcon,
     QImage, QKeySequence, QLinearGradient, QPainter,
     QPalette, QPixmap, QRadialGradient, QTransform)
+from PySide6.QtSql import QSqlDatabase, QSqlQuery
 from PySide6.QtWidgets import (QApplication, QCheckBox, QDialog, QHeaderView,
     QLabel, QLineEdit, QPushButton, QSizePolicy,
     QTableWidget, QTableWidgetItem, QWidget)
@@ -23,15 +24,18 @@ from sqlalchemy import create_engine, text
 
 
 
+
 class Ui_Dialog(object):
 
-    def write_settlement_to_db(self, item_pk, text_to_write):
-        DB_PATH = 'MainDatabaseVet'  # vremennoe reshenie
-        TABLE_ROW_LIMIT = 10
-        vet_db_connection = create_engine(f'sqlite:///{DB_PATH}').connect()
-
-        data_for_table = pd.read_sql_query(text("INSERT INTO settlements (name) VALUES ('Тимашевский'))"))#ne robit
-
+    def write_settlement_to_db(self, item_pk, text_to_write): #Ne robit pochemu to
+        DB_PATH = 'MainDatabaseVet'  # bezvremennoe reshenie
+        VetDbConnnection = QSqlDatabase.addDatabase("QSQLITE")
+        VetDbConnnection.open()
+        VetTableQuery = QSqlQuery()
+        VetTableQuery.exec("""
+        INSERT INTO settlement(pk, name) VALUES(6, 'Тимашевский')
+        """)
+        VetDbConnnection.close()
 
     def setupUi(self, Dialog):
         if not Dialog.objectName():
