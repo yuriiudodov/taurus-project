@@ -22,7 +22,7 @@ from PySide6.QtWidgets import (QApplication, QCheckBox, QDialog, QHeaderView,
     QTableWidget, QTableWidgetItem, QWidget)
 from sqlalchemy import create_engine, text
 
-
+import ui_dialog_open
 
 
 class Ui_Dialog(object):
@@ -41,11 +41,70 @@ class Ui_Dialog(object):
         VetTableQuery.bindValue(":pk", item_pk.text())
         VetTableQuery.exec()
         VetDbConnnection.close()
+        #refresh table
+        vet_db_connection = create_engine(f'sqlite:///{DB_PATH}').connect()
+        data_for_table = pd.read_sql(text(f'SELECT pk,name FROM settlement'), vet_db_connection).astype(str)
+        self.settlementTableWidget.setColumnCount(2)
+        self.settlementTableWidget.setRowCount(len(data_for_table))
+
+        for col_num in range(len(data_for_table.columns)):
+            for row_num in range(0, len(data_for_table)):
+                self.settlementTableWidget.setItem(row_num, col_num,
+                                                   QTableWidgetItem(data_for_table.iloc[row_num, col_num]))
+    def add_settlement_to_db(self, text_to_write): #Должна редачить имя выбранного в тейблвиджете населенного пункта
+
+        DB_PATH = 'MainDatabaseVet'  # bezvremennoe reshenie
+        VetDbConnnection = QSqlDatabase.addDatabase("QSQLITE")
+        VetDbConnnection.setDatabaseName(DB_PATH)
+        VetDbConnnection.open()
+        VetTableQuery = QSqlQuery()
+        VetTableQuery.prepare("""
+        INSERT INTO settlement (name) VALUES (:name)
+        """)
+        VetTableQuery.bindValue(":name", text_to_write.text())
+
+        VetTableQuery.exec()
+        VetDbConnnection.close()
+        #refresh table
+        vet_db_connection = create_engine(f'sqlite:///{DB_PATH}').connect()
+        data_for_table = pd.read_sql(text(f'SELECT pk,name FROM settlement'), vet_db_connection).astype(str)
+        self.settlementTableWidget.setColumnCount(2)
+        self.settlementTableWidget.setRowCount(len(data_for_table))
+
+        for col_num in range(len(data_for_table.columns)):
+            for row_num in range(0, len(data_for_table)):
+                self.settlementTableWidget.setItem(row_num, col_num,
+                                                   QTableWidgetItem(data_for_table.iloc[row_num, col_num]))
+
+    def delete_settlement_to_db(self, item_pk):
+        print(item_pk.text(), " ")
+        DB_PATH = 'MainDatabaseVet'  # bezvremennoe reshenie
+        VetDbConnnection = QSqlDatabase.addDatabase("QSQLITE")
+        VetDbConnnection.setDatabaseName(DB_PATH)
+        VetDbConnnection.open()
+        VetTableQuery = QSqlQuery()
+        VetTableQuery.prepare("""
+               DELETE FROM settlement WHERE pk = :pk
+               """)
+
+        VetTableQuery.bindValue(":pk", item_pk.text())
+        VetTableQuery.exec()
+        VetDbConnnection.close()
+        # refresh table
+        vet_db_connection = create_engine(f'sqlite:///{DB_PATH}').connect()
+        data_for_table = pd.read_sql(text(f'SELECT pk,name FROM settlement'), vet_db_connection).astype(str)
+        self.settlementTableWidget.setColumnCount(2)
+        self.settlementTableWidget.setRowCount(len(data_for_table))
+
+        for col_num in range(len(data_for_table.columns)):
+            for row_num in range(0, len(data_for_table)):
+                self.settlementTableWidget.setItem(row_num, col_num,
+                                                   QTableWidgetItem(data_for_table.iloc[row_num, col_num]))
 
     def setupUi(self, Dialog):
         if not Dialog.objectName():
             Dialog.setObjectName(u"Dialog")
-        Dialog.resize(570, 427)
+        Dialog.resize(670, 627)
         self.label = QLabel(Dialog)
         self.label.setObjectName(u"label")
         self.label.setGeometry(QRect(50, 10, 91, 16))
@@ -55,12 +114,15 @@ class Ui_Dialog(object):
         self.settlementLineEdit = QLineEdit(Dialog)
         self.settlementLineEdit.setObjectName(u"settlementLineEdit")
         self.settlementLineEdit.setGeometry(QRect(12, 270, 201, 21))
-        self.pushButtonSaveSettlement = QPushButton(Dialog, clicked=lambda:self.write_settlement_to_db(self.settlementTableWidget.item(self.settlementTableWidget.currentRow(),0),self.settlementLineEdit))
+        self.pushButtonSaveSettlement = QPushButton(Dialog, clicked=lambda: self.write_settlement_to_db(self.settlementTableWidget.item(self.settlementTableWidget.currentRow(),0),self.settlementLineEdit))
         self.pushButtonSaveSettlement.setObjectName(u"pushButton")
         self.pushButtonSaveSettlement.setGeometry(QRect(230, 270, 75, 24))
-        self.pushButtonDeleteSettlement = QPushButton(Dialog, clicked=lambda: print("delete"))
+        self.pushButtonDeleteSettlement = QPushButton(Dialog, clicked=lambda: self.delete_settlement_to_db(self.settlementTableWidget.item(self.settlementTableWidget.currentRow(),0)))
         self.pushButtonDeleteSettlement.setObjectName(u"pushButton_2")
         self.pushButtonDeleteSettlement.setGeometry(QRect(410, 350, 111, 41))
+        self.pushButtonAddSettlement = QPushButton(Dialog, clicked=lambda: self.add_settlement_to_db(self.settlementLineEdit))
+        self.pushButtonAddSettlement.setObjectName(u"pushButton_3")
+        self.pushButtonAddSettlement.setGeometry(QRect(480, 420, 181, 111))
         self.checkBox = QCheckBox(Dialog)
         self.checkBox.setObjectName(u"checkBox")
         self.checkBox.setGeometry(QRect(410, 300, 161, 20))
@@ -78,7 +140,6 @@ class Ui_Dialog(object):
         TABLE_ROW_LIMIT = 10
         vet_db_connection = create_engine(f'sqlite:///{DB_PATH}').connect()
         data_for_table = pd.read_sql(text(f'SELECT pk,name FROM settlement'),vet_db_connection).astype(str)
-        display(data_for_table)
         self.settlementTableWidget.setColumnCount(2)
         self.settlementTableWidget.setRowCount(len(data_for_table))
 
@@ -98,6 +159,7 @@ class Ui_Dialog(object):
 
     def retranslateUi(self, Dialog):
         Dialog.setWindowTitle(QCoreApplication.translate("Dialog", u"Dialog", None))
+        self.pushButtonAddSettlement.setText("ADD")
         self.label.setText(QCoreApplication.translate("Dialog", u"Settlements", None))
         self.pushButtonSaveSettlement.setText(QCoreApplication.translate("Dialog", u"\u0441\u043e\u0445\u0440\u0430\u043d\u0438\u0442\u044c", None))
         self.pushButtonDeleteSettlement.setText(QCoreApplication.translate("Dialog", u"\u0423\u0434\u0430\u043b\u0438\u0442\u044c", None))

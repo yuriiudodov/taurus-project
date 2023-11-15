@@ -34,7 +34,18 @@ class Ui_Dialog(object):
         print("nichego poka chto")
     def open_household_edit(self):
         print("nichego poka chto")
+    def refresh_table(self):
+        DB_PATH = 'MainDatabaseVet'  # vremennoe reshenie
+        TABLE_ROW_LIMIT = 10
+        vet_db_connection = create_engine(f'sqlite:///{DB_PATH}').connect()
+        data_for_table = pd.read_sql(text(f'SELECT name FROM settlement'), vet_db_connection)
+        self.settlementTableWidget.setColumnCount(1)
+        self.settlementTableWidget.setRowCount(len(data_for_table))
 
+        for col_num in range(len(data_for_table.columns)):
+            for row_num in range(0, len(data_for_table)):
+                self.settlementTableWidget.setItem(row_num, col_num,
+                                                   QTableWidgetItem(data_for_table.iloc[row_num, col_num]))
     def setupUi(self, Dialog):
         if not Dialog.objectName():
             Dialog.setObjectName(u"Dialog")
