@@ -26,7 +26,11 @@ from sqlalchemy import create_engine, text
 class Ui_Dialog(object):
 
     def write_settlement_to_db(self, item_pk, text_to_write):
-        print("vizvano")
+        DB_PATH = 'MainDatabaseVet'  # vremennoe reshenie
+        TABLE_ROW_LIMIT = 10
+        vet_db_connection = create_engine(f'sqlite:///{DB_PATH}').connect()
+
+        data_for_table = pd.read_sql_query(text("INSERT INTO settlements (name) VALUES ('Тимашевский'))"))#ne robit
 
 
     def setupUi(self, Dialog):
