@@ -33,11 +33,12 @@ class Ui_Dialog(object):
         VetDbConnnection.setDatabaseName(DB_PATH)
         VetDbConnnection.open()
         VetTableQuery = QSqlQuery()
-        VetTableQuery.exec("""
-        INSERT INTO settlement(name) VALUES(*) WHERE pk==*
+        VetTableQuery.prepare("""
+        UPDATE settlement SET name = * WHERE pk = *
         """)
         VetTableQuery.bindValue("*", text_to_write)
         VetTableQuery.bindValue("*", item_pk)
+        VetTableQuery.exec()
         VetDbConnnection.close()
 
     def setupUi(self, Dialog):
