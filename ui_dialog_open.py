@@ -31,7 +31,7 @@ class Ui_Dialog(object):
         self.ui.setupUi(self.window)
         self.window.show()
 
-    def open_city_edit(self):
+    def open_city_edit(self):#opens hyety nesysvetnyu
         self.window = QDialog()
         self.ui=ui_edit_cities.Ui_Dialog()
         self.ui.setupUi(self.window)
@@ -39,7 +39,40 @@ class Ui_Dialog(object):
 
     def open_household_edit(self):
         print("nichego poka chto")
-    def refresh_table(self):
+
+    def fill_cities_table(self):
+        # loads the table
+        DB_PATH = 'MainDatabaseVet'  # bezvremennoe reshenie
+        TABLE_ROW_LIMIT = 10
+        vet_db_connection = create_engine(f'sqlite:///{DB_PATH}').connect()
+        # -----------------cities_table------------------------
+        data_for_table = pd.read_sql(text(
+            f'SELECT city.name, settlement.name FROM city LEFT JOIN settlement ON city.belongs_to_settlement = settlement.pk'),
+            vet_db_connection)
+        self.cityTableWidget.setColumnCount(2)
+        self.cityTableWidget.setRowCount(len(data_for_table))
+
+        for col_num in range(len(data_for_table.columns)):
+            for row_num in range(0, len(data_for_table)):
+                self.cityTableWidget.setItem(row_num, col_num,
+                                             QTableWidgetItem(data_for_table.iloc[row_num, col_num]))
+
+    def fill_households_table(self):
+        # loads the table
+        DB_PATH = 'MainDatabaseVet'  # bezvremennoe reshenie
+        TABLE_ROW_LIMIT = 10
+        vet_db_connection = create_engine(f'sqlite:///{DB_PATH}').connect()
+        data_for_table = pd.read_sql(text(
+            f'SELECT household.address, household.owner, city.name FROM city right JOIN household ON household.belongs_to_city = city.pk'),
+            vet_db_connection)
+        self.householdTableWidget.setColumnCount(3)
+        self.householdTableWidget.setRowCount(len(data_for_table))
+
+        for col_num in range(len(data_for_table.columns)):
+            for row_num in range(0, len(data_for_table)):
+                self.householdTableWidget.setItem(row_num, col_num,
+                                                  QTableWidgetItem(data_for_table.iloc[row_num, col_num]))
+    def refres_table(self):
         DB_PATH = 'MainDatabaseVet'  # vremennoe reshenie
         TABLE_ROW_LIMIT = 10
         vet_db_connection = create_engine(f'sqlite:///{DB_PATH}').connect()
@@ -70,6 +103,7 @@ class Ui_Dialog(object):
         self.cityTableWidget.setObjectName(u"cityTableWidget")
         self.cityTableWidget.setGeometry(QRect(300, 70, 256, 192))
         self.settlementTableWidget = QTableWidget(Dialog)
+        self.settlementTableWidget.itemClicked.connect(lambda: self.fill_cities_table())
         self.settlementTableWidget.setObjectName(u"settlementTableWidget")
         self.settlementTableWidget.setGeometry(QRect(10, 70, 256, 192))
         self.label = QLabel(Dialog)
@@ -88,6 +122,7 @@ class Ui_Dialog(object):
         self.householdTableWidget.setObjectName(u"householdTableWidget")
         self.householdTableWidget.setGeometry(QRect(580, 70, 256, 192))
         self.householdPushButton = QPushButton(Dialog, clicked=lambda: self.open_household_edit())
+        self.cityTableWidget.itemClicked.connect(lambda: self.fill_households_table())
         self.householdPushButton.setObjectName(u"householdPushButton")
         self.householdPushButton.setGeometry(QRect(580, 270, 161, 24))
         self.label_3 = QLabel(Dialog)
@@ -113,28 +148,9 @@ class Ui_Dialog(object):
             for row_num in range(0, len(data_for_table)):
                 self.settlementTableWidget.setItem(row_num, col_num,
                                                    QTableWidgetItem(data_for_table.iloc[row_num, col_num]))
-        # -----------------cities_table------------------------
-        data_for_table = pd.read_sql(text(
-            f'SELECT city.name, settlement.name FROM city LEFT JOIN settlement ON city.belongs_to_settlement = settlement.pk'),
-                                        vet_db_connection)
-        self.cityTableWidget.setColumnCount(2)
-        self.cityTableWidget.setRowCount(len(data_for_table))
 
-        for col_num in range(len(data_for_table.columns)):
-            for row_num in range(0, len(data_for_table)):
-                self.cityTableWidget.setItem(row_num, col_num,
-                                                QTableWidgetItem(data_for_table.iloc[row_num, col_num]))
-        # -----------------households_table------------------------
-        data_for_table = pd.read_sql(text(
-            f'SELECT household.address, household.owner, city.name FROM city right JOIN household ON household.belongs_to_city = city.pk'),
-            vet_db_connection)
-        self.householdTableWidget.setColumnCount(3)
-        self.householdTableWidget.setRowCount(len(data_for_table))
 
-        for col_num in range(len(data_for_table.columns)):
-            for row_num in range(0, len(data_for_table)):
-                self.householdTableWidget.setItem(row_num, col_num,
-                                                QTableWidgetItem(data_for_table.iloc[row_num, col_num]))
+
 
     # setupUi
 

@@ -28,7 +28,7 @@ if __name__ == "__main__":
     widget = MainWindow()
     widget.show()
     widget.setWindowTitle("Система учёта животных домашних хозяйств Build 1000-7")
-    #border verh
+#border verh
 
 
     #border niz
