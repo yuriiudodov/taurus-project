@@ -104,6 +104,7 @@ class Ui_Dialog(object):
         DB_PATH = 'MainDatabaseVet'  # bezvremennoe reshenie
         TABLE_ROW_LIMIT = 10
         vet_db_connection = create_engine(f'sqlite:///{DB_PATH}').connect()
+        # ---------------settlements_table------------------------
         data_for_table = pd.read_sql(text(f'SELECT name FROM settlement'), vet_db_connection)
         self.settlementTableWidget.setColumnCount(1)
         self.settlementTableWidget.setRowCount(len(data_for_table))
