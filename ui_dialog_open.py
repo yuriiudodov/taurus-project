@@ -84,8 +84,8 @@ class Ui_Dialog(object):
         self.retranslateUi(Dialog)
 
         QMetaObject.connectSlotsByName(Dialog)
-
-        DB_PATH = 'MainDatabaseVet'  # vremennoe reshenie
+        #loads the table
+        DB_PATH = 'MainDatabaseVet'  # bezvremennoe reshenie
         TABLE_ROW_LIMIT = 10
         vet_db_connection = create_engine(f'sqlite:///{DB_PATH}').connect()
         data_for_table = pd.read_sql(text(f'SELECT name FROM settlement'), vet_db_connection)

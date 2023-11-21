@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
-
+import pandas as pd
+from IPython.display import display
 ################################################################################
 ## Form generated from reading UI file 'edit_settlements.ui'
 ##
@@ -17,29 +18,30 @@ from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
     QPalette, QPixmap, QRadialGradient, QTransform)
 from PySide6.QtSql import QSqlDatabase, QSqlQuery
 from PySide6.QtWidgets import (QApplication, QCheckBox, QDialog, QHeaderView,
-                               QLabel, QLineEdit, QPushButton, QSizePolicy,
-                               QTableWidget, QTableWidgetItem, QWidget, QGridLayout)
+    QLabel, QLineEdit, QPushButton, QSizePolicy,
+    QTableWidget, QTableWidgetItem, QWidget)
 from sqlalchemy import create_engine, text
-import pandas as pd
+
+import ui_dialog_open
 
 
 class Ui_Dialog(object):
-    def write_settlement_to_db(self, item_pk,
-                               text_to_write):  # Должна редачить имя выбранного в тейблвиджете населенного пункта
-        print(item_pk.text(), " ", text_to_write.text())
+
+    def write_settlement_to_db(self, item_pk, text_to_write): #Должна редачить имя выбранного в тейблвиджете населенного пункта
+        print(item_pk.text(), " ",text_to_write.text())
         DB_PATH = 'MainDatabaseVet'  # bezvremennoe reshenie
         VetDbConnnection = QSqlDatabase.addDatabase("QSQLITE")
         VetDbConnnection.setDatabaseName(DB_PATH)
         VetDbConnnection.open()
         VetTableQuery = QSqlQuery()
         VetTableQuery.prepare("""
-           UPDATE settlement SET name = :name WHERE pk = :pk
-           """)
+        UPDATE settlement SET name = :name WHERE pk = :pk
+        """)
         VetTableQuery.bindValue(":name", text_to_write.text())
         VetTableQuery.bindValue(":pk", item_pk.text())
         VetTableQuery.exec()
         VetDbConnnection.close()
-        # refresh table
+        #refresh table
         vet_db_connection = create_engine(f'sqlite:///{DB_PATH}').connect()
         data_for_table = pd.read_sql(text(f'SELECT pk,name FROM settlement'), vet_db_connection).astype(str)
         self.settlementTableWidget.setColumnCount(2)
@@ -49,8 +51,7 @@ class Ui_Dialog(object):
             for row_num in range(0, len(data_for_table)):
                 self.settlementTableWidget.setItem(row_num, col_num,
                                                    QTableWidgetItem(data_for_table.iloc[row_num, col_num]))
-
-    def add_settlement_to_db(self, text_to_write):  # Должна редачить имя выбранного в тейблвиджете населенного пункта
+    def add_settlement_to_db(self, text_to_write): #Должна редачить имя выбранного в тейблвиджете населенного пункта
 
         DB_PATH = 'MainDatabaseVet'  # bezvremennoe reshenie
         VetDbConnnection = QSqlDatabase.addDatabase("QSQLITE")
@@ -58,13 +59,13 @@ class Ui_Dialog(object):
         VetDbConnnection.open()
         VetTableQuery = QSqlQuery()
         VetTableQuery.prepare("""
-           INSERT INTO settlement (name) VALUES (:name)
-           """)
+        INSERT INTO settlement (name) VALUES (:name)
+        """)
         VetTableQuery.bindValue(":name", text_to_write.text())
 
         VetTableQuery.exec()
         VetDbConnnection.close()
-        # refresh table
+        #refresh table
         vet_db_connection = create_engine(f'sqlite:///{DB_PATH}').connect()
         data_for_table = pd.read_sql(text(f'SELECT pk,name FROM settlement'), vet_db_connection).astype(str)
         self.settlementTableWidget.setColumnCount(2)
@@ -83,8 +84,8 @@ class Ui_Dialog(object):
         VetDbConnnection.open()
         VetTableQuery = QSqlQuery()
         VetTableQuery.prepare("""
-                  DELETE FROM settlement WHERE pk = :pk
-                  """)
+               DELETE FROM settlement WHERE pk = :pk
+               """)
 
         VetTableQuery.bindValue(":pk", item_pk.text())
         VetTableQuery.exec()
@@ -99,100 +100,70 @@ class Ui_Dialog(object):
             for row_num in range(0, len(data_for_table)):
                 self.settlementTableWidget.setItem(row_num, col_num,
                                                    QTableWidgetItem(data_for_table.iloc[row_num, col_num]))
+
     def setupUi(self, Dialog):
         if not Dialog.objectName():
             Dialog.setObjectName(u"Dialog")
-        Dialog.resize(509, 340)
-        icon = QIcon(QIcon.fromTheme(u"accessories-text-editor"))
-        Dialog.setWindowIcon(icon)
-        self.gridLayout = QGridLayout(Dialog)
-        self.gridLayout.setObjectName(u"gridLayout")
-        self.label_2 = QLabel(Dialog)
-        self.label_2.setObjectName(u"label_2")
-
-        self.gridLayout.addWidget(self.label_2, 2, 0, 1, 1)
-
-        self.settlementTableWidget = QTableWidget(Dialog)
-        self.settlementTableWidget.setObjectName(u"settlementTableWidget")
-
-        self.gridLayout.addWidget(self.settlementTableWidget, 1, 0, 1, 2)
-
+        Dialog.resize(670, 627)
         self.label = QLabel(Dialog)
         self.label.setObjectName(u"label")
-
-        self.gridLayout.addWidget(self.label, 0, 0, 1, 1)
-
-        self.pushButtonSaveSettlement = QPushButton(Dialog, clicked=lambda: self.write_settlement_to_db(self.settlementTableWidget.item(self.settlementTableWidget.currentRow(),0),self.settlementLineEdit))
-        self.pushButtonSaveSettlement.setObjectName(u"pushButtonSaveSettlement")
-
-        self.gridLayout.addWidget(self.pushButtonSaveSettlement, 3, 1, 1, 1)
-
-        self.pushButtonDeleteSettlement = QPushButton(Dialog, clicked=lambda: self.delete_settlement_to_db(self.settlementTableWidget.item(self.settlementTableWidget.currentRow(),0)))
-        self.pushButtonDeleteSettlement.setObjectName(u"pushButtonDeleteSettlement")
-
-        self.gridLayout.addWidget(self.pushButtonDeleteSettlement, 5, 3, 1, 1)
-
+        self.label.setGeometry(QRect(50, 10, 91, 16))
+        self.settlementTableWidget = QTableWidget(Dialog)
+        self.settlementTableWidget.setObjectName(u"settlementTableWidget")
+        self.settlementTableWidget.setGeometry(QRect(30, 40, 211, 201))
         self.settlementLineEdit = QLineEdit(Dialog)
         self.settlementLineEdit.setObjectName(u"settlementLineEdit")
-
-        self.gridLayout.addWidget(self.settlementLineEdit, 3, 0, 1, 1)
-
+        self.settlementLineEdit.setGeometry(QRect(12, 270, 201, 21))
+        self.pushButtonSaveSettlement = QPushButton(Dialog, clicked=lambda: self.write_settlement_to_db(self.settlementTableWidget.item(self.settlementTableWidget.currentRow(),0),self.settlementLineEdit))
+        self.pushButtonSaveSettlement.setObjectName(u"pushButton")
+        self.pushButtonSaveSettlement.setGeometry(QRect(230, 270, 75, 24))
+        self.pushButtonDeleteSettlement = QPushButton(Dialog, clicked=lambda: self.delete_settlement_to_db(self.settlementTableWidget.item(self.settlementTableWidget.currentRow(),0)))
+        self.pushButtonDeleteSettlement.setObjectName(u"pushButton_2")
+        self.pushButtonDeleteSettlement.setGeometry(QRect(410, 350, 111, 41))
         self.pushButtonAddSettlement = QPushButton(Dialog, clicked=lambda: self.add_settlement_to_db(self.settlementLineEdit))
-        self.pushButtonAddSettlement.setObjectName(u"pushButtonAddSettlement")
-
-        self.gridLayout.addWidget(self.pushButtonAddSettlement, 3, 2, 1, 1)
-
+        self.pushButtonAddSettlement.setObjectName(u"pushButton_3")
+        self.pushButtonAddSettlement.setGeometry(QRect(480, 420, 181, 111))
         self.checkBox = QCheckBox(Dialog)
         self.checkBox.setObjectName(u"checkBox")
-
-        self.gridLayout.addWidget(self.checkBox, 4, 3, 1, 1)
-
+        self.checkBox.setGeometry(QRect(410, 300, 161, 20))
+        self.label_2 = QLabel(Dialog)
+        self.label_2.setObjectName(u"label_2")
+        self.label_2.setGeometry(QRect(10, 250, 151, 16))
 
         self.retranslateUi(Dialog)
 
         QMetaObject.connectSlotsByName(Dialog)
 
-        # -----------------------------------------------------------------------------------
+        #-----------------------------------------------------------------------------------
 
         DB_PATH = 'MainDatabaseVet'  # vremennoe reshenie
         TABLE_ROW_LIMIT = 10
         vet_db_connection = create_engine(f'sqlite:///{DB_PATH}').connect()
-        data_for_table = pd.read_sql(text(f'SELECT pk,name FROM settlement'), vet_db_connection).astype(str)
+        data_for_table = pd.read_sql(text(f'SELECT pk,name FROM settlement'),vet_db_connection).astype(str)
         self.settlementTableWidget.setColumnCount(2)
         self.settlementTableWidget.setRowCount(len(data_for_table))
 
         for col_num in range(len(data_for_table.columns)):
             for row_num in range(0, len(data_for_table)):
-                self.settlementTableWidget.setItem(row_num, col_num,
-                                                   QTableWidgetItem(data_for_table.iloc[row_num, col_num]))
-        # setupUi
+                self.settlementTableWidget.setItem(row_num, col_num, QTableWidgetItem(data_for_table.iloc[row_num, col_num]))
+    # setupUi
 
-        # self.settlementTableWidget.itemClicked.connect(lambda:self.settlementLineEdit.setText(text(self.settlementTableWidget.item(self.settlementTableWidget.currentRow(),2))))
+        #self.settlementTableWidget.itemClicked.connect(lambda:self.settlementLineEdit.setText(text(self.settlementTableWidget.item(self.settlementTableWidget.currentRow(),2))))
 
-        # Yura connects for the UI
+        #Yura connects for the UI
         self.settlementTableWidget.itemClicked.connect(lambda: self.settlementLineEdit.setText(
             self.settlementTableWidget.item(self.settlementTableWidget.currentRow(), 1).text()))
-    # setupUi
+
+
+
 
     def retranslateUi(self, Dialog):
         Dialog.setWindowTitle(QCoreApplication.translate("Dialog", u"Dialog", None))
-#if QT_CONFIG(statustip)
-        Dialog.setStatusTip(QCoreApplication.translate("Dialog", u"\u043f\u043e\u0434\u0441\u043a\u0430\u0437\u043a\u0430 \u0441\u0442\u0430\u0442\u0443\u0441\u0430 ", None))
-#endif // QT_CONFIG(statustip)
-#if QT_CONFIG(whatsthis)
-        Dialog.setWhatsThis(QCoreApplication.translate("Dialog", u"\u0447\u0442\u043e \u044d\u0442\u043e \u0440\u0435\u0434\u0430\u043a\u0442\u0438\u0440\u043e\u0432\u0430\u043d\u0438\u0435 \u043f\u043e\u0441\u0435\u043b\u0435\u043d\u0438\u0439", None))
-#endif // QT_CONFIG(whatsthis)
-#if QT_CONFIG(accessibility)
-        Dialog.setAccessibleName(QCoreApplication.translate("Dialog", u"\u0440\u0435\u0434\u0430\u043a\u0442\u0438\u0440\u043e\u0432\u0430\u043d\u0438\u0435 \u043f\u043e\u0441\u0435\u043b\u0435\u043d\u0438\u0439 \u0438\u043c\u044f", None))
-#endif // QT_CONFIG(accessibility)
-#if QT_CONFIG(accessibility)
-        Dialog.setAccessibleDescription(QCoreApplication.translate("Dialog", u"<html><head/><body><p>\u0420\u0435\u0434\u0430\u043a\u0442\u0438\u0440\u043e\u0432\u0430\u043d\u0438\u0435 \u043f\u043e\u0441\u0435\u043b\u0435\u0438\u0439 \u0434\u043e\u0441\u0442\u0443\u043f\u043d\u043e\u0435 \u043e\u043f\u0438\u0441\u0430\u043d\u0438\u0435</p></body></html>", None))
-#endif // QT_CONFIG(accessibility)
-        self.label_2.setText(QCoreApplication.translate("Dialog", u"\u041f\u043e\u043b\u0435 \u0440\u0435\u0434\u0430\u043a\u0442\u0438\u0440\u043e\u0432\u0430\u043d\u0438\u044f", None))
-        self.label.setText(QCoreApplication.translate("Dialog", u"\u0421\u0435\u043b\u044c\u0441\u043a\u0438\u0435 \u043f\u043e\u0441\u0435\u043b\u0435\u043d\u0438\u044f", None))
-        self.pushButtonSaveSettlement.setText(QCoreApplication.translate("Dialog", u"\u0421\u043e\u0445\u0440\u0430\u043d\u0438\u0442\u044c", None))
+        self.pushButtonAddSettlement.setText("ADD")
+        self.label.setText(QCoreApplication.translate("Dialog", u"Settlements", None))
+        self.pushButtonSaveSettlement.setText(QCoreApplication.translate("Dialog", u"\u0441\u043e\u0445\u0440\u0430\u043d\u0438\u0442\u044c", None))
         self.pushButtonDeleteSettlement.setText(QCoreApplication.translate("Dialog", u"\u0423\u0434\u0430\u043b\u0438\u0442\u044c", None))
-        self.pushButtonAddSettlement.setText(QCoreApplication.translate("Dialog", u"\u0414\u043e\u0431\u0430\u0432\u0438\u0442\u044c", None))
         self.checkBox.setText(QCoreApplication.translate("Dialog", u"\u043f\u043e\u0434\u0442\u0432\u0435\u0440\u0434\u0438\u0442\u0435 \u0443\u0434\u0430\u043b\u0435\u043d\u0438\u0435", None))
+        self.label_2.setText(QCoreApplication.translate("Dialog", u"\u041f\u043e\u043b\u0435 \u0440\u0435\u0434\u0430\u043a\u0442\u0438\u0440\u043e\u0432\u0430\u043d\u0438\u044f", None))
     # retranslateUi
 
