@@ -62,9 +62,8 @@ class Ui_Dialog(object):
         DB_PATH = 'MainDatabaseVet'  # bezvremennoe reshenie
         TABLE_ROW_LIMIT = 10
         vet_db_connection = create_engine(f'sqlite:///{DB_PATH}').connect()
-        data_for_table = pd.read_sql(text(
-            f'SELECT household.address, household.owner, city.name FROM city right JOIN household ON household.belongs_to_city = city.pk'),
-            vet_db_connection)
+        pandas_SQL_query=f'SELECT household.address, household.owner, city.name FROM city right JOIN household ON household.belongs_to_city = ' + (self.cityTableWidget.item(self.cityTableWidget.currentRow(), 0).text())# need help blin
+        data_for_table = pd.read_sql(text(pandas_SQL_query,vet_db_connection))
         self.householdTableWidget.setColumnCount(3)
         self.householdTableWidget.setRowCount(len(data_for_table))
 
