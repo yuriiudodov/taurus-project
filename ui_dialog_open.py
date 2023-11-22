@@ -7,7 +7,7 @@ import pandas as pd
 ##pyside6-uic dialog.ui -o ui_dialog.py
 ## WARNING! All changes made in this file will be lost when recompiling UI file!
 ################################################################################
-
+from IPython.display import display
 from PySide6.QtCore import (QCoreApplication, QDate, QDateTime, QLocale,
     QMetaObject, QObject, QPoint, QRect,
     QSize, QTime, QUrl, Qt)
@@ -47,9 +47,9 @@ class Ui_Dialog(object):
         vet_db_connection = create_engine(f'sqlite:///{DB_PATH}').connect()
         # -----------------cities_table------------------------
         data_for_table = pd.read_sql(text(
-            f'SELECT city.name, settlement.name FROM city LEFT JOIN settlement ON city.belongs_to_settlement = settlement.pk'),
+            f'SELECT city.pk, city.name, settlement.name FROM city LEFT JOIN settlement ON city.belongs_to_settlement = settlement.pk'),
             vet_db_connection)
-        self.cityTableWidget.setColumnCount(2)
+        self.cityTableWidget.setColumnCount(3)
         self.cityTableWidget.setRowCount(len(data_for_table))
 
         for col_num in range(len(data_for_table.columns)):
@@ -62,8 +62,10 @@ class Ui_Dialog(object):
         DB_PATH = 'MainDatabaseVet'  # bezvremennoe reshenie
         TABLE_ROW_LIMIT = 10
         vet_db_connection = create_engine(f'sqlite:///{DB_PATH}').connect()
-        pandas_SQL_query=f'SELECT household.address, household.owner, city.name FROM city right JOIN household ON household.belongs_to_city = ' + (self.cityTableWidget.item(self.cityTableWidget.currentRow(), 0).text())# need help blin
-        data_for_table = pd.read_sql(text(pandas_SQL_query,vet_db_connection))
+
+        pandas_SQL_query = 'SELECT household.address, household.owner, city.name FROM city right JOIN household ON household.belongs_to_city = ' + self.cityTableWidget.item(self.cityTableWidget.currentRow(), 0).text()
+        print(pandas_SQL_query)
+        data_for_table = pd.read_sql(pandas_SQL_query,vet_db_connection)
         self.householdTableWidget.setColumnCount(3)
         self.householdTableWidget.setRowCount(len(data_for_table))
 
@@ -79,15 +81,16 @@ class Ui_Dialog(object):
         data_for_table = pd.read_sql(text(f'SELECT pk,name FROM settlement'), vet_db_connection)
         self.settlementTableWidget.setColumnCount(2)
         self.settlementTableWidget.setRowCount(len(data_for_table))
-
+        display(data_for_table)
         for col_num in range(len(data_for_table.columns)):
             for row_num in range(0, len(data_for_table)):
                 self.settlementTableWidget.setItem(row_num, col_num,
                                                    QTableWidgetItem(data_for_table.iloc[row_num, col_num]))
         # -----------------cities_table------------------------
-        data_for_table = pd.read_sql(text(f'SELECT city.name, settlement.name FROM city LEFT JOIN settlement ON city.belongs_to_settlement = settlement.pk'), vet_db_connection)
-        self.cityTableWidget.setColumnCount(2)
+        data_for_table = pd.read_sql(text(f'SELECT city.pk, city.name, settlement.name FROM city LEFT JOIN settlement ON city.belongs_to_settlement = settlement.pk'), vet_db_connection)
+        self.cityTableWidget.setColumnCount(3)
         self.cityTableWidget.setRowCount(len(data_for_table))
+        display(data_for_table)
 
         for col_num in range(len(data_for_table.columns)):
             for row_num in range(0, len(data_for_table)):
