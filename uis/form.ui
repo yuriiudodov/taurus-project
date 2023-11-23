@@ -6,110 +6,104 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>800</width>
-    <height>600</height>
+    <width>673</width>
+    <height>534</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>MainWindow</string>
   </property>
+  <property name="tabShape">
+   <enum>QTabWidget::Rounded</enum>
+  </property>
   <widget class="QWidget" name="centralwidget">
-   <widget class="QPushButton" name="pushButton">
-    <property name="geometry">
-     <rect>
-      <x>80</x>
-      <y>450</y>
-      <width>201</width>
-      <height>24</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>Оформлять хозяйства</string>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="warning_button">
-    <property name="geometry">
-     <rect>
-      <x>490</x>
-      <y>430</y>
-      <width>151</width>
-      <height>71</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>ПРАВКА БАЗ</string>
-    </property>
-   </widget>
-   <widget class="QLabel" name="label">
-    <property name="geometry">
-     <rect>
-      <x>-10</x>
-      <y>-10</y>
-      <width>451</width>
-      <height>361</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string/>
-    </property>
-    <property name="pixmap">
-     <pixmap>../resources/2212_Zodiac_Taurus_Blog_Header_1200x628_EN.png</pixmap>
-    </property>
-   </widget>
-   <widget class="QLabel" name="label_2">
-    <property name="geometry">
-     <rect>
-      <x>430</x>
-      <y>40</y>
-      <width>171</width>
-      <height>101</height>
-     </rect>
-    </property>
-    <property name="font">
-     <font>
-      <family>Onyx</family>
-     </font>
-    </property>
-    <property name="text">
-     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:48pt; font-weight:700;&quot;&gt;TABP&lt;/span&gt;&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-    </property>
-   </widget>
-   <widget class="QLabel" name="label_3">
-    <property name="geometry">
-     <rect>
-      <x>430</x>
-      <y>70</y>
-      <width>171</width>
-      <height>101</height>
-     </rect>
-    </property>
-    <property name="font">
-     <font>
-      <family>Onyx</family>
-     </font>
-    </property>
-    <property name="text">
-     <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;самое стильное окно на диком западе&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
-    </property>
-   </widget>
+   <property name="sizePolicy">
+    <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+     <horstretch>1</horstretch>
+     <verstretch>2</verstretch>
+    </sizepolicy>
+   </property>
+   <layout class="QGridLayout" name="gridLayout_2">
+    <item row="3" column="0">
+     <widget class="QPushButton" name="openHouseholdButton">
+      <property name="tabletTracking">
+       <bool>false</bool>
+      </property>
+      <property name="toolTip">
+       <string>Перейти к оформлению документов</string>
+      </property>
+      <property name="text">
+       <string>-------------------------
+Оформлять хозяйства
+-------------------------</string>
+      </property>
+     </widget>
+    </item>
+    <item row="0" column="1">
+     <widget class="QLabel" name="label_2">
+      <property name="font">
+       <font>
+        <family>Onyx</family>
+       </font>
+      </property>
+      <property name="text">
+       <string>&lt;html&gt;&lt;head/&gt;&lt;body&gt;&lt;p&gt;&lt;span style=&quot; font-size:48pt; font-weight:700;&quot;&gt;TABP&lt;/span&gt;&lt;/p&gt;&lt;p&gt;самое стильное окно на диком западе&lt;/p&gt;&lt;/body&gt;&lt;/html&gt;</string>
+      </property>
+     </widget>
+    </item>
+    <item row="0" column="0">
+     <widget class="QLabel" name="label">
+      <property name="text">
+       <string/>
+      </property>
+      <property name="pixmap">
+       <pixmap>../resources/2212_Zodiac_Taurus_Blog_Header_1200x628_EN.png</pixmap>
+      </property>
+     </widget>
+    </item>
+    <item row="1" column="1" rowspan="3">
+     <widget class="QPushButton" name="editDbButton">
+      <property name="toolTip">
+       <string>Добавление и удаление хозяйств из базы данных</string>
+      </property>
+      <property name="text">
+       <string>--------------
+ПРАВКА БАЗ
+--------------</string>
+      </property>
+     </widget>
+    </item>
+   </layout>
   </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>800</width>
+     <width>673</width>
      <height>22</height>
     </rect>
    </property>
    <widget class="QMenu" name="menu_1">
     <property name="title">
-     <string>вкладка1</string>
+     <string>Главный экран</string>
     </property>
    </widget>
+   <widget class="QMenu" name="menu">
+    <property name="title">
+     <string>помощь</string>
+    </property>
+    <addaction name="action"/>
+   </widget>
    <addaction name="menu_1"/>
+   <addaction name="menu"/>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
+  <action name="action">
+   <property name="text">
+    <string>ты овощь?</string>
+   </property>
+  </action>
  </widget>
  <resources/>
  <connections/>

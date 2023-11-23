@@ -111,6 +111,7 @@ class Ui_Dialog(object):
         self.settlementTableWidget.itemClicked.connect(lambda: self.fill_cities_table())
         self.settlementTableWidget.setObjectName(u"settlementTableWidget")
         self.settlementTableWidget.setGeometry(QRect(10, 70, 256, 192))
+
         self.label = QLabel(Dialog)
         self.label.setObjectName(u"label")
         self.label.setGeometry(QRect(10, 50, 141, 16))
