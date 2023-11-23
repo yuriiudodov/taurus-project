@@ -65,7 +65,7 @@ class Ui_Dialog(object):
 
         pandas_SQL_query = f'SELECT household.pk, household.address, household.owner, city.name FROM household INNER JOIN city ON household.belongs_to_city = city.pk WHERE city.pk = {self.cityTableWidget.item(self.cityTableWidget.currentRow(), 0).text()}'
 
-        data_for_table = pd.read_sql(pandas_SQL_query,vet_db_connection)
+        data_for_table = pd.read_sql(pandas_SQL_query,vet_db_connection).astype(str)
 
         self.householdTableWidget.setColumnCount(4)
         self.householdTableWidget.setRowCount(len(data_for_table))
