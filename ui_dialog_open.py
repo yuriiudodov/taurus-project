@@ -63,18 +63,20 @@ class Ui_Dialog(object):
         TABLE_ROW_LIMIT = 10
         vet_db_connection = create_engine(f'sqlite:///{DB_PATH}').connect()
 
-        pandas_SQL_query = f'SELECT household.address, household.owner, city.name FROM household INNER JOIN city ON household.belongs_to_city = city.pk WHERE city.pk = {self.cityTableWidget.item(self.cityTableWidget.currentRow(), 0).text()}'
+        pandas_SQL_query = f'SELECT household.pk, household.address, household.owner, city.name FROM household INNER JOIN city ON household.belongs_to_city = city.pk WHERE city.pk = {self.cityTableWidget.item(self.cityTableWidget.currentRow(), 0).text()}'
 
         data_for_table = pd.read_sql(pandas_SQL_query,vet_db_connection)
 
-        self.householdTableWidget.setColumnCount(3)
+        self.householdTableWidget.setColumnCount(4)
         self.householdTableWidget.setRowCount(len(data_for_table))
 
         for col_num in range(len(data_for_table.columns)):
+            print("\n")#debug
             for row_num in range(0, len(data_for_table)):
+                print(QTableWidgetItem(data_for_table.iloc[row_num, col_num]).text())#debug
                 self.householdTableWidget.setItem(row_num, col_num,
                                                   QTableWidgetItem(data_for_table.iloc[row_num, col_num]))
-    def refres_table(self):
+    def refresh_table(self):
         DB_PATH = 'MainDatabaseVet'  # vremennoe reshenie
         TABLE_ROW_LIMIT = 10
         vet_db_connection = create_engine(f'sqlite:///{DB_PATH}').connect()
