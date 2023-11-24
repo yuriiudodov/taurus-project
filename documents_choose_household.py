@@ -19,12 +19,15 @@ from PySide6.QtWidgets import (QApplication, QHeaderView, QLabel, QPushButton,
                                QSizePolicy, QTableWidget, QTableWidgetItem, QWidget, QDialog)
 from sqlalchemy import text,create_engine
 from IPython.display import display
-
+import report_creation
 
 class Ui_Form(object):
 
-    def open_report_rus(self):  # RUS open report creation window
-       print("eshyo nihuia")
+    def open_report_creation_rus(self):  # RUS open report creation window
+        self.window = QWidget()
+        self.ui = report_creation.Ui_Form()
+        self.ui.setupUi(self.window)
+        self.window.show()
     def fill_cities_table(self):
         # loads the table
         DB_PATH = 'MainDatabaseVet'  # bezvremennoe reshenie
@@ -88,7 +91,7 @@ class Ui_Form(object):
         if not Form.objectName():
             Form.setObjectName(u"Form")
         Form.resize(1062, 575)
-        self.choosePushButton = QPushButton(Form, clicked=lambda: self.open_report_rus())
+        self.choosePushButton = QPushButton(Form, clicked=lambda: self.open_report_creation_rus())
         self.choosePushButton.setObjectName(u"choosePushButton")
         self.choosePushButton.setGeometry(QRect(30, 530, 91, 31))
         self.closePushButton = QPushButton(Form)
