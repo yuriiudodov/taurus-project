@@ -19,13 +19,13 @@ from PySide6.QtWidgets import (QApplication, QHeaderView, QLabel, QPushButton,
                                QSizePolicy, QTableWidget, QTableWidgetItem, QWidget, QDialog)
 from sqlalchemy import text,create_engine
 from IPython.display import display
-import report_creation
+import ui_report_creation
 
 class Ui_Form(object):
 
     def open_report_creation_rus(self):  # RUS open report creation window
         self.window = QWidget()
-        self.ui = report_creation.Ui_Form()
+        self.ui = ui_report_creation.Ui_Form()
         self.ui.setupUi(self.window)
         self.window.show()
     def fill_cities_table(self):
@@ -100,6 +100,8 @@ class Ui_Form(object):
         self.householdTableWidget = QTableWidget(Form)
         if (self.householdTableWidget.columnCount() < 4):
             self.householdTableWidget.setColumnCount(4)
+
+
         __qtablewidgetitem = QTableWidgetItem()
         self.householdTableWidget.setHorizontalHeaderItem(0, __qtablewidgetitem)
         __qtablewidgetitem1 = QTableWidgetItem()
@@ -172,6 +174,7 @@ class Ui_Form(object):
         Form.setWindowTitle(QCoreApplication.translate("Form", u"\u0412\u044b\u0431\u043e\u0440 \u0445\u043e\u0437\u044f\u0439\u0441\u0442\u0432\u0430 \u0434\u043b\u044f \u043e\u0444\u043e\u0440\u043c\u043b\u0435\u043d\u0438\u044f \u0434\u043e\u043a\u0443\u043c\u0435\u043d\u0442\u043e\u0432", None))
         self.choosePushButton.setText(QCoreApplication.translate("Form", u"\u0412\u042b\u0411\u041e\u0420", None))
         self.closePushButton.setText(QCoreApplication.translate("Form", u"\u041d\u0410\u0417\u0410\u0414", None))
+
         ___qtablewidgetitem = self.householdTableWidget.horizontalHeaderItem(0)
         ___qtablewidgetitem.setText("ПК");
         ___qtablewidgetitem1 = self.householdTableWidget.horizontalHeaderItem(1)

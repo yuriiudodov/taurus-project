@@ -17,8 +17,20 @@ from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
     QPalette, QPixmap, QRadialGradient, QTransform)
 from PySide6.QtWidgets import (QApplication, QHeaderView, QLabel, QPushButton,
     QSizePolicy, QTableWidget, QTableWidgetItem, QWidget)
+import ui_animal_add
 
 class Ui_Form(object):
+    def create_report(self):
+        print("ne sozdayotsa")
+    def delete_animal(self):
+        print("ne ydalyaetsya")
+    def open_animals_add(self):
+        self.window = QWidget()
+        self.ui = ui_animal_add.Ui_Form()
+        self.ui.setupUi(self.window)
+        self.window.show()
+    def open_animals_edit(self):
+        print("ne redachitsa")
     def setupUi(self, Form):
         if not Form.objectName():
             Form.setObjectName(u"Form")
@@ -55,8 +67,8 @@ class Ui_Form(object):
         self.placeForOwner.setGeometry(QRect(110, 90, 251, 41))
         self.placeForOwner.setFont(font1)
         self.tableWidget = QTableWidget(Form)
-        if (self.tableWidget.columnCount() < 5):
-            self.tableWidget.setColumnCount(5)
+        if (self.tableWidget.columnCount() < 6):
+            self.tableWidget.setColumnCount(6)
         __qtablewidgetitem = QTableWidgetItem()
         self.tableWidget.setHorizontalHeaderItem(0, __qtablewidgetitem)
         __qtablewidgetitem1 = QTableWidgetItem()
@@ -67,6 +79,8 @@ class Ui_Form(object):
         self.tableWidget.setHorizontalHeaderItem(3, __qtablewidgetitem3)
         __qtablewidgetitem4 = QTableWidgetItem()
         self.tableWidget.setHorizontalHeaderItem(4, __qtablewidgetitem4)
+        __qtablewidgetitem5 = QTableWidgetItem()
+        self.tableWidget.setHorizontalHeaderItem(5, __qtablewidgetitem5)
         self.tableWidget.setObjectName(u"tableWidget")
         self.tableWidget.setGeometry(QRect(20, 160, 701, 281))
         self.label_4 = QLabel(Form)
@@ -75,17 +89,17 @@ class Ui_Form(object):
         font2 = QFont()
         font2.setPointSize(12)
         self.label_4.setFont(font2)
-        self.documentAddAnimal = QPushButton(Form)
+        self.documentAddAnimal = QPushButton(Form, clicked=lambda:self.open_animals_add())
         self.documentAddAnimal.setObjectName(u"documentAddAnimal")
         self.documentAddAnimal.setGeometry(QRect(20, 470, 141, 41))
-        self.createHouseholdReport = QPushButton(Form)
+        self.createHouseholdReport = QPushButton(Form, clicked=lambda:self.create_report())
         self.createHouseholdReport.setObjectName(u"createHouseholdReport")
         self.createHouseholdReport.setGeometry(QRect(540, 460, 191, 51))
         self.createHouseholdReport.setToolTipDuration(2)
-        self.documentDeleteAnimal = QPushButton(Form)
+        self.documentDeleteAnimal = QPushButton(Form, clicked=lambda:self.delete_animal())
         self.documentDeleteAnimal.setObjectName(u"documentDeleteAnimal")
         self.documentDeleteAnimal.setGeometry(QRect(340, 470, 141, 41))
-        self.documentAddAnimal_2 = QPushButton(Form)
+        self.documentAddAnimal_2 = QPushButton(Form, clicked=lambda:self.open_animals_edit())#i forgot to rename it, it is actually edit button
         self.documentAddAnimal_2.setObjectName(u"documentAddAnimal_2")
         self.documentAddAnimal_2.setGeometry(QRect(170, 470, 161, 41))
 
@@ -113,6 +127,8 @@ class Ui_Form(object):
         ___qtablewidgetitem4 = self.tableWidget.horizontalHeaderItem(4)
         ___qtablewidgetitem4.setText(QCoreApplication.translate("Form", u"\u0423\u0441\u043b\u043e\u0432\u0438\u044f \n"
 "\u0441\u043e\u0434\u0435\u0440\u0436\u0430\u043d\u0438\u044f", None));
+        ___qtablewidgetitem5 = self.tableWidget.horizontalHeaderItem(5)
+        ___qtablewidgetitem5.setText("Вид");
         self.label_4.setText(QCoreApplication.translate("Form", u"\u0416\u0438\u0432\u043e\u0442\u043d\u044b\u0435 \u0445\u043e\u0437\u044f\u0439\u0441\u0442\u0432\u0430", None))
         self.documentAddAnimal.setText(QCoreApplication.translate("Form", u"\u0414\u043e\u0431\u0430\u0432\u0438\u0442\u044c \u0416\u0438\u0432\u043e\u0442\u043d\u043e\u0435", None))
 #if QT_CONFIG(tooltip)
