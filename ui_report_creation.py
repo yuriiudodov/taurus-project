@@ -18,6 +18,8 @@ from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
 from PySide6.QtWidgets import (QApplication, QHeaderView, QLabel, QPushButton,
     QSizePolicy, QTableWidget, QTableWidgetItem, QWidget)
 import ui_animal_add
+import ui_animal_edit
+
 
 class Ui_Form(object):
     def create_report(self):
@@ -30,8 +32,12 @@ class Ui_Form(object):
         self.ui.setupUi(self.window)
         self.window.show()
     def open_animals_edit(self):
-        print("ne redachitsa")
-    def setupUi(self, Form):
+        self.window = QWidget()
+        self.ui = ui_animal_edit.Ui_Form()
+        self.ui.setupUi(self.window)
+        self.window.show()
+
+    def setupUi(self, Form, city, address, owner):
         if not Form.objectName():
             Form.setObjectName(u"Form")
         Form.resize(758, 527)
@@ -103,6 +109,10 @@ class Ui_Form(object):
         self.documentAddAnimal_2.setObjectName(u"documentAddAnimal_2")
         self.documentAddAnimal_2.setGeometry(QRect(170, 470, 161, 41))
 
+        self.placeForCity.setText(QCoreApplication.translate("Form", city, None))
+        self.placeForAddress.setText(QCoreApplication.translate("Form", address, None))
+        self.placeForOwner.setText(QCoreApplication.translate("Form", owner, None))
+
         self.retranslateUi(Form)
 
         QMetaObject.connectSlotsByName(Form)
@@ -113,9 +123,6 @@ class Ui_Form(object):
         self.label.setText(QCoreApplication.translate("Form", u"\u0410\u0434\u0440\u0435\u0441:", None))
         self.label_2.setText(QCoreApplication.translate("Form", u"\u0412\u043b\u0430\u0434\u0435\u043b\u0435\u0446:", None))
         self.label_3.setText(QCoreApplication.translate("Form", u"\u0413\u043e\u0440\u043e\u0434:", None))
-        self.placeForCity.setText(QCoreApplication.translate("Form", u"placeForCity", None))
-        self.placeForAddress.setText(QCoreApplication.translate("Form", u"placeForAddress", None))
-        self.placeForOwner.setText(QCoreApplication.translate("Form", u"placeForOwner", None))
         ___qtablewidgetitem = self.tableWidget.horizontalHeaderItem(0)
         ___qtablewidgetitem.setText(QCoreApplication.translate("Form", u"\u041f\u041a", None));
         ___qtablewidgetitem1 = self.tableWidget.horizontalHeaderItem(1)
