@@ -26,7 +26,8 @@ class Ui_Form(object):
     def open_report_creation_rus(self):  # RUS open report creation window
         self.window = QWidget()
         self.ui = ui_report_creation.Ui_Form()
-        self.ui.setupUi(self.window, "city_name", "address_name", "owner_name")#параметры чтоб тянуть хуйню из бд, это ещё не все, нужно еще удет тянуть пк хозяйства и там его читая заполнять таблицу с животными
+        print(self.cityTableWidget.currentRow(), "pdor debug")#БЕЗ ЭТОЙ ШТУКИ ПОЧЕМУ ТО НЕ РАБОТАЕТ АХАХАХА
+        self.ui.setupUi(self.window, "city_name", "address_name", "owner_name", self.householdTableWidget.item(self.cityTableWidget.currentRow(), 0).text())#параметры чтоб тянуть хуйню из бд, последний не робит, это ещё не все, нужно еще удет тянуть пк хозяйства и там его читая заполнять таблицу с животными
         self.window.show()
     def fill_cities_table(self):
         # loads the table

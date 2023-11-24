@@ -37,10 +37,11 @@ class Ui_Form(object):
         self.ui.setupUi(self.window)
         self.window.show()
 
-    def setupUi(self, Form, city, address, owner):
+    def setupUi(self, Form, city, address, owner, household_pk):
         if not Form.objectName():
             Form.setObjectName(u"Form")
         Form.resize(758, 527)
+        print(household_pk)
         font = QFont()
         font.setPointSize(9)
         Form.setFont(font)

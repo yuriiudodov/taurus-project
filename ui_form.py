@@ -21,11 +21,11 @@ from PySide6.QtWidgets import (QApplication, QLabel, QMainWindow, QMenu,
                                QWidget, QDialog, QTabWidget, QGridLayout)
 
 import ui_dialog_open #открыть новое окно из файла интерфейса
-import documents_choose_household
+import ui_documents_choose_household
 
 def open_households_rus(self):  # RUS open households window
     self.window = QDialog()
-    self.ui = documents_choose_household.Ui_Dialog()
+    self.ui = ui_documents_choose_household.Ui_Dialog()
     self.ui.setupUi(self.window)
     self.window.show()
 
@@ -39,7 +39,7 @@ def open_dialog_rus(self):  # открыть новое окно из файла
 class Ui_MainWindow(object):
     def open_households_rus(self):  # RUS open households window
         self.window = QDialog()
-        self.ui = documents_choose_household.Ui_Form()
+        self.ui = ui_documents_choose_household.Ui_Form()
         self.ui.setupUi(self.window)
         self.window.show()
 
@@ -53,7 +53,7 @@ class Ui_MainWindow(object):
 
     def open_households_rus(self):  # RUS open households window
         self.window = QDialog()
-        self.ui = documents_choose_household.Ui_Form()
+        self.ui = ui_documents_choose_household.Ui_Form()
         self.ui.setupUi(self.window)
         self.window.show()
 
