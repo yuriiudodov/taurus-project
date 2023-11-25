@@ -31,7 +31,7 @@ from openpyxl import load_workbook
 import ui_animal_add
 import ui_animal_edit
 from openpyxl.styles import Alignment
-from settings import DB_PATH, EXCEL_TEMPLATE_PATH, MAIN_REPORT_PAGE, EXCEL_HEADER_ROWS, SAVE_DIR, WRAP_COLUMNS
+from settings import DB_PATH, EXCEL_TEMPLATE_PATH, MAIN_REPORT_PAGE, EXCEL_HEADER_ROWS, SAVE_DIR, WRAP_COLUMNS, NAMES_TXT_PATH
 
 
 class Ui_Form(object):
@@ -39,7 +39,7 @@ class Ui_Form(object):
         self.vet_db_connection = create_engine(f'sqlite:///{DB_PATH}').connect()
     def create_report(self):
         print("ne sozdayotsa")
-        self.household_pk = 1 # !!!!!!!!!!!!!!!!!!!!!!! временно
+        self.city_pk = 2 # !!!!!!!!!!!!!!!!!!!!!!! временно
         report_entries = pd.read_sql(text(
             f'''SELECT household.owner, city.name, household.address, report_entries.specie, report_entries.count, report_entries.data_from_administration, report_entries.prevous_count, report_entries.is_conditions_good FROM report_entries
                 --присоединяем данные о хозяйстве (владелец и его адрес в рамках города)
@@ -49,7 +49,7 @@ class Ui_Form(object):
                 --присоединяем данные о городе (для хозяйства, уточняем адрес) 
                 INNER JOIN city
                 ON city.pk = household.belongs_to_city
-                WHERE household.pk = {self.household_pk}
+                WHERE city.pk = {self.city_pk}
                      
             '''
         ), self.vet_db_connection)
@@ -68,7 +68,20 @@ class Ui_Form(object):
         current_report = pd.ExcelWriter(filename, engine='openpyxl', mode='a')
         
         # заполнение данными
-        page           = current_report.sheets[MAIN_REPORT_PAGE]
+        with open(NAMES_TXT_PATH, 'r', encoding='utf-8') as names_file:
+            names = [line.strip() for line in names_file.readlines()]
+            names = {'VET_CEO': names[0], 'VET_DOC': names[1], 'VET_DEP': names[2]}
+
+        page = current_report.sheets[MAIN_REPORT_PAGE]
+
+        def fill_placeholders(names, cell):
+            if isinstance(cell.value, str):
+                for placeholder, name in names.items():
+                    cell.value = cell.value.replace(placeholder, name)
+        for row in range(1, page.max_row + 1):
+            fill_placeholders(names, page.cell(row, 1))
+        
+        
         page.insert_rows(EXCEL_HEADER_ROWS + 1, amount=report_entries.shape[0])
         for row in range(report_entries.shape[0]):
             for col, col_name in enumerate(report_entries.columns):
