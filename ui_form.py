@@ -81,7 +81,7 @@ class Ui_MainWindow(object):
         self.openHouseholdButton = QPushButton(self.centralwidget, clicked=lambda: self.open_households_rus())
         self.openHouseholdButton.setObjectName(u"openHouseholdButton")
 
-        self.gridLayout_2.addWidget(self.openHouseholdButton, 3, 0, 1, 1)
+        self.gridLayout_2.addWidget(self.openHouseholdButton, 3, 0, 2, 1)
 
         self.label_2 = QLabel(self.centralwidget)
         self.label_2.setObjectName(u"label_2")
@@ -101,7 +101,7 @@ class Ui_MainWindow(object):
         self.editDbButton = QPushButton(self.centralwidget, clicked=lambda: self.open_db_edit_rus())
         self.editDbButton.setObjectName(u"editDbButton")
 
-        self.gridLayout_2.addWidget(self.editDbButton, 1, 1, 3, 1)
+        self.gridLayout_2.addWidget(self.editDbButton, 1, 1, 6, 1)
 
         MainWindow.setCentralWidget(self.centralwidget)
         self.menubar = QMenuBar(MainWindow)
