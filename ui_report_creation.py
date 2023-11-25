@@ -17,13 +17,79 @@ from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
     QPalette, QPixmap, QRadialGradient, QTransform)
 from PySide6.QtWidgets import (QApplication, QHeaderView, QLabel, QPushButton,
     QSizePolicy, QTableWidget, QTableWidgetItem, QWidget)
+
+
+import pandas as pd
+import os
+import shutil
+
+from time import time
+
+from sqlalchemy import text, create_engine
+from openpyxl import load_workbook
+
 import ui_animal_add
 import ui_animal_edit
+from openpyxl.styles import Alignment
+from settings import DB_PATH, EXCEL_TEMPLATE_PATH, MAIN_REPORT_PAGE, EXCEL_HEADER_ROWS, SAVE_DIR, WRAP_COLUMNS
 
+def get_column_name_excel_by_index(position_index: int):
+    '''перевод индекса столбца датафрейма в название столбца эксель'''
+    position_index += 1
+    column_name     = ''
+    while position_index:
+        value          = (position_index - 1) % 26
+        column_name    = chr(ord('A') + value) + column_name
+        position_index = (position_index - value) // 26
+    return column_name
 
 class Ui_Form(object):
+    def __init__(self):
+        self.vet_db_connection = create_engine(f'sqlite:///{DB_PATH}').connect()
     def create_report(self):
         print("ne sozdayotsa")
+        self.household_pk = 1 # !!!!!!!!!!!!!!!!!!!!!!! временно
+        report_entries = pd.read_sql(text(
+            f'''SELECT household.owner, city.name, household.address, report_entries.specie, report_entries.count, report_entries.data_from_administration, report_entries.prevous_count, report_entries.is_conditions_good FROM report_entries
+                --присоединяем данные о хозяйстве (владелец и его адрес в рамках города)
+                INNER JOIN household
+                ON household.pk = report_entries.household
+
+                --присоединяем данные о городе (для хозяйства, уточняем адрес) 
+                INNER JOIN city
+                ON city.pk = household.belongs_to_city
+                WHERE household.pk = {self.household_pk}
+                     
+            '''
+        ), self.vet_db_connection)
+        # ----------------------------------------------------------------------------------дефолтные прелбразования данныхз ради некривого форматирования--------------------------------------------------------------------------------------------------------------------------
+        report_entries.insert(0, 'position', report_entries['owner'].astype('category').cat.codes + 1)
+        report_entries = report_entries.sort_values('owner')
+        report_entries.loc[~report_entries[['owner']].duplicated(keep='last'), ['owner', 'address', 'name', 'position']] = ''
+        report_entries['address'] = report_entries.apply(lambda x: f"{x['name']}, {x['address']}" if x['address'] else "", axis=1)
+        report_entries = report_entries.drop(columns='name')
+        print(report_entries)
+        
+        # ----------------------------------------------------------------------------------создаем диреткории если нет и копируем шаблон, затем заполняем его--------------------------------------------------------------------------------------------------------------------------
+        os.makedirs(SAVE_DIR, exist_ok=True)
+        filename       = os.path.join(SAVE_DIR, f'{int(time())}.xlsx') 
+        shutil.copy(EXCEL_TEMPLATE_PATH, filename)
+        current_report = pd.ExcelWriter(filename, engine='openpyxl', mode='a')
+        
+        # заполнение данными
+        page           = current_report.sheets[MAIN_REPORT_PAGE]
+        page.insert_rows(EXCEL_HEADER_ROWS + 1, amount=report_entries.shape[0])
+        for row in range(report_entries.shape[0]):
+            for col, col_name in enumerate(report_entries.columns):
+                cell = page.cell(row + EXCEL_HEADER_ROWS + 1, col + 1)
+                cell.value = report_entries.iloc[row, col]
+                # перенос по словам
+                if col_name in WRAP_COLUMNS:
+                    cell.alignment = cell.alignment.copy(wrapText=True)
+
+        current_report.close()
+        
+        
     def delete_animal(self):
         print("ne ydalyaetsya")
     def open_animals_add(self):
@@ -37,7 +103,8 @@ class Ui_Form(object):
         self.ui.setupUi(self.window)
         self.window.show()
 
-    def setupUi(self, Form, city, address, owner, household_pk):
+    def setupUi(self, Form, city, address, owner, household_pk=1):
+        self.household_pk = household_pk
         if not Form.objectName():
             Form.setObjectName(u"Form")
         Form.resize(758, 527)
