@@ -33,15 +33,6 @@ import ui_animal_edit
 from openpyxl.styles import Alignment
 from settings import DB_PATH, EXCEL_TEMPLATE_PATH, MAIN_REPORT_PAGE, EXCEL_HEADER_ROWS, SAVE_DIR, WRAP_COLUMNS
 
-def get_column_name_excel_by_index(position_index: int):
-    '''перевод индекса столбца датафрейма в название столбца эксель'''
-    position_index += 1
-    column_name     = ''
-    while position_index:
-        value          = (position_index - 1) % 26
-        column_name    = chr(ord('A') + value) + column_name
-        position_index = (position_index - value) // 26
-    return column_name
 
 class Ui_Form(object):
     def __init__(self):
