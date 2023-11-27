@@ -25,12 +25,13 @@ import ui_edit_settlements
 class Ui_Dialog(object):
     selected_table=0
     def set_edit_method(self, editmethod):
-        selected=editmethod
+        selected_table=editmethod
+
     def edit_button_pressed(self):
         if(self.selected_table==0):
-            print("open zero")
+            self.open_settlement_edit()
         if(self.selected_table==1):
-            print("open first")
+            self.open_household_edit()
         if (self.selected_table == 2):
             print("open second")
     def open_settlement_edit(self):
