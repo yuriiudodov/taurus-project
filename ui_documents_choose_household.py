@@ -138,6 +138,10 @@ class Ui_Form(object):
         self.settlementTableWidget.setGeometry(QRect(20, 40, 231, 471))
         self.settlementTableWidget.itemClicked.connect(lambda: self.fill_cities_table())
 
+        self.createHouseholdReport = QPushButton(Form, clicked=lambda: ui_report_creation.Ui_Form.create_report(self))
+        self.createHouseholdReport.setObjectName(u"createHouseholdReport")
+        self.createHouseholdReport.setGeometry(QRect(450, 530, 91, 31))
+
         self.label_3 = QLabel(Form)
         self.label_3.setObjectName(u"label_3")
         self.label_3.setGeometry(QRect(660, 10, 101, 21))
@@ -176,6 +180,7 @@ class Ui_Form(object):
         Form.setWindowTitle(QCoreApplication.translate("Form", u"\u0412\u044b\u0431\u043e\u0440 \u0445\u043e\u0437\u044f\u0439\u0441\u0442\u0432\u0430 \u0434\u043b\u044f \u043e\u0444\u043e\u0440\u043c\u043b\u0435\u043d\u0438\u044f \u0434\u043e\u043a\u0443\u043c\u0435\u043d\u0442\u043e\u0432", None))
         self.choosePushButton.setText(QCoreApplication.translate("Form", u"\u0412\u042b\u0411\u041e\u0420", None))
         self.closePushButton.setText(QCoreApplication.translate("Form", u"\u041d\u0410\u0417\u0410\u0414", None))
+        self.createHouseholdReport.setText("Отчёт")
 
         ___qtablewidgetitem = self.householdTableWidget.horizontalHeaderItem(0)
         ___qtablewidgetitem.setText("ПК");

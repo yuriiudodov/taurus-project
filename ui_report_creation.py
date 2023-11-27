@@ -16,7 +16,7 @@ from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
     QImage, QKeySequence, QLinearGradient, QPainter,
     QPalette, QPixmap, QRadialGradient, QTransform)
 from PySide6.QtWidgets import (QApplication, QHeaderView, QLabel, QPushButton,
-    QSizePolicy, QTableWidget, QTableWidgetItem, QWidget)
+                               QSizePolicy, QTableWidget, QTableWidgetItem, QWidget, QMessageBox, QDialog)
 
 
 import pandas as pd
@@ -38,6 +38,7 @@ class Ui_Form(object):
     def __init__(self):
         self.vet_db_connection = create_engine(f'sqlite:///{DB_PATH}').connect()
     def create_report(self):
+        self.vet_db_connection = create_engine(f'sqlite:///{DB_PATH}').connect()
         print("ne sozdayotsa")
         self.city_pk = 2 # !!!!!!!!!!!!!!!!!!!!!!! временно
         report_entries = pd.read_sql(text(
@@ -73,6 +74,10 @@ class Ui_Form(object):
             names = {'VET_CEO': names[0], 'VET_DOC': names[1], 'VET_DEP': names[2]}
 
         page = current_report.sheets[MAIN_REPORT_PAGE]
+        message = QMessageBox()
+        message.setText("loh")
+        message.show()
+
 
         def fill_placeholders(names, cell):
             if isinstance(cell.value, str):
@@ -80,8 +85,7 @@ class Ui_Form(object):
                     cell.value = cell.value.replace(placeholder, name)
         for row in range(1, page.max_row + 1):
             fill_placeholders(names, page.cell(row, 1))
-        
-        
+
         page.insert_rows(EXCEL_HEADER_ROWS + 1, amount=report_entries.shape[0])
         for row in range(report_entries.shape[0]):
             for col, col_name in enumerate(report_entries.columns):
@@ -170,10 +174,10 @@ class Ui_Form(object):
         self.documentAddAnimal = QPushButton(Form, clicked=lambda:self.open_animals_add())
         self.documentAddAnimal.setObjectName(u"documentAddAnimal")
         self.documentAddAnimal.setGeometry(QRect(20, 470, 141, 41))
-        self.createHouseholdReport = QPushButton(Form, clicked=lambda:self.create_report())
-        self.createHouseholdReport.setObjectName(u"createHouseholdReport")
-        self.createHouseholdReport.setGeometry(QRect(540, 460, 191, 51))
-        self.createHouseholdReport.setToolTipDuration(2)
+        # self.createHouseholdReport = QPushButton(Form, clicked=lambda:self.create_report())
+        # self.createHouseholdReport.setObjectName(u"createHouseholdReport")
+        # self.createHouseholdReport.setGeometry(QRect(540, 460, 191, 51))
+        # self.createHouseholdReport.setToolTipDuration(2)
         self.documentDeleteAnimal = QPushButton(Form, clicked=lambda:self.delete_animal())
         self.documentDeleteAnimal.setObjectName(u"documentDeleteAnimal")
         self.documentDeleteAnimal.setGeometry(QRect(340, 470, 141, 41))
@@ -211,9 +215,9 @@ class Ui_Form(object):
         self.label_4.setText(QCoreApplication.translate("Form", u"\u0416\u0438\u0432\u043e\u0442\u043d\u044b\u0435 \u0445\u043e\u0437\u044f\u0439\u0441\u0442\u0432\u0430", None))
         self.documentAddAnimal.setText(QCoreApplication.translate("Form", u"\u0414\u043e\u0431\u0430\u0432\u0438\u0442\u044c \u0416\u0438\u0432\u043e\u0442\u043d\u043e\u0435", None))
 #if QT_CONFIG(tooltip)
-        self.createHouseholdReport.setToolTip(QCoreApplication.translate("Form", u"\u0412\u044b\u043f\u0443\u0441\u043a \u043e\u0442\u0447\u0451\u0442\u0430 \u0438 \u0437\u0430\u043f\u0438\u0441\u044c \u0432 \u0444\u0430\u0439\u043b", u"\u0412\u044b\u043f\u0443\u0441\u043a \u043e\u0442\u0447\u0451\u0442\u0430 \u0438 \u0437\u0430\u043f\u0438\u0441\u044c \u0432 \u0444\u0430\u0439\u043b"))
-#endif // QT_CONFIG(tooltip)
-        self.createHouseholdReport.setText(QCoreApplication.translate("Form", u"\u0412\u044b\u043f\u0443\u0441\u0442\u0438\u0442\u044c \u0431\u0435\u0448\u0435\u043d\u044b\u0445 \u043f\u0438\u0434\u043e\u0440\u043e\u0432", None))
+#         self.createHouseholdReport.setToolTip(QCoreApplication.translate("Form", u"\u0412\u044b\u043f\u0443\u0441\u043a \u043e\u0442\u0447\u0451\u0442\u0430 \u0438 \u0437\u0430\u043f\u0438\u0441\u044c \u0432 \u0444\u0430\u0439\u043b", u"\u0412\u044b\u043f\u0443\u0441\u043a \u043e\u0442\u0447\u0451\u0442\u0430 \u0438 \u0437\u0430\u043f\u0438\u0441\u044c \u0432 \u0444\u0430\u0439\u043b"))
+# #endif // QT_CONFIG(tooltip)
+#         self.createHouseholdReport.setText(QCoreApplication.translate("Form", u"\u0412\u044b\u043f\u0443\u0441\u0442\u0438\u0442\u044c \u0431\u0435\u0448\u0435\u043d\u044b\u0445 \u043f\u0438\u0434\u043e\u0440\u043e\u0432", None))
         self.documentDeleteAnimal.setText(QCoreApplication.translate("Form", u"\u0423\u0434\u0430\u043b\u0438\u0442\u044c \u0416\u0438\u0432\u043e\u0442\u043d\u043e\u0435", None))
         self.documentAddAnimal_2.setText(QCoreApplication.translate("Form", u"\u0420\u0435\u0434\u0430\u043a\u0442\u0438\u0440\u043e\u0432\u0430\u0442\u044c \u0416\u0438\u0432\u043e\u0442\u043d\u043e\u0435", None))
     # retranslateUi
