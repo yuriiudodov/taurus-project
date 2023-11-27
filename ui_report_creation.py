@@ -23,7 +23,7 @@ import pandas as pd
 import os
 import shutil
 
-from time import time
+from time import time, sleep
 
 from sqlalchemy import text, create_engine
 from openpyxl import load_workbook
@@ -32,15 +32,17 @@ import ui_animal_add
 import ui_animal_edit
 from openpyxl.styles import Alignment
 from settings import DB_PATH, EXCEL_TEMPLATE_PATH, MAIN_REPORT_PAGE, EXCEL_HEADER_ROWS, SAVE_DIR, WRAP_COLUMNS, NAMES_TXT_PATH
-
+from db_utils import db_get_city_name, db_get_owner, db_get_settlement
 
 class Ui_Form(object):
     def __init__(self):
         self.vet_db_connection = create_engine(f'sqlite:///{DB_PATH}').connect()
-    def create_report(self):
-        self.vet_db_connection = create_engine(f'sqlite:///{DB_PATH}').connect()
-        print("ne sozdayotsa")
-        self.city_pk = 2 # !!!!!!!!!!!!!!!!!!!!!!! временно
+    def create_report(self, selected_items):
+        settlement      = selected_items['settlement']
+        city            = selected_items['city']
+        city_name       = db_get_city_name(city)
+        settlement_name = db_get_settlement(settlement)
+
         report_entries = pd.read_sql(text(
             f'''SELECT household.owner, city.name, household.address, report_entries.specie, report_entries.count, report_entries.data_from_administration, report_entries.prevous_count, report_entries.is_conditions_good FROM report_entries
                 --присоединяем данные о хозяйстве (владелец и его адрес в рамках города)
@@ -50,7 +52,7 @@ class Ui_Form(object):
                 --присоединяем данные о городе (для хозяйства, уточняем адрес) 
                 INNER JOIN city
                 ON city.pk = household.belongs_to_city
-                WHERE city.pk = {self.city_pk}
+                WHERE city.pk = {city}
                      
             '''
         ), self.vet_db_connection)
@@ -71,12 +73,13 @@ class Ui_Form(object):
         # заполнение данными
         with open(NAMES_TXT_PATH, 'r', encoding='utf-8') as names_file:
             names = [line.strip() for line in names_file.readlines()]
-            names = {'VET_CEO': names[0], 'VET_DOC': names[1], 'VET_DEP': names[2]}
+        names = {'VET_CEO': names[0], 'VET_DOC': names[1], 'VET_DEP': names[2], 'CITY': city_name, 'SETTLEMENT': settlement_name}
 
         page = current_report.sheets[MAIN_REPORT_PAGE]
         message = QMessageBox()
         message.setText("loh")
         message.show()
+        sleep(1.5)
 
 
         def fill_placeholders(names, cell):
