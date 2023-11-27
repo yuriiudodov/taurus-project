@@ -27,6 +27,8 @@ class Ui_Dialog(object):
     selected_table=0
     def set_edit_method(self, editmethod):
         selected_table=editmethod
+        print(editmethod, "cumgay, ",selected_table)
+
 
     def edit_button_pressed(self):
         if(self.selected_table==0):
