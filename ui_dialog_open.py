@@ -176,9 +176,9 @@ class Ui_Dialog(object):
         self.pushButton.setGeometry(QRect(30, 530, 181, 31))
 
         # hyeta dlya knopki vibora
-        self.settlementTableWidget.itemClicked.connect(self.set_edit_method(0))
-        self.cityTableWidget.itemClicked.connect(self.set_edit_method(1))
-        self.householdTableWidget.itemClicked.connect(self.set_edit_method(2))
+        self.settlementTableWidget.itemSelectionChanged.connect(lambda: self.set_edit_method(0))
+        self.cityTableWidget.itemSelectionChanged.connect(lambda: self.set_edit_method(1))
+        self.householdTableWidget.itemSelectionChanged.connect(lambda: self.set_edit_method(2))
         # hyeta dlya knopki vibora
 
         self.retranslateUi(Form)
