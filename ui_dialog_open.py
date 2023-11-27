@@ -19,8 +19,9 @@ from PySide6.QtWidgets import (QApplication, QDialog, QHeaderView, QLabel,
     QWidget)
 from sqlalchemy import create_engine, text
 
-import ui_edit_cities
 import ui_edit_settlements
+import ui_edit_cities
+import ui_edit_households
 
 class Ui_Dialog(object):
     selected_table=0
@@ -31,9 +32,9 @@ class Ui_Dialog(object):
         if(self.selected_table==0):
             self.open_settlement_edit()
         if(self.selected_table==1):
-            self.open_household_edit()
+            self.open_city_edit()
         if (self.selected_table == 2):
-            print("open second")
+            self.open_household_edit()
     def open_settlement_edit(self):
         self.window = QDialog()
         self.ui = ui_edit_settlements.Ui_Dialog()
@@ -47,7 +48,10 @@ class Ui_Dialog(object):
         self.window.show()
 
     def open_household_edit(self):
-        print("nichego poka chto")
+        self.window = QDialog()
+        self.ui = ui_edit_households.Ui_Form()
+        self.ui.setupUi(self.window)
+        self.window.show()
 
     def fill_cities_table(self):
         # loads the table
