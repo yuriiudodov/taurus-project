@@ -15,10 +15,12 @@ from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
     QFont, QFontDatabase, QGradient, QIcon,
     QImage, QKeySequence, QLinearGradient, QPainter,
     QPalette, QPixmap, QRadialGradient, QTransform)
-from PySide6.QtWidgets import (QApplication, QFormLayout, QHeaderView, QLabel,
-    QLineEdit, QPushButton, QSizePolicy, QTableWidget,
-    QTableWidgetItem, QWidget)
-
+from PySide6.QtSql import QSqlDatabase, QSqlQuery
+from PySide6.QtWidgets import (QApplication, QCheckBox, QDialog, QHeaderView,
+                               QLabel, QLineEdit, QPushButton, QSizePolicy,
+                               QTableWidget, QTableWidgetItem, QWidget, QGridLayout, QFormLayout)
+from sqlalchemy import create_engine, text
+import pandas as pd
 class Ui_Form(object):
     def setupUi(self, Form):
         if not Form.objectName():
@@ -69,6 +71,16 @@ class Ui_Form(object):
 
 
         self.retranslateUi(Form)
+        DB_PATH = 'MainDatabaseVet'
+        vet_db_connection = create_engine(f'sqlite:///{DB_PATH}').connect()
+        data_for_table = pd.read_sql(text(f'SELECT pk,name FROM settlement'), vet_db_connection).astype(str)
+        self.selectSettlementTableWidget.setColumnCount(2)
+        self.selectSettlementTableWidget.setRowCount(len(data_for_table))
+
+        for col_num in range(len(data_for_table.columns)):
+            for row_num in range(0, len(data_for_table)):
+                self.selectSettlementTableWidget.setItem(row_num, col_num,
+                                                   QTableWidgetItem(data_for_table.iloc[row_num, col_num]))
 
         QMetaObject.connectSlotsByName(Form)
     # setupUi

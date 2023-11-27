@@ -26,8 +26,8 @@ import ui_edit_households
 class Ui_Dialog(object):
     selected_table=0
     def set_edit_method(self, editmethod):
-        selected_table=editmethod
-        print(editmethod, "cumgay, ",selected_table)
+        self.selected_table=editmethod
+
 
 
     def edit_button_pressed(self):
@@ -45,7 +45,7 @@ class Ui_Dialog(object):
 
     def open_city_edit(self):  # opens hyety nesysvetnyu
         self.window = QDialog()
-        self.ui = ui_edit_cities.Ui_Dialog()
+        self.ui = ui_edit_cities.Ui_Form()
         self.ui.setupUi(self.window)
         self.window.show()
 

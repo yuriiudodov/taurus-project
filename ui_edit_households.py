@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-
+import pandas as pd
 ################################################################################
 ## Form generated from reading UI file 'edit_households.ui'
 ##
@@ -18,8 +18,27 @@ from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
 from PySide6.QtWidgets import (QApplication, QGridLayout, QHeaderView, QLabel,
     QLineEdit, QSizePolicy, QTableWidget, QTableWidgetItem,
     QWidget)
+from sqlalchemy import create_engine, text
+
 
 class Ui_Form(object):
+
+    def fill_cities_table(self):
+        # loads the table
+        DB_PATH = 'MainDatabaseVet'  # bezvremennoe reshenie
+        TABLE_ROW_LIMIT = 10
+        vet_db_connection = create_engine(f'sqlite:///{DB_PATH}').connect()
+        # -----------------cities_table------------------------
+        pandas_SQL_query = f'SELECT city.pk, city.name, settlement.name FROM settlement INNER JOIN city ON city.belongs_to_settlement = settlement.pk WHERE settlement.pk = {self.settlementTableWidget.item(self.settlementTableWidget.currentRow(), 0).text()}'
+
+        data_for_table = pd.read_sql(text(pandas_SQL_query), vet_db_connection).astype(str)
+        self.cityTableWidget.setColumnCount(3)
+        self.cityTableWidget.setRowCount(len(data_for_table))
+
+        for col_num in range(len(data_for_table.columns)):
+            for row_num in range(0, len(data_for_table)):
+                self.cityTableWidget.setItem(row_num, col_num,
+                                             QTableWidgetItem(data_for_table.iloc[row_num, col_num]))
     def setupUi(self, Form):
         if not Form.objectName():
             Form.setObjectName(u"Form")
@@ -65,6 +84,7 @@ class Ui_Form(object):
         self.gridLayout.addWidget(self.label_4, 3, 2, 1, 1)
 
         self.settlementTableWidget = QTableWidget(self.widget)
+        self.settlementTableWidget.itemClicked.connect(lambda: self.fill_cities_table())
         if (self.settlementTableWidget.columnCount() < 2):
             self.settlementTableWidget.setColumnCount(2)
         __qtablewidgetitem = QTableWidgetItem()
@@ -76,6 +96,7 @@ class Ui_Form(object):
         self.gridLayout.addWidget(self.settlementTableWidget, 4, 1, 1, 1)
 
         self.cityTableWidget = QTableWidget(self.widget)
+
         if (self.cityTableWidget.columnCount() < 3):
             self.cityTableWidget.setColumnCount(3)
         __qtablewidgetitem2 = QTableWidgetItem()
@@ -100,6 +121,17 @@ class Ui_Form(object):
 
 
         self.retranslateUi(Form)
+
+        DB_PATH = 'MainDatabaseVet'
+        vet_db_connection = create_engine(f'sqlite:///{DB_PATH}').connect()
+        data_for_table = pd.read_sql(text(f'SELECT pk,name FROM settlement'), vet_db_connection).astype(str)
+        self.settlementTableWidget.setColumnCount(2)
+        self.settlementTableWidget.setRowCount(len(data_for_table))
+
+        for col_num in range(len(data_for_table.columns)):
+            for row_num in range(0, len(data_for_table)):
+                self.settlementTableWidget.setItem(row_num, col_num,
+                                                         QTableWidgetItem(data_for_table.iloc[row_num, col_num]))
 
         QMetaObject.connectSlotsByName(Form)
     # setupUi
