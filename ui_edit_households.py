@@ -27,7 +27,7 @@ class Ui_Form(object):
         print("ne sdelano")
 
     def add_household_to_db(self):
-        print("ne sdelano1")
+        print("ne sdelano1")#cum
 
     def fill_cities_table(self):
         # loads the table
