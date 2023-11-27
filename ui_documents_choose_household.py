@@ -21,20 +21,31 @@ from sqlalchemy import text,create_engine
 from IPython.display import display
 import ui_report_creation
 
+from db_utils import db_get_city_name, db_get_owner, db_get_settlement, vet_db_connection
+
+
 class Ui_Form(object):
+    def selected_items(self):
+        household  = self.householdTableWidget.item(self.householdTableWidget.currentRow(), 0).text()
+        city       = self.cityTableWidget.item(self.cityTableWidget.currentRow(), 0).text()
+        settlement = self.settlementTableWidget.item(self.settlementTableWidget.currentRow(), 0).text()
+        return {'settlement': settlement, 'city': city, 'household': household}
+    
 
     def open_report_creation_rus(self):  # RUS open report creation window
         self.window = QWidget()
         self.ui = ui_report_creation.Ui_Form()
-        #print(self.cityTableWidget.currentRow(), "pdor debug")#БЕЗ ЭТОЙ ШТУКИ ПОЧЕМУ ТО НЕ РАБОТАЕТ АХАХАХА
 
-        self.ui.setupUi(self.window, "city_name", "address_name", "owner_name", self.householdTableWidget.item(self.householdTableWidget.currentRow(), 0).text())#параметры чтоб тянуть хуйню из бд, последний не робит, это ещё не все, нужно еще удет тянуть пк хозяйства и там его читая заполнять таблицу с животными
+        household = self.selected_items()['household']
+        owner     = db_get_owner(household)
+        city      = db_get_city_name(self.selected_items()['city'])
+ 
+        self.ui.setupUi(self.window, city, owner['address'], owner['owner'], household)#параметры чтоб тянуть хуйню из бд, последний не робит, это ещё не все, нужно еще удет тянуть пк хозяйства и там его читая заполнять таблицу с животными
         self.window.show()
     def fill_cities_table(self):
         # loads the table
-        DB_PATH = 'MainDatabaseVet'  # bezvremennoe reshenie
+       
         TABLE_ROW_LIMIT = 10
-        vet_db_connection = create_engine(f'sqlite:///{DB_PATH}').connect()
         # -----------------cities_table------------------------
         pandas_SQL_query = f'SELECT city.pk, city.name, settlement.name FROM settlement INNER JOIN city ON city.belongs_to_settlement = settlement.pk WHERE settlement.pk = {self.settlementTableWidget.item(self.settlementTableWidget.currentRow(), 0).text()}'
 
@@ -49,9 +60,7 @@ class Ui_Form(object):
 
     def fill_households_table(self):
         # loads the table
-        DB_PATH = 'MainDatabaseVet'  # bezvremennoe reshenie
         TABLE_ROW_LIMIT = 10
-        vet_db_connection = create_engine(f'sqlite:///{DB_PATH}').connect()
 
         pandas_SQL_query = f'SELECT household.pk, household.address, household.owner, city.name FROM household INNER JOIN city ON household.belongs_to_city = city.pk WHERE city.pk = {self.cityTableWidget.item(self.cityTableWidget.currentRow(), 0).text()}'
 
@@ -67,9 +76,8 @@ class Ui_Form(object):
                 self.householdTableWidget.setItem(row_num, col_num,
                                                   QTableWidgetItem(data_for_table.iloc[row_num, col_num]))
     def refresh_table(self):
-        DB_PATH = 'MainDatabaseVet'  # vremennoe reshenie
         TABLE_ROW_LIMIT = 10
-        vet_db_connection = create_engine(f'sqlite:///{DB_PATH}').connect()
+        
         #-----------------settlements_table------------------------
         data_for_table = pd.read_sql(text(f'SELECT pk,name FROM settlement'), vet_db_connection)
         self.settlementTableWidget.setColumnCount(2)
@@ -138,7 +146,7 @@ class Ui_Form(object):
         self.settlementTableWidget.setGeometry(QRect(20, 40, 231, 471))
         self.settlementTableWidget.itemClicked.connect(lambda: self.fill_cities_table())
 
-        self.createHouseholdReport = QPushButton(Form, clicked=lambda: ui_report_creation.Ui_Form.create_report(self))
+        self.createHouseholdReport = QPushButton(Form, clicked=lambda: ui_report_creation.Ui_Form().create_report(self.selected_items()))
         self.createHouseholdReport.setObjectName(u"createHouseholdReport")
         self.createHouseholdReport.setGeometry(QRect(450, 530, 91, 31))
 
