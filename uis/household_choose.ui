@@ -13,32 +13,6 @@
   <property name="windowTitle">
    <string>Form</string>
   </property>
-  <widget class="QPushButton" name="choosePushButton">
-   <property name="geometry">
-    <rect>
-     <x>30</x>
-     <y>530</y>
-     <width>91</width>
-     <height>31</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string>ВЫБОР</string>
-   </property>
-  </widget>
-  <widget class="QPushButton" name="closePushButton">
-   <property name="geometry">
-    <rect>
-     <x>900</x>
-     <y>530</y>
-     <width>91</width>
-     <height>31</height>
-    </rect>
-   </property>
-   <property name="text">
-    <string>НАЗАД</string>
-   </property>
-  </widget>
   <widget class="QTableWidget" name="householdTableWidget">
    <property name="geometry">
     <rect>
@@ -50,12 +24,12 @@
    </property>
    <column>
     <property name="text">
-     <string>Новый столбец</string>
+     <string>ПК</string>
     </property>
    </column>
    <column>
     <property name="text">
-     <string>ПК</string>
+     <string>Адрес</string>
     </property>
    </column>
    <column>
@@ -85,7 +59,7 @@
    </column>
    <column>
     <property name="text">
-     <string>Новый столбец</string>
+     <string>Город</string>
     </property>
    </column>
    <column>
@@ -166,6 +140,19 @@
    </property>
    <property name="text">
     <string>Поселение</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="pushButton">
+   <property name="geometry">
+    <rect>
+     <x>30</x>
+     <y>530</y>
+     <width>181</width>
+     <height>31</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Редактировать выбранное</string>
    </property>
   </widget>
  </widget>
