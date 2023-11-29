@@ -26,6 +26,7 @@ class Ui_Form(object):
         self.pk = pk
         self.name = name
         self.belongs_to_settlement = belongs_to_settlement
+        self.pidor=0
 
     def add_new_city_to_db(self, name, belongs_to_settlement):
         DB_PATH = 'MainDatabaseVet'  # bezvremennoe reshenie
@@ -110,6 +111,7 @@ class Ui_Form(object):
 
         self.formLayout.setWidget(7, QFormLayout.FieldRole, self.NewCityPushButton)
 
+        # self.selectSettlementTableWidget.selectRow()
 
         self.retranslateUi(Form)
         DB_PATH = 'MainDatabaseVet'
@@ -125,6 +127,14 @@ class Ui_Form(object):
 
         QMetaObject.connectSlotsByName(Form)
     # setupUi
+        rowcount = self.selectSettlementTableWidget.rowCount()
+
+        for i in range(0, rowcount):
+
+            if (self.selectSettlementTableWidget.item(i, 0).text() == self.belongs_to_settlement):
+
+                self.pidor = i
+        self.selectSettlementTableWidget.selectRow(self.pidor)
 
     def retranslateUi(self, Form):
         Form.setWindowTitle(QCoreApplication.translate("Form", u"\u0420\u0435\u0434\u0430\u043a\u0442\u0438\u0440\u043e\u0432\u0430\u043d\u0438\u0435 \u0433\u043e\u0440\u043e\u0434\u0430", None))
