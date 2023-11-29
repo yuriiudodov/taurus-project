@@ -104,7 +104,7 @@ class Ui_Form(object):
         self.choosePushButton = QPushButton(Form, clicked=lambda: self.open_report_creation_rus())
         self.choosePushButton.setObjectName(u"choosePushButton")
         self.choosePushButton.setGeometry(QRect(30, 530, 91, 31))
-        self.closePushButton = QPushButton(Form)
+        self.closePushButton = QPushButton(Form, clicked=lambda: print("close window"))
         self.closePushButton.setObjectName(u"closePushButton")
         self.closePushButton.setGeometry(QRect(900, 530, 91, 31))
         self.householdTableWidget = QTableWidget(Form)

@@ -28,7 +28,8 @@ class Ui_Dialog(object):
     def set_edit_method(self, editmethod):
         self.selected_table=editmethod
 
-
+    def current_household(self):
+        return self.householdTableWidget.item(self.householdTableWidget.currentRow(),0)
 
     def edit_button_pressed(self):
         if(self.selected_table==0):

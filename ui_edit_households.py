@@ -20,14 +20,28 @@ from PySide6.QtWidgets import (QApplication, QGridLayout, QHeaderView, QLabel,
     QTableWidgetItem, QWidget)
 from sqlalchemy import create_engine, text
 
+import ui_dialog_open
+
 
 class Ui_Form(object):
+    #def __init__(self):
+    DB_PATH = 'MainDatabaseVet'  # bezvremennoe reshenie
+    TABLE_ROW_LIMIT = 10
+    vet_db_connection = create_engine(f'sqlite:///{DB_PATH}').connect()
+    def write_household_to_db(self, pk_prev):
+        owner = self.lineEdit.text()
+        address = self.lineEdit.text()
+        city_pk = self.cityTableWidget.item(self.cityTableWidget.currentRow(), 0).text()
+        pandas_SQL_query = f"UPDATE household (owner={owner},address={address},belongs_to_city={city_pk}) WHERE pk={pk_prev}"
+        pd.read_sql(text(pandas_SQL_query), self.vet_db_connection).astype(str)
 
-    def write_household_to_db(self):
-        print("ne sdelano")
 
-    def add_household_to_db(self):
-        print("ne sdelano1")#cu
+    def add_household_to_db(self, ):
+        owner = self.lineEdit.text()
+        address = self.lineEdit.text()
+        city_pk = self.cityTableWidget.item(self.cityTableWidget.currentRow(), 0).text()
+        pandas_SQL_query = "INSERT INTO household (owner,address,belongs_to_city) VALUES (" + owner + "," + address + "," + city_pk + ")" + "WHERE pk ="
+        pd.read_sql(text(pandas_SQL_query), self.vet_db_connection).astype(str)
 
     def fill_cities_table(self):
         # loads the table
@@ -126,7 +140,7 @@ class Ui_Form(object):
 
         self.gridLayout.addWidget(self.label_6, 0, 0, 1, 3)
 
-        self.saveButton = QPushButton(self.layoutWidget, clicked = lambda: self.write_household_to_db())
+        self.saveButton = QPushButton(self.layoutWidget, clicked = lambda: self.write_household_to_db(ui_dialog_open.Ui_Dialog.current_household()))
         self.saveButton.setObjectName(u"saveButton")
         self.saveButton.setMinimumSize(QSize(0, 50))
 
