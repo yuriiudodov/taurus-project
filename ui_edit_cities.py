@@ -26,7 +26,7 @@ class Ui_Form(object):
         self.pk = pk
         self.name = name
         self.belongs_to_settlement = belongs_to_settlement
-        self.pidor=0
+        self.pidor=0# штука чтобы выбирать строчку в табличке поселений в форме редачки города внизу где то
 
     def add_new_city_to_db(self, name, belongs_to_settlement):
         DB_PATH = 'MainDatabaseVet'  # bezvremennoe reshenie
