@@ -95,7 +95,10 @@ class Ui_Form(object):
         self.selectSettlementTableWidget.setHorizontalHeaderItem(1, __qtablewidgetitem1)
         self.selectSettlementTableWidget.setObjectName(u"selectSettlementTableWidget")
 
+
         self.formLayout.setWidget(4, QFormLayout.FieldRole, self.selectSettlementTableWidget)
+
+        #self.selectSettlementTableWidget.selectRow()
 
         self.saveCityPushButton = QPushButton(Form, clicked = lambda: self.edit_city_to_db(self.pk,self.cityNamelineEdit.text(),self.selectSettlementTableWidget.item(self.selectSettlementTableWidget.currentRow(), 0).text()) )
         self.saveCityPushButton.setObjectName(u"saveCityPushButton")
