@@ -54,7 +54,7 @@ class Ui_Dialog(object):
     def open_city_edit(self):  # opens hyety nesysvetnyu
         self.window = QDialog()
         self.ui = ui_edit_cities.Ui_Form()
-        ui_edit_cities.Ui_Form.transfer_city_data(ui_edit_cities.Ui_Form,self.cityTableWidget.item(self.cityTableWidget.currentRow(),0).text(),self.cityTableWidget.item(self.cityTableWidget.currentRow(),1).text(), self.cityTableWidget.item(self.cityTableWidget.currentRow(),2).text())
+        ui_edit_cities.Ui_Form.transfer_city_data(ui_edit_cities.Ui_Form,self.cityTableWidget.item(self.cityTableWidget.currentRow(),0).text(),self.cityTableWidget.item(self.cityTableWidget.currentRow(),1).text(), self.settlementTableWidget.item(self.settlementTableWidget.currentRow(),0).text())
         self.ui.setupUi(self.window)
         self.window.show()
 

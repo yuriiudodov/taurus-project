@@ -34,13 +34,14 @@ class Ui_Form(object):
         VetDbConnnection.open()
         VetTableQuery = QSqlQuery()
         VetTableQuery.prepare("""
-               INSERT INTO settlement (name,belongs_to_settlement) VALUES (:name, :belongs_to_settlement)
+               INSERT INTO city (name,belongs_to_settlement) VALUES (:name, :belongs_to_settlement)
                """)
         VetTableQuery.bindValue(":name", name)
         VetTableQuery.bindValue(":belongs_to_settlement", belongs_to_settlement)
         VetTableQuery.exec()
         VetDbConnnection.close()
-        print("need to update tablewidgets in uidialogogpen")
+
+        print(name, belongs_to_settlement, "что происходит при добавлении")
 
     def edit_city_to_db(self, pk, name, belongs_to_settlement):
         DB_PATH = 'MainDatabaseVet'  # bezvremennoe reshenie
@@ -49,14 +50,14 @@ class Ui_Form(object):
         VetDbConnnection.open()
         VetTableQuery = QSqlQuery()
         VetTableQuery.prepare("""
-                  UPDATE settlement SET name=:name,belongs_to_settlement=:belongs_to_settlement WHERE pk=:pk
+                  UPDATE city SET name=:name,belongs_to_settlement=:belongs_to_settlement WHERE pk=:pk
                   """)
         VetTableQuery.bindValue(":name", name)
         VetTableQuery.bindValue(":belongs_to_settlement", belongs_to_settlement)
         VetTableQuery.bindValue(":pk", pk)
         VetTableQuery.exec()
         VetDbConnnection.close()
-        print("need to update tablewidgets in uidialogogpen")
+        print(pk, name, belongs_to_settlement, "что происходит при увше")
 
     def setupUi(self, Form):
         if not Form.objectName():
@@ -96,7 +97,7 @@ class Ui_Form(object):
 
         self.formLayout.setWidget(4, QFormLayout.FieldRole, self.selectSettlementTableWidget)
 
-        self.saveCityPushButton = QPushButton(Form, clicked = lambda: self.edit_city_to_db(self.pk,self.cityNamelineEdit.text(), self.belongs_to_settlement) )
+        self.saveCityPushButton = QPushButton(Form, clicked = lambda: self.edit_city_to_db(self.pk,self.cityNamelineEdit.text(),self.selectSettlementTableWidget.item(self.selectSettlementTableWidget.currentRow(), 0).text()) )
         self.saveCityPushButton.setObjectName(u"saveCityPushButton")
 
         self.formLayout.setWidget(6, QFormLayout.FieldRole, self.saveCityPushButton)
