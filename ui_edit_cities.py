@@ -22,6 +22,42 @@ from PySide6.QtWidgets import (QApplication, QCheckBox, QDialog, QHeaderView,
 from sqlalchemy import create_engine, text
 import pandas as pd
 class Ui_Form(object):
+    def transfer_city_data(self, pk, name, belongs_to_settlement):
+        self.pk = pk
+        self.name = name
+        self.belongs_to_settlement = belongs_to_settlement
+
+    def add_new_city_to_db(self, name, belongs_to_settlement):
+        DB_PATH = 'MainDatabaseVet'  # bezvremennoe reshenie
+        VetDbConnnection = QSqlDatabase.addDatabase("QSQLITE")
+        VetDbConnnection.setDatabaseName(DB_PATH)
+        VetDbConnnection.open()
+        VetTableQuery = QSqlQuery()
+        VetTableQuery.prepare("""
+               INSERT INTO settlement (name,belongs_to_settlement) VALUES (:name, :belongs_to_settlement)
+               """)
+        VetTableQuery.bindValue(":name", name)
+        VetTableQuery.bindValue(":belongs_to_settlement", belongs_to_settlement)
+        VetTableQuery.exec()
+        VetDbConnnection.close()
+        print("need to update tablewidgets in uidialogogpen")
+
+    def edit_city_to_db(self, pk, name, belongs_to_settlement):
+        DB_PATH = 'MainDatabaseVet'  # bezvremennoe reshenie
+        VetDbConnnection = QSqlDatabase.addDatabase("QSQLITE")
+        VetDbConnnection.setDatabaseName(DB_PATH)
+        VetDbConnnection.open()
+        VetTableQuery = QSqlQuery()
+        VetTableQuery.prepare("""
+                  UPDATE settlement SET name=:name,belongs_to_settlement=:belongs_to_settlement WHERE pk=:pk
+                  """)
+        VetTableQuery.bindValue(":name", name)
+        VetTableQuery.bindValue(":belongs_to_settlement", belongs_to_settlement)
+        VetTableQuery.bindValue(":pk", pk)
+        VetTableQuery.exec()
+        VetDbConnnection.close()
+        print("need to update tablewidgets in uidialogogpen")
+
     def setupUi(self, Form):
         if not Form.objectName():
             Form.setObjectName(u"Form")
@@ -40,6 +76,7 @@ class Ui_Form(object):
 
         self.cityNamelineEdit = QLineEdit(Form)
         self.cityNamelineEdit.setObjectName(u"cityNamelineEdit")
+        self.cityNamelineEdit.setText(self.name)
 
         self.formLayout.setWidget(2, QFormLayout.FieldRole, self.cityNamelineEdit)
 
@@ -59,12 +96,12 @@ class Ui_Form(object):
 
         self.formLayout.setWidget(4, QFormLayout.FieldRole, self.selectSettlementTableWidget)
 
-        self.saveCityPushButton = QPushButton(Form)
+        self.saveCityPushButton = QPushButton(Form, clicked = lambda: self.edit_city_to_db(self.pk,self.cityNamelineEdit.text(), self.belongs_to_settlement) )
         self.saveCityPushButton.setObjectName(u"saveCityPushButton")
 
         self.formLayout.setWidget(6, QFormLayout.FieldRole, self.saveCityPushButton)
 
-        self.NewCityPushButton = QPushButton(Form)
+        self.NewCityPushButton = QPushButton(Form, clicked = lambda: self.add_new_city_to_db(self.cityNamelineEdit.text(),self.selectSettlementTableWidget.item(self.selectSettlementTableWidget.currentRow(), 0).text()))
         self.NewCityPushButton.setObjectName(u"NewCityPushButton")
 
         self.formLayout.setWidget(7, QFormLayout.FieldRole, self.NewCityPushButton)

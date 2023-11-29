@@ -23,6 +23,13 @@ import ui_edit_settlements
 import ui_edit_cities
 import ui_edit_households
 
+class transfer_data:
+    def __init__(self, in_pk, in_name, in_settlement):
+        self.pk=in_pk
+        self.name=in_name
+        self.settlement=in_settlement
+
+
 class Ui_Dialog(object):
     selected_table=0
     def set_edit_method(self, editmethod):
@@ -47,6 +54,7 @@ class Ui_Dialog(object):
     def open_city_edit(self):  # opens hyety nesysvetnyu
         self.window = QDialog()
         self.ui = ui_edit_cities.Ui_Form()
+        ui_edit_cities.Ui_Form.transfer_city_data(ui_edit_cities.Ui_Form,self.cityTableWidget.item(self.cityTableWidget.currentRow(),0).text(),self.cityTableWidget.item(self.cityTableWidget.currentRow(),1).text(), self.cityTableWidget.item(self.cityTableWidget.currentRow(),2).text())
         self.ui.setupUi(self.window)
         self.window.show()
 
