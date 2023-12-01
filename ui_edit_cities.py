@@ -21,6 +21,7 @@ from PySide6.QtWidgets import (QApplication, QCheckBox, QDialog, QHeaderView,
                                QTableWidget, QTableWidgetItem, QWidget, QGridLayout, QFormLayout)
 from sqlalchemy import create_engine, text
 import pandas as pd
+import settings
 class Ui_Form(object):
     def transfer_city_data(self, pk, name, belongs_to_settlement):
         self.pk = pk
@@ -29,7 +30,7 @@ class Ui_Form(object):
         self.pidor=0# штука чтобы выбирать строчку в табличке поселений в форме редачки города внизу где то
 
     def add_new_city_to_db(self, name, belongs_to_settlement):
-        DB_PATH = 'MainDatabaseVet'  # bezvremennoe reshenie
+        DB_PATH = settings.DB_PATH  # bezvremennoe reshenie
         VetDbConnnection = QSqlDatabase.addDatabase("QSQLITE")
         VetDbConnnection.setDatabaseName(DB_PATH)
         VetDbConnnection.open()
@@ -45,7 +46,7 @@ class Ui_Form(object):
         print(name, belongs_to_settlement, "что происходит при добавлении")
 
     def edit_city_to_db(self, pk, name, belongs_to_settlement):
-        DB_PATH = 'MainDatabaseVet'  # bezvremennoe reshenie
+        DB_PATH = settings.DB_PATH  # bezvremennoe reshenie
         VetDbConnnection = QSqlDatabase.addDatabase("QSQLITE")
         VetDbConnnection.setDatabaseName(DB_PATH)
         VetDbConnnection.open()
@@ -114,7 +115,7 @@ class Ui_Form(object):
         # self.selectSettlementTableWidget.selectRow()
 
         self.retranslateUi(Form)
-        DB_PATH = 'MainDatabaseVet'
+        DB_PATH = settings.DB_PATH
         vet_db_connection = create_engine(f'sqlite:///{DB_PATH}').connect()
         data_for_table = pd.read_sql(text(f'SELECT pk,name FROM settlement'), vet_db_connection).astype(str)
         self.selectSettlementTableWidget.setColumnCount(2)

@@ -22,7 +22,7 @@ from PySide6.QtWidgets import (QApplication, QLabel, QMainWindow, QMenu,
 
 import ui_dialog_open #открыть новое окно из файла интерфейса
 import ui_documents_choose_household
-
+import settings
 def open_households_rus(self):  # RUS open households window
     self.window = QDialog()
     self.ui = ui_documents_choose_household.Ui_Dialog()
@@ -62,6 +62,9 @@ class Ui_MainWindow(object):
         self.ui = ui_dialog_open.Ui_Dialog()
         self.ui.setupUi(self.window)
         self.window.show()
+
+    def open_settings_window(self):
+        print("nety")
     def setupUi(self, MainWindow):
         if not MainWindow.objectName():
             MainWindow.setObjectName(u"MainWindow")
@@ -111,12 +114,15 @@ class Ui_MainWindow(object):
         self.menu_1.setObjectName(u"menu_1")
         self.menu = QMenu(self.menubar)
         self.menu.setObjectName(u"menu")
+        self.menu_settings = QMenu(self.menubar)
+        self.menu_settings.setObjectName(u"menu")
         MainWindow.setMenuBar(self.menubar)
         self.statusbar = QStatusBar(MainWindow)
         self.statusbar.setObjectName(u"statusbar")
         MainWindow.setStatusBar(self.statusbar)
         self.menubar.addAction(self.menu_1.menuAction())
         self.menubar.addAction(self.menu.menuAction())
+        self.menubar.addAction(self.menu_settings.menuAction())
         self.menu.addAction(self.action)
 
         self.retranslateUi(MainWindow)
@@ -142,6 +148,7 @@ class Ui_MainWindow(object):
 "\u041f\u0420\u0410\u0412\u041a\u0410 \u0411\u0410\u0417\n"
 "--------------", None))
         self.menu_1.setTitle(QCoreApplication.translate("MainWindow", u"\u0413\u043b\u0430\u0432\u043d\u044b\u0439 \u044d\u043a\u0440\u0430\u043d", None))
-        self.menu.setTitle(QCoreApplication.translate("MainWindow", u"\u043f\u043e\u043c\u043e\u0449\u044c", None))
+        self.menu.setTitle("Эe")
+        self.menu_settings.setTitle("Настройки")
     # retranslateUi
 

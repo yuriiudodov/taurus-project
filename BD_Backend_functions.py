@@ -7,7 +7,7 @@ def get_data_db(self, table_name, db_connection):
     data = pd.read_sql(f'SELECT * FROM {table_name}', db_connection)
 def vet_table_widget_fill(widget,DB_PATH, column_count):
     if DB_PATH=="default":
-        DB_PATH="MainDatabaseVet"#vremennoe reshenie
+        DB_PATH=settings.DB_PATH#vremennoe reshenie
 
     TABLE_ROW_LIMIT = 10
     vet_db_connection = create_engine(f'sqlite:///{DB_PATH}').connect()

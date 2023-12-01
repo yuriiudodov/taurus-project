@@ -1,7 +1,7 @@
 import pandas as pd
 from sqlalchemy import text, create_engine
-
-DB_PATH           = 'MainDatabaseVet'  # bezvremennoe reshenie
+import settings
+DB_PATH           = settings.DB_PATH  # bezvremennoe reshenie
 vet_db_connection = create_engine(f'sqlite:///{DB_PATH}').connect()
 
 

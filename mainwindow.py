@@ -7,12 +7,12 @@ from PySide6.QtWidgets import QApplication, QMainWindow, QDialog
 # You need to run the following command to generate the ui_form.py file
 #     pyside6-uic form.ui -o ui_form.py, or
 #     pyside2-uic form.ui -o ui_form.py
-
+import settings
 from sqlalchemy import create_engine
 
 from ui_form import Ui_MainWindow
 class vet_db:
-    DB_PATH = 'MainDatabaseVet'
+    DB_PATH = settings.DB_PATH
     TABLE_ROW_LIMIT = 10
     vet_db_connection = create_engine(f'sqlite:///{DB_PATH}').connect()
 

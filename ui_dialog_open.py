@@ -22,7 +22,7 @@ from sqlalchemy import create_engine, text
 import ui_edit_settlements
 import ui_edit_cities
 import ui_edit_households
-
+import settings
 class transfer_data:
     def __init__(self, in_pk, in_name, in_settlement):
         self.pk=in_pk
@@ -66,7 +66,7 @@ class Ui_Dialog(object):
 
     def fill_cities_table(self):
         # loads the table
-        DB_PATH = 'MainDatabaseVet'  # bezvremennoe reshenie
+        DB_PATH = settings.DB_PATH  # bezvremennoe reshenie
         TABLE_ROW_LIMIT = 10
         vet_db_connection = create_engine(f'sqlite:///{DB_PATH}').connect()
         # -----------------cities_table------------------------
@@ -83,7 +83,7 @@ class Ui_Dialog(object):
 
     def fill_households_table(self):
         # loads the table
-        DB_PATH = 'MainDatabaseVet'  # bezvremennoe reshenie
+        DB_PATH = settings.DB_PATH  # bezvremennoe reshenie
         TABLE_ROW_LIMIT = 10
         vet_db_connection = create_engine(f'sqlite:///{DB_PATH}').connect()
 
@@ -102,7 +102,7 @@ class Ui_Dialog(object):
                                                   QTableWidgetItem(data_for_table.iloc[row_num, col_num]))
 
     def refresh_table(self):
-        DB_PATH = 'MainDatabaseVet'  # vremennoe reshenie
+        DB_PATH = settings.DB_PATH  # vremennoe reshenie
         TABLE_ROW_LIMIT = 10
         vet_db_connection = create_engine(f'sqlite:///{DB_PATH}').connect()
         # -----------------settlements_table------------------------
@@ -196,7 +196,7 @@ class Ui_Dialog(object):
 
         QMetaObject.connectSlotsByName(Form)
 
-        DB_PATH = 'MainDatabaseVet'  # bezvremennoe reshenie
+        DB_PATH = settings.DB_PATH  # bezvremennoe reshenie
         TABLE_ROW_LIMIT = 10
         vet_db_connection = create_engine(f'sqlite:///{DB_PATH}').connect()
         # ---------------settlements_table------------------------

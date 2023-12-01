@@ -21,11 +21,11 @@ from PySide6.QtWidgets import (QApplication, QGridLayout, QHeaderView, QLabel,
 from sqlalchemy import create_engine, text
 
 import ui_dialog_open
-
+import settings
 
 class Ui_Form(object):
     #def __init__(self):
-    DB_PATH = 'MainDatabaseVet'  # bezvremennoe reshenie
+    DB_PATH = settings.DB_PATH  # bezvremennoe reshenie
     TABLE_ROW_LIMIT = 10
     vet_db_connection = create_engine(f'sqlite:///{DB_PATH}').connect()
     def write_household_to_db(self, pk_prev):
@@ -45,7 +45,7 @@ class Ui_Form(object):
 
     def fill_cities_table(self):
         # loads the table
-        DB_PATH = 'MainDatabaseVet'  # bezvremennoe reshenie
+        DB_PATH = settings.DB_PATH  # bezvremennoe reshenie
         TABLE_ROW_LIMIT = 10
         vet_db_connection = create_engine(f'sqlite:///{DB_PATH}').connect()
         # -----------------cities_table------------------------
@@ -152,7 +152,7 @@ class Ui_Form(object):
 
         self.gridLayout.addWidget(self.writeButton, 5, 2, 1, 1)
 
-        DB_PATH = 'MainDatabaseVet'
+        DB_PATH = settings.DB_PATH
         vet_db_connection = create_engine(f'sqlite:///{DB_PATH}').connect()
         data_for_table = pd.read_sql(text(f'SELECT pk,name FROM settlement'), vet_db_connection).astype(str)
         self.settlementTableWidget.setColumnCount(2)

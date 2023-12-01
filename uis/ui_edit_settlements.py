@@ -27,7 +27,7 @@ class Ui_Dialog(object):
     def write_settlement_to_db(self, item_pk,
                                text_to_write):  # Должна редачить имя выбранного в тейблвиджете населенного пункта
         print(item_pk.text(), " ", text_to_write.text())
-        DB_PATH = 'MainDatabaseVet'  # bezvremennoe reshenie
+        DB_PATH = settings.DB_PATH  # bezvremennoe reshenie
         VetDbConnnection = QSqlDatabase.addDatabase("QSQLITE")
         VetDbConnnection.setDatabaseName(DB_PATH)
         VetDbConnnection.open()
@@ -52,7 +52,7 @@ class Ui_Dialog(object):
 
     def add_settlement_to_db(self, text_to_write):  # Должна редачить имя выбранного в тейблвиджете населенного пункта
 
-        DB_PATH = 'MainDatabaseVet'  # bezvremennoe reshenie
+        DB_PATH = settings.DB_PATH  # bezvremennoe reshenie
         VetDbConnnection = QSqlDatabase.addDatabase("QSQLITE")
         VetDbConnnection.setDatabaseName(DB_PATH)
         VetDbConnnection.open()
@@ -77,7 +77,7 @@ class Ui_Dialog(object):
 
     def delete_settlement_to_db(self, item_pk):
         print(item_pk.text(), " ")
-        DB_PATH = 'MainDatabaseVet'  # bezvremennoe reshenie
+        DB_PATH = settings.DB_PATH  # bezvremennoe reshenie
         VetDbConnnection = QSqlDatabase.addDatabase("QSQLITE")
         VetDbConnnection.setDatabaseName(DB_PATH)
         VetDbConnnection.open()
@@ -154,7 +154,7 @@ class Ui_Dialog(object):
 
         # -----------------------------------------------------------------------------------
 
-        DB_PATH = 'MainDatabaseVet'  # vremennoe reshenie
+        DB_PATH = settings.DB_PATH  # vremennoe reshenie
         TABLE_ROW_LIMIT = 10
         vet_db_connection = create_engine(f'sqlite:///{DB_PATH}').connect()
         data_for_table = pd.read_sql(text(f'SELECT pk,name FROM settlement'), vet_db_connection).astype(str)

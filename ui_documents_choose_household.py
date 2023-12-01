@@ -22,7 +22,7 @@ from IPython.display import display
 import ui_report_creation
 
 from db_utils import db_get_city_name, db_get_owner, db_get_settlement, vet_db_connection
-
+import settings
 
 class Ui_Form(object):
     def selected_items(self):
@@ -166,7 +166,7 @@ class Ui_Form(object):
         self.label_5.setFont(font)
 
         # loads the table
-        DB_PATH = 'MainDatabaseVet'  # bezvremennoe reshenie
+        DB_PATH = settings.DB_PATH  # bezvremennoe reshenie
         TABLE_ROW_LIMIT = 10
         vet_db_connection = create_engine(f'sqlite:///{DB_PATH}').connect()
         # ---------------settlements_table------------------------

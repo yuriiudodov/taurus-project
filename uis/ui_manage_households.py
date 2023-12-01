@@ -57,7 +57,7 @@ class Ui_Dialog(object):
         self.retranslateUi(Dialog)
 
         #cities table filling
-        DB_PATH = 'MainDatabaseVet'#vremennoe reshenie
+        DB_PATH = settings.DB_PATH#vremennoe reshenie
         TABLE_ROW_LIMIT = 10
         vet_db_connection = create_engine(f'sqlite:///{DB_PATH}').connect()
 

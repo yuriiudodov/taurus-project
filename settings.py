@@ -1,4 +1,4 @@
-DB_PATH             = 'MainDatabaseVet'  # bezvremennoe reshenie
+DB_PATH             = 'MainDatabaseVet'  # NAKONEC TO BLYAT YA SDELAL NORMALNEE
 EXCEL_TEMPLATE_PATH = 'template.xlsx'
 EXCEL_HEADER_ROWS   = 5
 MAIN_REPORT_PAGE    = 'Отчет'

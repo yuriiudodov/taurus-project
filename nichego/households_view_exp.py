@@ -47,7 +47,7 @@ class Table(QDialog):
  def __init__(self, parent=None):
     super(Table, self).__init__(parent)
     layout = PySide6.QtWidgets.QGridLayout()
-    self.MyTableMModel = MyTableModel("MainDatabaseVet") # pass directory in which table exists
+    self.MyTableMModel = MyTableModel(settings.DB_PATH) # pass directory in which table exists
     self.table = PySide6.QtWidgets.QTableView()
     self.table.setModel(self.MyTableModel)
     layout.addWidget(self.table)
