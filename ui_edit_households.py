@@ -23,11 +23,23 @@ from sqlalchemy import create_engine, text
 import ui_dialog_open
 import settings
 
+
+
+
 class Ui_Form(object):
+
+    def transfer_household_data(self, pk, owner, address, belongs_to_city):
+            self.pk = pk
+            self.owner = owner
+            self.address = address
+            self.belongs_to_city = belongs_to_city
+
     #def __init__(self):
     DB_PATH = settings.DB_PATH  # bezvremennoe reshenie
     TABLE_ROW_LIMIT = 10
     vet_db_connection = create_engine(f'sqlite:///{DB_PATH}').connect()
+
+
     def write_household_to_db(self, pk_prev):
         owner = self.lineEdit.text()
         address = self.lineEdit.text()
@@ -62,6 +74,7 @@ class Ui_Form(object):
 
 
     def setupUi(self, Form):
+
         if not Form.objectName():
             Form.setObjectName(u"Form")
         Form.resize(744, 721)
@@ -116,6 +129,7 @@ class Ui_Form(object):
 
         self.lineEdit_2 = QLineEdit(self.layoutWidget)
         self.lineEdit_2.setObjectName(u"lineEdit_2")
+        self.lineEdit_2.setText(self.address)
 
         self.gridLayout.addWidget(self.lineEdit_2, 1, 1, 1, 1)
 

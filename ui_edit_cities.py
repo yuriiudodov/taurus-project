@@ -115,6 +115,7 @@ class Ui_Form(object):
         # self.selectSettlementTableWidget.selectRow()
 
         self.retranslateUi(Form)
+
         DB_PATH = settings.DB_PATH
         vet_db_connection = create_engine(f'sqlite:///{DB_PATH}').connect()
         data_for_table = pd.read_sql(text(f'SELECT pk,name FROM settlement'), vet_db_connection).astype(str)

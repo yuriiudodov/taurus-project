@@ -30,6 +30,8 @@ class transfer_data:
         self.settlement=in_settlement
 
 
+
+
 class Ui_Dialog(object):
     selected_table=0
     def set_edit_method(self, editmethod):
@@ -61,6 +63,7 @@ class Ui_Dialog(object):
     def open_household_edit(self):
         self.window = QDialog()
         self.ui = ui_edit_households.Ui_Form()
+        ui_edit_households.transfer_household_data("[eq,","[eq,","[eq,","[eq,")# только начал поэтому хуй хуй хуй хуй
         self.ui.setupUi(self.window)
         self.window.show()
 
