@@ -42,15 +42,15 @@ class Ui_Form(object):
 
 
     def write_household_to_db(self, pk_prev):
-        owner = self.addressLineEdit.text()
+        owner = self.ownerLineEdit.text()
         address = self.addressLineEdit.text()
         city_pk = self.cityTableWidget.item(self.cityTableWidget.currentRow(), 0).text()
-        pandas_SQL_query = f"UPDATE household (owner={owner},address={address},belongs_to_city={city_pk}) WHERE pk={pk_prev}"
+        pandas_SQL_query = f"UPDATE household  SET (owner={owner},address={address},belongs_to_city={city_pk}) WHERE pk={pk_prev}"
         pd.read_sql(text(pandas_SQL_query), self.vet_db_connection).astype(str)
 
 
     def add_household_to_db(self, ):
-        owner = self.addressLineEdit.text()
+        owner = self.ownerLineEdit.text()
         address = self.addressLineEdit.text()
         city_pk = self.cityTableWidget.item(self.cityTableWidget.currentRow(), 0).text()
         pandas_SQL_query = "INSERT INTO household (owner,address,belongs_to_city) VALUES (" + owner + "," + address + "," + city_pk + ")" + "WHERE pk ="
@@ -157,7 +157,7 @@ class Ui_Form(object):
 
         self.gridLayout.addWidget(self.label_6, 0, 0, 1, 3)
 
-        self.saveButton = QPushButton(self.layoutWidget, clicked = lambda: self.write_household_to_db(ui_dialog_open.Ui_Dialog.current_household()))
+        self.saveButton = QPushButton(self.layoutWidget, clicked = lambda: self.write_household_to_db(self.pk))
         self.saveButton.setObjectName(u"saveButton")
         self.saveButton.setMinimumSize(QSize(0, 50))
 
