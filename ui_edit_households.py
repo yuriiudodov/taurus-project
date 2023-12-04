@@ -28,12 +28,13 @@ import settings
 
 class Ui_Form(object):
 
-    def transfer_household_data(self, pk, owner, address, belongs_to_city):
+    def transfer_household_data(self, pk, owner, address, belongs_to_city, belongs_to_settlemnent):
             self.pk = pk
             self.owner = owner
             self.address = address
             self.belongs_to_city = belongs_to_city
-
+            self.belongs_to_settlement=belongs_to_settlemnent
+            self.pidor = 0  # штука чтобы выбирать строчку в табличке поселений в форме редачки города внизу где то
     #def __init__(self):
     DB_PATH = settings.DB_PATH  # bezvremennoe reshenie
     TABLE_ROW_LIMIT = 10
@@ -167,7 +168,7 @@ class Ui_Form(object):
         self.writeButton.setMinimumSize(QSize(0, 50))
 
         self.gridLayout.addWidget(self.writeButton, 5, 2, 1, 1)
-
+        # -----------------settlements_table------------------------
         DB_PATH = settings.DB_PATH
         vet_db_connection = create_engine(f'sqlite:///{DB_PATH}').connect()
         data_for_table = pd.read_sql(text(f'SELECT pk,name FROM settlement'), vet_db_connection).astype(str)
@@ -179,10 +180,41 @@ class Ui_Form(object):
                 self.settlementTableWidget.setItem(row_num, col_num,
                                                    QTableWidgetItem(data_for_table.iloc[row_num, col_num]))
 
+        # -----------------cities_table------------------------
+        pandas_SQL_query = f'SELECT city.pk, city.name, settlement.name FROM settlement INNER JOIN city ON city.belongs_to_settlement = settlement.pk WHERE settlement.pk = {self.belongs_to_settlement}'
+
+        data_for_table = pd.read_sql(text(pandas_SQL_query), vet_db_connection).astype(str)
+        self.cityTableWidget.setColumnCount(3)
+        self.cityTableWidget.setRowCount(len(data_for_table))
+
+        for col_num in range(len(data_for_table.columns)):
+            for row_num in range(0, len(data_for_table)):
+                self.cityTableWidget.setItem(row_num, col_num,
+                                                QTableWidgetItem(data_for_table.iloc[row_num, col_num]))
+
         self.retranslateUi(Form)
 
         QMetaObject.connectSlotsByName(Form)
     # setupUi
+
+        rowcount = self.cityTableWidget.rowCount()
+
+        for i in range(0, rowcount):
+
+            if (self.cityTableWidget.item(i, 0).text() == self.belongs_to_city):
+                self.pidor = i
+        self.cityTableWidget.selectRow(self.pidor)
+
+        pidor=0
+
+        rowcount = self.settlementTableWidget.rowCount()
+
+        for i in range(0, rowcount):
+
+            if (self.settlementTableWidget.item(i, 0).text() == self.belongs_to_settlement):
+                self.pidor = i
+        self.settlementTableWidget.selectRow(self.pidor)
+
 
     def retranslateUi(self, Form):
         Form.setWindowTitle(QCoreApplication.translate("Form", u"Form", None))

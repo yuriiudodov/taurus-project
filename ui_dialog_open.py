@@ -64,7 +64,7 @@ class Ui_Dialog(object):
     def open_household_edit(self):
         self.window = QDialog()
         self.ui = ui_edit_households.Ui_Form()
-        ui_edit_households.Ui_Form.transfer_household_data(ui_edit_households.Ui_Form, self.householdTableWidget.item(self.householdTableWidget.currentRow(),0).text(), self.householdTableWidget.item(self.householdTableWidget.currentRow(),2).text(),self.householdTableWidget.item(self.householdTableWidget.currentRow(),1).text(), self.cityTableWidget.item(self.cityTableWidget.currentRow(),0).text())# только начал поэтому хуй хуй хуй хуй
+        ui_edit_households.Ui_Form.transfer_household_data(ui_edit_households.Ui_Form, self.householdTableWidget.item(self.householdTableWidget.currentRow(),0).text(), self.householdTableWidget.item(self.householdTableWidget.currentRow(),2).text(),self.householdTableWidget.item(self.householdTableWidget.currentRow(),1).text(), self.cityTableWidget.item(self.cityTableWidget.currentRow(),0).text(),self.settlementTableWidget.item(self.settlementTableWidget.currentRow(),0).text())# только начал поэтому хуй хуй хуй хуй
         self.ui.setupUi(self.window)
         self.window.show()
 
