@@ -32,7 +32,8 @@ import ui_animal_add
 import ui_animal_edit
 from openpyxl.styles import Alignment
 from settings import DB_PATH, EXCEL_TEMPLATE_PATH, MAIN_REPORT_PAGE, EXCEL_HEADER_ROWS, SAVE_DIR, WRAP_COLUMNS, NAMES_TXT_PATH
-from db_utils import db_get_city_name, db_get_owner, db_get_settlement
+from db_utils import db_get_city_name, db_get_owner, db_get_settlement, vet_db_connection
+
 
 class Ui_Form(object):
     def __init__(self):
@@ -184,13 +185,24 @@ class Ui_Form(object):
         self.documentDeleteAnimal = QPushButton(Form, clicked=lambda:self.delete_animal())
         self.documentDeleteAnimal.setObjectName(u"documentDeleteAnimal")
         self.documentDeleteAnimal.setGeometry(QRect(340, 470, 141, 41))
-        self.documentAddAnimal_2 = QPushButton(Form, clicked=lambda:self.open_animals_edit())#i forgot to rename it, it is actually edit button
+        self.documentAddAnimal_2 = QPushButton(Form, clicked=lambda:self.open_animals_edit())#i forgor to rename it, it is actually edit button
         self.documentAddAnimal_2.setObjectName(u"documentAddAnimal_2")
         self.documentAddAnimal_2.setGeometry(QRect(170, 470, 161, 41))
 
         self.placeForCity.setText(QCoreApplication.translate("Form", city, None))
         self.placeForAddress.setText(QCoreApplication.translate("Form", address, None))
         self.placeForOwner.setText(QCoreApplication.translate("Form", owner, None))
+        # -----------------animals_table------------------------
+        pandas_SQL_query = f'SELECT specie, count, is_conditions_good, data_from_administration, previous_count FROM report_entries WHERE household ='+"'"+household_pk+"'"
+
+        data_for_table = pd.read_sql(text(pandas_SQL_query), vet_db_connection).astype(str)
+        self.tableWidget.setColumnCount(5)
+        self.tableWidget.setRowCount(len(data_for_table))
+
+        for col_num in range(len(data_for_table.columns)):
+            for row_num in range(0, len(data_for_table)):
+                self.tableWidget.setItem(row_num, col_num,
+                                             QTableWidgetItem(data_for_table.iloc[row_num, col_num]))
 
         self.retranslateUi(Form)
 
