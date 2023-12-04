@@ -41,16 +41,16 @@ class Ui_Form(object):
 
 
     def write_household_to_db(self, pk_prev):
-        owner = self.lineEdit.text()
-        address = self.lineEdit.text()
+        owner = self.addressLineEdit.text()
+        address = self.addressLineEdit.text()
         city_pk = self.cityTableWidget.item(self.cityTableWidget.currentRow(), 0).text()
         pandas_SQL_query = f"UPDATE household (owner={owner},address={address},belongs_to_city={city_pk}) WHERE pk={pk_prev}"
         pd.read_sql(text(pandas_SQL_query), self.vet_db_connection).astype(str)
 
 
     def add_household_to_db(self, ):
-        owner = self.lineEdit.text()
-        address = self.lineEdit.text()
+        owner = self.addressLineEdit.text()
+        address = self.addressLineEdit.text()
         city_pk = self.cityTableWidget.item(self.cityTableWidget.currentRow(), 0).text()
         pandas_SQL_query = "INSERT INTO household (owner,address,belongs_to_city) VALUES (" + owner + "," + address + "," + city_pk + ")" + "WHERE pk ="
         pd.read_sql(text(pandas_SQL_query), self.vet_db_connection).astype(str)
@@ -127,11 +127,12 @@ class Ui_Form(object):
 
         self.gridLayout.addWidget(self.label, 1, 0, 1, 1)
 
-        self.lineEdit_2 = QLineEdit(self.layoutWidget)
-        self.lineEdit_2.setObjectName(u"lineEdit_2")
-        self.lineEdit_2.setText(self.address)
+        self.ownerLineEdit = QLineEdit(self.layoutWidget)
+        self.ownerLineEdit.setObjectName(u"lineEdit_2")
+        print(self.owner)
+        self.ownerLineEdit.setText(self.owner)
 
-        self.gridLayout.addWidget(self.lineEdit_2, 1, 1, 1, 1)
+        self.gridLayout.addWidget(self.ownerLineEdit, 1, 1, 1, 1)
 
         self.label_4 = QLabel(self.layoutWidget)
         self.label_4.setObjectName(u"label_4")
@@ -139,10 +140,11 @@ class Ui_Form(object):
 
         self.gridLayout.addWidget(self.label_4, 3, 2, 1, 1)
 
-        self.lineEdit = QLineEdit(self.layoutWidget)
-        self.lineEdit.setObjectName(u"lineEdit")
+        self.addressLineEdit = QLineEdit(self.layoutWidget)
+        self.addressLineEdit.setObjectName(u"lineEdit")
+        self.addressLineEdit.setText(self.address)
 
-        self.gridLayout.addWidget(self.lineEdit, 2, 1, 1, 2)
+        self.gridLayout.addWidget(self.addressLineEdit, 2, 1, 1, 2)
 
         self.label_3 = QLabel(self.layoutWidget)
         self.label_3.setObjectName(u"label_3")

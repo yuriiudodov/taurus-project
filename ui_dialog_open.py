@@ -19,6 +19,7 @@ from PySide6.QtWidgets import (QApplication, QDialog, QHeaderView, QLabel,
     QWidget)
 from sqlalchemy import create_engine, text
 
+import db_utils
 import ui_edit_settlements
 import ui_edit_cities
 import ui_edit_households
@@ -63,7 +64,7 @@ class Ui_Dialog(object):
     def open_household_edit(self):
         self.window = QDialog()
         self.ui = ui_edit_households.Ui_Form()
-        ui_edit_households.transfer_household_data("[eq,","[eq,","[eq,","[eq,")# только начал поэтому хуй хуй хуй хуй
+        ui_edit_households.Ui_Form.transfer_household_data(ui_edit_households.Ui_Form, self.householdTableWidget.item(self.householdTableWidget.currentRow(),0).text(), self.householdTableWidget.item(self.householdTableWidget.currentRow(),2).text(),self.householdTableWidget.item(self.householdTableWidget.currentRow(),1).text(), self.cityTableWidget.item(self.cityTableWidget.currentRow(),0).text())# только начал поэтому хуй хуй хуй хуй
         self.ui.setupUi(self.window)
         self.window.show()
 
@@ -72,7 +73,7 @@ class Ui_Dialog(object):
         DB_PATH = settings.DB_PATH  # bezvremennoe reshenie
         TABLE_ROW_LIMIT = 10
         vet_db_connection = create_engine(f'sqlite:///{DB_PATH}').connect()
-        # -----------------cities_table------------------------
+        # -----------------cities_table------------------------"
         pandas_SQL_query = f'SELECT city.pk, city.name, settlement.name FROM settlement INNER JOIN city ON city.belongs_to_settlement = settlement.pk WHERE settlement.pk = {self.settlementTableWidget.item(self.settlementTableWidget.currentRow(), 0).text()}'
 
         data_for_table = pd.read_sql(text(pandas_SQL_query), vet_db_connection).astype(str)
