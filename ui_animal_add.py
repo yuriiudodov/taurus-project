@@ -39,7 +39,7 @@ class Ui_Form(object):
         VetTableQuery.bindValue(":household", self.household_pk)
         VetTableQuery.bindValue(":count", self.countFactLineEdit.text())
         VetTableQuery.bindValue(":data_from_administration", self.countAdmLineEdit.text())
-        VetTableQuery.bindValue(":is_conditions_good", self.containmentConditionsLineEdit.text())
+        VetTableQuery.bindValue(":is_conditions_good", self.containmentConditionsLineEdit.toPlainText())
         VetTableQuery.exec()
         VetDbConnnection.close()
     def setupUi(self, Form):
@@ -77,7 +77,7 @@ class Ui_Form(object):
 
         self.gridLayout.addWidget(self.countAdmLineEdit, 3, 0, 1, 1)
 
-        self.confirmButton = QPushButton(Form)
+        self.confirmButton = QPushButton(Form, clicked = lambda:self.add_animal_to_household())
         self.confirmButton.setObjectName(u"confirmButton")
         sizePolicy1 = QSizePolicy(QSizePolicy.Minimum, QSizePolicy.Expanding)
         sizePolicy1.setHorizontalStretch(0)
