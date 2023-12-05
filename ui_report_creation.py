@@ -193,7 +193,7 @@ class Ui_Form(object):
         self.placeForAddress.setText(QCoreApplication.translate("Form", address, None))
         self.placeForOwner.setText(QCoreApplication.translate("Form", owner, None))
         # -----------------animals_table------------------------
-        pandas_SQL_query = f'SELECT specie, count, is_conditions_good, data_from_administration FROM report_entries WHERE household ='+"'"+household_pk+"'"
+        pandas_SQL_query = f'SELECT specie, count, is_conditions_good, data_from_administration FROM report_entries WHERE household ={household_pk}'
 
         data_for_table = pd.read_sql(text(pandas_SQL_query), vet_db_connection).astype(str)
         self.tableWidget.setColumnCount(5)
