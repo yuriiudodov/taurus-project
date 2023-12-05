@@ -33,14 +33,16 @@ class Ui_Form(object):
         VetDbConnnection.open()
         VetTableQuery = QSqlQuery()
         VetTableQuery.prepare("""
-                       INSERT INTO report_entries (household, specie,count, data_from_administration, prevous_count, is_conditions_good) VALUES (:household, :specie,:count, :data_from_administration, :prevous_count, :is_conditions_good)
+                       INSERT INTO report_entries (household, specie,count, data_from_administration, prevous_count, is_conditions_good, belongs_to_report) VALUES (:household, :specie,:count, :data_from_administration, :prevous_count, :is_conditions_good, 1)
                        """)
         VetTableQuery.bindValue(":specie",self.specieLineEdit.text())
         VetTableQuery.bindValue(":household", self.household_pk)
         VetTableQuery.bindValue(":count", self.countFactLineEdit.text())
+        VetTableQuery.bindValue(":prevous_count", self.countPrevLineEdit.text())
         VetTableQuery.bindValue(":data_from_administration", self.countAdmLineEdit.text())
         VetTableQuery.bindValue(":is_conditions_good", self.containmentConditionsLineEdit.toPlainText())
-        VetTableQuery.exec()
+        ass=VetTableQuery.exec()
+        print("USPEH BLYAT&",ass)
         VetDbConnnection.close()
     def setupUi(self, Form):
         if not Form.objectName():
