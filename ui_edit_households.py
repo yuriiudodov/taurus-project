@@ -45,7 +45,7 @@ class Ui_Form(object):
         owner = self.ownerLineEdit.text()
         address = self.addressLineEdit.text()
         city_pk = self.cityTableWidget.item(self.cityTableWidget.currentRow(), 0).text()
-        pandas_SQL_query = f"UPDATE household  SET (owner={owner},address={address},belongs_to_city={city_pk}) WHERE pk={pk_prev}"
+        pandas_SQL_query = f"UPDATE household  SET owner={owner},address={address},belongs_to_city={city_pk} WHERE pk={pk_prev}"
         pd.read_sql(text(pandas_SQL_query), self.vet_db_connection).astype(str)
 
 
