@@ -36,6 +36,8 @@ class Ui_Form(object):
         self.window = QWidget()
         self.ui = ui_report_creation.Ui_Form()
 
+        self.ui.transher_household_pk(self.householdTableWidget.item(self.householdTableWidget.currentRow(),0).text())
+
         household = self.selected_items()['household']
         owner     = db_get_owner(household)
         city      = db_get_city_name(self.selected_items()['city'])

@@ -36,6 +36,8 @@ from db_utils import db_get_city_name, db_get_owner, db_get_settlement, vet_db_c
 
 
 class Ui_Form(object):
+    def transher_household_pk(self,household_pk):
+        self.household_pk=household_pk
     def __init__(self):
         self.vet_db_connection = create_engine(f'sqlite:///{DB_PATH}').connect()
     def create_report(self, selected_items):
@@ -108,6 +110,8 @@ class Ui_Form(object):
         self.window = QWidget()
         self.ui = ui_animal_add.Ui_Form()
         self.ui.setupUi(self.window)
+        self.ui.transfer_animal_add_data(self.household_pk)
+        print ("В юи репорт креайшн передан пк хозяйства; ", self.household_pk)
         self.window.show()
     def open_animals_edit(self):
         self.window = QWidget()
@@ -193,7 +197,7 @@ class Ui_Form(object):
         self.placeForAddress.setText(QCoreApplication.translate("Form", address, None))
         self.placeForOwner.setText(QCoreApplication.translate("Form", owner, None))
         # -----------------animals_table------------------------
-        pandas_SQL_query = f'SELECT specie, count, is_conditions_good, data_from_administration FROM report_entries WHERE household ={household_pk}'
+        pandas_SQL_query = f'SELECT pk, specie, count, is_conditions_good, data_from_administration FROM report_entries WHERE household ={household_pk}'
 
         data_for_table = pd.read_sql(text(pandas_SQL_query), vet_db_connection).astype(str)
         self.tableWidget.setColumnCount(5)

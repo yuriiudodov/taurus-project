@@ -15,10 +15,33 @@ from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
     QFont, QFontDatabase, QGradient, QIcon,
     QImage, QKeySequence, QLinearGradient, QPainter,
     QPalette, QPixmap, QRadialGradient, QTransform)
+from PySide6.QtSql import QSqlDatabase, QSqlQuery
 from PySide6.QtWidgets import (QApplication, QGridLayout, QLabel, QLineEdit,
     QPushButton, QSizePolicy, QTextEdit, QWidget)
 
+import settings
+
+
 class Ui_Form(object):
+    def transfer_animal_add_data(self, household_pk):
+        self.household_pk=household_pk
+        print("A V ui animals add peredan pk hoziaistva:", self.household_pk)
+    def add_animal_to_household(self):
+        DB_PATH = settings.DB_PATH  # bezvremennoe reshenie
+        VetDbConnnection = QSqlDatabase.addDatabase("QSQLITE")
+        VetDbConnnection.setDatabaseName(DB_PATH)
+        VetDbConnnection.open()
+        VetTableQuery = QSqlQuery()
+        VetTableQuery.prepare("""
+                       INSERT INTO report_entries (household, specie,count, data_from_administration, prevous_count, is_conditions_good) VALUES (:household, :specie,:count, :data_from_administration, :prevous_count, :is_conditions_good)
+                       """)
+        VetTableQuery.bindValue(":specie",self.specieLineEdit.text())
+        VetTableQuery.bindValue(":household", self.household_pk)
+        VetTableQuery.bindValue(":count", self.countFactLineEdit.text())
+        VetTableQuery.bindValue(":data_from_administration", self.countAdmLineEdit.text())
+        VetTableQuery.bindValue(":is_conditions_good", self.containmentConditionsLineEdit.text())
+        VetTableQuery.exec()
+        VetDbConnnection.close()
     def setupUi(self, Form):
         if not Form.objectName():
             Form.setObjectName(u"Form")
