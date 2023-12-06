@@ -198,8 +198,9 @@ class Ui_Form(object):
         self.placeForOwner.setText(QCoreApplication.translate("Form", owner, None))
         # -----------------animals_table------------------------
         pandas_SQL_query = f'SELECT pk, specie, count, is_conditions_good, data_from_administration FROM report_entries WHERE household ={household_pk}'
-
+        print("ZAPROS NA TABLICY S ZHIVOTNIMI", pandas_SQL_query)
         data_for_table = pd.read_sql(text(pandas_SQL_query), vet_db_connection).astype(str)
+        print("ZAPROS VOZVRASHAET",data_for_table )
         self.tableWidget.setColumnCount(5)
         self.tableWidget.setRowCount(len(data_for_table))
 
