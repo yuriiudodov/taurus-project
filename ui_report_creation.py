@@ -15,6 +15,7 @@ from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
     QFont, QFontDatabase, QGradient, QIcon,
     QImage, QKeySequence, QLinearGradient, QPainter,
     QPalette, QPixmap, QRadialGradient, QTransform)
+from PySide6.QtSql import QSqlDatabase, QSqlQuery
 from PySide6.QtWidgets import (QApplication, QHeaderView, QLabel, QPushButton,
                                QSizePolicy, QTableWidget, QTableWidgetItem, QWidget, QMessageBox, QDialog)
 
@@ -28,6 +29,7 @@ from time import time, sleep
 from sqlalchemy import text, create_engine
 from openpyxl import load_workbook
 
+import settings
 import ui_animal_add
 import ui_animal_edit
 from openpyxl.styles import Alignment
@@ -105,7 +107,19 @@ class Ui_Form(object):
         
         
     def delete_animal(self):
-        print("ne ydalyaetsya")
+        DB_PATH = settings.DB_PATH  # bezvremennoe reshenie
+        VetDbConnnection = QSqlDatabase.addDatabase("QSQLITE")
+        VetDbConnnection.setDatabaseName(DB_PATH)
+        VetDbConnnection.open()
+        VetTableQuery = QSqlQuery()
+        vet_query_str="""DELETE FROM report_entries WHERE pk =""" + self.tableWidget.item(self.tableWidget.currentRow(), 0).text()
+        VetTableQuery.prepare(vet_query_str)
+
+        #VetTableQuery.bindValue(":deleted_pk", self.tableWidget.item(self.tableWidget.currentRow(), 0))
+
+        uspeh = VetTableQuery.exec()
+        print("USPEH UDALENIA BLYAT&", uspeh, VetTableQuery.lastQuery())
+        VetDbConnnection.close()
     def open_animals_add(self):
         self.window = QWidget()
         self.ui = ui_animal_add.Ui_Form()
@@ -117,6 +131,7 @@ class Ui_Form(object):
         self.window = QWidget()
         self.ui = ui_animal_edit.Ui_Form()
         self.ui.setupUi(self.window)
+        self.ui.transfer_animal_add_data(self.household_pk,self.tableWidget.item(self.tableWidget.currentRow(), 0))
         self.window.show()
 
     def setupUi(self, Form, city, address, owner, household_pk=1):

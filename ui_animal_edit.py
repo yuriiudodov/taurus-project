@@ -15,10 +15,39 @@ from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
     QFont, QFontDatabase, QGradient, QIcon,
     QImage, QKeySequence, QLinearGradient, QPainter,
     QPalette, QPixmap, QRadialGradient, QTransform)
+from PySide6.QtSql import QSqlDatabase, QSqlQuery
 from PySide6.QtWidgets import (QApplication, QGridLayout, QLabel, QLineEdit,
     QPushButton, QSizePolicy, QTextEdit, QWidget)
 
+import settings
+
+
 class Ui_Form(object):
+
+    def transfer_animal_add_data(self, household_pk, animal_pk):
+        self.household_pk = household_pk
+        self.animal_pk=animal_pk
+        print("A V ui animals add peredan pk hoziaistva:", self.household_pk)
+
+    def add_animal_to_household(self):
+        DB_PATH = settings.DB_PATH  # bezvremennoe reshenie
+        VetDbConnnection = QSqlDatabase.addDatabase("QSQLITE")
+        VetDbConnnection.setDatabaseName(DB_PATH)
+        VetDbConnnection.open()
+        VetTableQuery = QSqlQuery()
+        VetTableQuery.prepare("""
+                         UPDATE report_entries SET household=:household, specie=:specie,count=:count, data_from_administration=:data_from_administration, prevous_count=:prevous_count, is_conditions_good=:is_conditions_good WHERE pk=:pk
+                          """)
+        VetTableQuery.bindValue(":pk", self.animal_pk)
+        VetTableQuery.bindValue(":specie", self.specieLineEdit.text())
+        VetTableQuery.bindValue(":household", str(self.household_pk))
+        VetTableQuery.bindValue(":count", self.countFactLineEdit.text())
+        VetTableQuery.bindValue(":prevous_count", self.countPrevLineEdit.text())
+        VetTableQuery.bindValue(":data_from_administration", self.countAdmLineEdit.text())
+        VetTableQuery.bindValue(":is_conditions_good", self.containmentConditionsLineEdit.toPlainText())
+        uspeh = VetTableQuery.exec()
+        print("USPEH BLYAT&", uspeh)
+        VetDbConnnection.close()
     def setupUi(self, Form):
         if not Form.objectName():
             Form.setObjectName(u"Form")
