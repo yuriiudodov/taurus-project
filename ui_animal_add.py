@@ -23,8 +23,11 @@ import settings
 
 
 class Ui_Form(object):
-    def transfer_fields_data(self):
-        print("nihya")
+    def transfer_fields_data(self, animal_pk,specie, count_fact, count_adm, count_prev, containment_conditions):
+        self.animal_pk=animal_pk
+        self.specie=specie
+        self.count_fact=count_fact
+        self.count_adm=count_adm
     def transfer_animal_add_data(self, household_pk):
         self.household_pk=household_pk
         print("A V ui animals add peredan pk hoziaistva:", self.household_pk)

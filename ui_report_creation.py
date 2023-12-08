@@ -186,6 +186,8 @@ class Ui_Form(object):
         self.tableWidget.setHorizontalHeaderItem(4, __qtablewidgetitem4)
         __qtablewidgetitem5 = QTableWidgetItem()
         self.tableWidget.setHorizontalHeaderItem(5, __qtablewidgetitem5)
+
+        self.tableWidget.setHorizontalHeaderItem(2, __qtablewidgetitem4)
         self.tableWidget.setObjectName(u"tableWidget")
         self.tableWidget.setGeometry(QRect(20, 160, 701, 281))
         self.label_4 = QLabel(Form)
@@ -246,7 +248,8 @@ class Ui_Form(object):
         ___qtablewidgetitem4.setText(QCoreApplication.translate("Form", u"\u0423\u0441\u043b\u043e\u0432\u0438\u044f \n"
 "\u0441\u043e\u0434\u0435\u0440\u0436\u0430\u043d\u0438\u044f", None));
         ___qtablewidgetitem5 = self.tableWidget.horizontalHeaderItem(5)
-        #___qtablewidgetitem5.setText("hui")
+
+        #___qtablewidgetitem5.setText("hui") cho za hyinia ne robit
         self.label_4.setText(QCoreApplication.translate("Form", u"\u0416\u0438\u0432\u043e\u0442\u043d\u044b\u0435 \u0445\u043e\u0437\u044f\u0439\u0441\u0442\u0432\u0430", None))
         self.documentAddAnimal.setText(QCoreApplication.translate("Form", u"\u0414\u043e\u0431\u0430\u0432\u0438\u0442\u044c \u0416\u0438\u0432\u043e\u0442\u043d\u043e\u0435", None))
 #if QT_CONFIG(tooltip)
