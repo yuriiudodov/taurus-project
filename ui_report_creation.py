@@ -61,10 +61,11 @@ class Ui_Form(object):
                      
             '''
         ), self.vet_db_connection)
+        print(report_entries)
         # ----------------------------------------------------------------------------------дефолтные прелбразования данныхз ради некривого форматирования--------------------------------------------------------------------------------------------------------------------------
         report_entries.insert(0, 'position', report_entries['owner'].astype('category').cat.codes + 1)
         report_entries = report_entries.sort_values('owner')
-        report_entries.loc[~report_entries[['owner']].duplicated(keep='last'), ['owner', 'address', 'name', 'position']] = ''
+        report_entries.loc[report_entries[['owner']].duplicated(keep='first'), ['owner', 'address', 'name', 'position']] = ''
         report_entries['address'] = report_entries.apply(lambda x: f"{x['name']}, {x['address']}" if x['address'] else "", axis=1)
         report_entries = report_entries.drop(columns='name')
         print(report_entries)
