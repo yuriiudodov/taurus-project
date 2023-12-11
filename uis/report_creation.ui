@@ -19,7 +19,8 @@
    <string>Выпуск Отчёта</string>
   </property>
   <property name="windowIcon">
-   <iconset theme="address-book-new"/>
+   <iconset theme="address-book-new">
+    <normaloff>.</normaloff>.</iconset>
   </property>
   <widget class="QLabel" name="label">
    <property name="geometry">
@@ -145,6 +146,11 @@
    </column>
    <column>
     <property name="text">
+     <string>Вид</string>
+    </property>
+   </column>
+   <column>
+    <property name="text">
      <string>Кол-во факт.</string>
     </property>
    </column>
@@ -196,25 +202,6 @@
     <string>Добавить Животное</string>
    </property>
   </widget>
-  <widget class="QPushButton" name="createHouseholdReport">
-   <property name="geometry">
-    <rect>
-     <x>540</x>
-     <y>460</y>
-     <width>191</width>
-     <height>51</height>
-    </rect>
-   </property>
-   <property name="toolTip">
-    <string comment="Выпуск отчёта и запись в файл" extracomment="Выпуск отчёта и запись в файл">Выпуск отчёта и запись в файл</string>
-   </property>
-   <property name="toolTipDuration">
-    <number>2</number>
-   </property>
-   <property name="text">
-    <string>Выпустить бешеных пидоров</string>
-   </property>
-  </widget>
   <widget class="QPushButton" name="documentDeleteAnimal">
    <property name="geometry">
     <rect>
@@ -239,6 +226,19 @@
    </property>
    <property name="text">
     <string>Редактировать Животное</string>
+   </property>
+  </widget>
+  <widget class="QPushButton" name="documentCancelButton">
+   <property name="geometry">
+    <rect>
+     <x>560</x>
+     <y>470</y>
+     <width>141</width>
+     <height>41</height>
+    </rect>
+   </property>
+   <property name="text">
+    <string>Назад</string>
    </property>
   </widget>
  </widget>
