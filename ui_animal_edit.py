@@ -144,7 +144,7 @@ class Ui_Form(object):
 "</style></head><body style=\" font-family:'Segoe UI'; font-size:9pt; font-weight:400; font-style:normal;\">\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">\u0423\u0441\u043b\u043e\u0432\u0438\u044f \u0441\u043e\u0434\u0435\u0440\u0436\u0430\u043d\u0438\u044f...</p></body></html>", None))
         self.containmentConditionsLineEdit.setText(self.is_conditions_good)#hyi
-        self.countPrevLineEdit.setText("")
+        self.countPrevLineEdit.setText(self.count_prev)
         self.countPrevLineEdit.setPlaceholderText(QCoreApplication.translate("Form", u"\u041a\u043e\u043b-\u0432\u043e \u043f\u0440\u0435\u0434.", None))
     # retranslateUi
 

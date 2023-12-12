@@ -124,15 +124,26 @@ class Ui_Form(object):
     def open_animals_add(self):
         self.window = QWidget()
         self.ui = ui_animal_add.Ui_Form()
-        self.ui.setupUi(self.window)
         self.ui.transfer_animal_add_data(self.household_pk)
+        self.ui.setupUi(self.window)
+        
         print ("В юи репорт креайшн передан пк хозяйства; ", self.household_pk)
         self.window.show()
     def open_animals_edit(self):
         self.window = QWidget()
         self.ui = ui_animal_edit.Ui_Form()
+        print(self.tableWidget.item(self.tableWidget.currentRow(), 4).text())
+        print(type(self.tableWidget.item(self.tableWidget.currentRow(), 4)))
+        self.ui.transfer_animal_add_data(
+            self.household_pk,
+            self.tableWidget.item(self.tableWidget.currentRow(), 0).text(),
+            self.tableWidget.item(self.tableWidget.currentRow(), 1).text(),
+            self.tableWidget.item(self.tableWidget.currentRow(), 2).text(),
+            self.tableWidget.item(self.tableWidget.currentRow(), 3).text(),
+            self.tableWidget.item(self.tableWidget.currentRow(), 4).text(),
+            self.tableWidget.item(self.tableWidget.currentRow(), 5).text()
+        )
         self.ui.setupUi(self.window)
-        self.ui.transfer_animal_add_data(self.household_pk,self.tableWidget.item(self.tableWidget.currentRow(), 0),self.tableWidget.item(self.tableWidget.currentRow(), 1),self.tableWidget.item(self.tableWidget.currentRow(), 2),self.tableWidget.item(self.tableWidget.currentRow(), 3),self.tableWidget.item(self.tableWidget.currentRow(), 4),self.tableWidget.item(self.tableWidget.currentRow(), 5))
         self.window.show()
 
     def setupUi(self, Form, city, address, owner, household_pk=1):
