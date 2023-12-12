@@ -24,9 +24,14 @@ import settings
 
 class Ui_Form(object):
 
-    def transfer_animal_add_data(self, household_pk, animal_pk):
+    def transfer_animal_add_data(self, household_pk, animal_pk,specie, count_fact, count_adm, count_prev, is_conditions_good):
         self.household_pk = household_pk
         self.animal_pk=animal_pk
+        self.specie=specie
+        self.count_fact=count_fact
+        self.count_adm=count_adm
+        self.count_prev=count_prev
+        self.is_conditions_good=is_conditions_good
         print("A V ui animals add peredan pk hoziaistva:", self.household_pk)
 
     def add_animal_to_household(self):
@@ -103,11 +108,13 @@ class Ui_Form(object):
 
         self.containmentConditionsLineEdit = QTextEdit(Form)
         self.containmentConditionsLineEdit.setObjectName(u"containmentConditionsLineEdit")
+        self.containmentConditionsLineEdit.setText(self.is_conditions_good)
 
         self.gridLayout.addWidget(self.containmentConditionsLineEdit, 5, 0, 1, 2)
 
         self.countPrevLineEdit = QLineEdit(Form)
         self.countPrevLineEdit.setObjectName(u"countPrevLineEdit")
+        self.countPrevLineEdit.setText(self.count_prev)
 
         self.gridLayout.addWidget(self.countPrevLineEdit, 4, 0, 1, 1)
 
@@ -120,11 +127,11 @@ class Ui_Form(object):
     def retranslateUi(self, Form):
         Form.setWindowTitle(QCoreApplication.translate("Form", u"\u0420\u0435\u0434\u0430\u043a\u0442\u0438\u0440\u043e\u0432\u0430\u043d\u0438\u0435 \u0416\u0438\u0432\u043e\u0442\u043d\u043e\u0433\u043e", None))
         self.label.setText(QCoreApplication.translate("Form", u"\u0420\u0435\u0434\u0430\u043a\u0442\u0438\u0440\u043e\u0432\u0430\u043d\u0438\u0435 \u0416\u0438\u0432\u043e\u0442\u043d\u043e\u0433\u043e", None))
-        self.specieLineEdit.setText("")
+        self.specieLineEdit.setText(self.specie)
         self.specieLineEdit.setPlaceholderText(QCoreApplication.translate("Form", u"\u0412\u0438\u0434", None))
-        self.countFactLineEdit.setText("")
+        self.countFactLineEdit.setText(self.count_fact)
         self.countFactLineEdit.setPlaceholderText(QCoreApplication.translate("Form", u"\u041a\u043e\u043b-\u0432\u043e \u0424\u0430\u043a\u0442\u0438\u0447\u0435\u0441\u043a\u043e\u0435 ", None))
-        self.countAdmLineEdit.setText("")
+        self.countAdmLineEdit.setText(self.count_adm)
         self.countAdmLineEdit.setPlaceholderText(QCoreApplication.translate("Form", u"\u041a\u043e\u043b-\u0432\u043e \u0430\u0434\u043c.", None))
         self.confirmButton.setText(QCoreApplication.translate("Form", u"\u043f\u043e\u0434\u0442\u0432\u0435\u0440\u0434\u0438\u0442\u044c", None))
         self.pushButton.setText(QCoreApplication.translate("Form", u"\u041e\u0442\u043c\u0435\u043d\u0438\u0442\u044c", None))
@@ -136,6 +143,7 @@ class Ui_Form(object):
 "li.checked::marker { content: \"\\2612\"; }\n"
 "</style></head><body style=\" font-family:'Segoe UI'; font-size:9pt; font-weight:400; font-style:normal;\">\n"
 "<p style=\" margin-top:0px; margin-bottom:0px; margin-left:0px; margin-right:0px; -qt-block-indent:0; text-indent:0px;\">\u0423\u0441\u043b\u043e\u0432\u0438\u044f \u0441\u043e\u0434\u0435\u0440\u0436\u0430\u043d\u0438\u044f...</p></body></html>", None))
+        self.containmentConditionsLineEdit.setText(self.is_conditions_good)#hyi
         self.countPrevLineEdit.setText("")
         self.countPrevLineEdit.setPlaceholderText(QCoreApplication.translate("Form", u"\u041a\u043e\u043b-\u0432\u043e \u043f\u0440\u0435\u0434.", None))
     # retranslateUi

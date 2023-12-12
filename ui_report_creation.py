@@ -132,7 +132,7 @@ class Ui_Form(object):
         self.window = QWidget()
         self.ui = ui_animal_edit.Ui_Form()
         self.ui.setupUi(self.window)
-        self.ui.transfer_animal_add_data(self.household_pk,self.tableWidget.item(self.tableWidget.currentRow(), 0))
+        self.ui.transfer_animal_add_data(self.household_pk,self.tableWidget.item(self.tableWidget.currentRow(), 0),self.tableWidget.item(self.tableWidget.currentRow(), 1),self.tableWidget.item(self.tableWidget.currentRow(), 2),self.tableWidget.item(self.tableWidget.currentRow(), 3),self.tableWidget.item(self.tableWidget.currentRow(), 4),self.tableWidget.item(self.tableWidget.currentRow(), 5))
         self.window.show()
 
     def setupUi(self, Form, city, address, owner, household_pk=1):
