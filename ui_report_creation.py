@@ -188,7 +188,7 @@ class Ui_Form(object):
         __qtablewidgetitem5 = QTableWidgetItem()
         self.tableWidget.setHorizontalHeaderItem(5, __qtablewidgetitem5)
 
-        self.tableWidget.setHorizontalHeaderItem(2, __qtablewidgetitem4)
+        #self.tableWidget.setHorizontalHeaderItem(2, __qtablewidgetitem4) # а вот оно бля где ссылалось (внизу хуцйня)
         self.tableWidget.setObjectName(u"tableWidget")
         self.tableWidget.setGeometry(QRect(20, 160, 701, 281))
         self.label_4 = QLabel(Form)
@@ -215,11 +215,11 @@ class Ui_Form(object):
         self.placeForAddress.setText(QCoreApplication.translate("Form", address, None))
         self.placeForOwner.setText(QCoreApplication.translate("Form", owner, None))
         # -----------------animals_table------------------------
-        pandas_SQL_query = f'SELECT pk, specie, count, is_conditions_good, data_from_administration FROM report_entries WHERE household ={household_pk}'
+        pandas_SQL_query = f'SELECT pk, specie, count, data_from_administration, prevous_count, is_conditions_good FROM report_entries WHERE household ={household_pk}'
         print("ZAPROS NA TABLICY S ZHIVOTNIMI", pandas_SQL_query)
         data_for_table = pd.read_sql(text(pandas_SQL_query), vet_db_connection).astype(str)
         print("ZAPROS VOZVRASHAET",data_for_table )
-        self.tableWidget.setColumnCount(5)
+        self.tableWidget.setColumnCount(6)
         self.tableWidget.setRowCount(len(data_for_table))
 
         for col_num in range(len(data_for_table.columns)):
@@ -238,19 +238,21 @@ class Ui_Form(object):
         self.label_2.setText(QCoreApplication.translate("Form", u"\u0412\u043b\u0430\u0434\u0435\u043b\u0435\u0446:", None))
         self.label_3.setText(QCoreApplication.translate("Form", u"\u0413\u043e\u0440\u043e\u0434:", None))
         ___qtablewidgetitem = self.tableWidget.horizontalHeaderItem(0)
-        ___qtablewidgetitem.setText(QCoreApplication.translate("Form", u"\u041f\u041a", None));
+        ___qtablewidgetitem.setText("ПК");
         ___qtablewidgetitem1 = self.tableWidget.horizontalHeaderItem(1)
-        ___qtablewidgetitem1.setText(QCoreApplication.translate("Form", u"\u041a\u043e\u043b-\u0432\u043e \u0444\u0430\u043a\u0442.", None));
+        ___qtablewidgetitem1.setText("Вид");
         ___qtablewidgetitem2 = self.tableWidget.horizontalHeaderItem(2)
-        ___qtablewidgetitem2.setText(QCoreApplication.translate("Form", u"\u041a\u043e\u043b-\u0432\u043e \u0430\u0434\u043c.", None));
+        ___qtablewidgetitem2.setText("Кол-во Факт.");
         ___qtablewidgetitem3 = self.tableWidget.horizontalHeaderItem(3)
-        ___qtablewidgetitem3.setText(QCoreApplication.translate("Form", u"\u041a\u043e\u043b-\u0432\u043e \u043f\u0440\u0435\u0434", None));
+        ___qtablewidgetitem3.setText("Кол-во Адм.");
         ___qtablewidgetitem4 = self.tableWidget.horizontalHeaderItem(4)
-        ___qtablewidgetitem4.setText(QCoreApplication.translate("Form", u"\u0423\u0441\u043b\u043e\u0432\u0438\u044f \n"
-"\u0441\u043e\u0434\u0435\u0440\u0436\u0430\u043d\u0438\u044f", None));
+        ___qtablewidgetitem4.setText("Кол-во Пред.");
         ___qtablewidgetitem5 = self.tableWidget.horizontalHeaderItem(5)
+        ___qtablewidgetitem5.setText("Условия содержания")
 
-        #___qtablewidgetitem5.setText("hui") cho za hyinia ne robit
+        #___qtablewidgetitem2 = self.tableWidget.horizontalHeaderItem(2) #разкомменть и две станут колво факт, походу где то одно ссылается на другое
+        #___qtablewidgetitem2.setText("Кол-во Факт.");
+
         self.label_4.setText(QCoreApplication.translate("Form", u"\u0416\u0438\u0432\u043e\u0442\u043d\u044b\u0435 \u0445\u043e\u0437\u044f\u0439\u0441\u0442\u0432\u0430", None))
         self.documentAddAnimal.setText(QCoreApplication.translate("Form", u"\u0414\u043e\u0431\u0430\u0432\u0438\u0442\u044c \u0416\u0438\u0432\u043e\u0442\u043d\u043e\u0435", None))
 #if QT_CONFIG(tooltip)
