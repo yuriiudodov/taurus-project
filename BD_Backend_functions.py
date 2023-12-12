@@ -2,6 +2,8 @@ from PySide6.QtWidgets import QTableWidgetItem
 from sqlalchemy import create_engine
 import pandas as pd
 
+import settings
+
 
 def get_data_db(self, table_name, db_connection):
     data = pd.read_sql(f'SELECT * FROM {table_name}', db_connection)
