@@ -148,7 +148,7 @@ class Ui_MainWindow(object):
 "\u041f\u0420\u0410\u0412\u041a\u0410 \u0411\u0410\u0417\n"
 "--------------", None))
         self.menu_1.setTitle(QCoreApplication.translate("MainWindow", u"\u0413\u043b\u0430\u0432\u043d\u044b\u0439 \u044d\u043a\u0440\u0430\u043d", None))
-        self.menu.setTitle("Эe")
+        self.menu.setTitle("Реквизиты ветеринарной службы")
         self.menu_settings.setTitle("Настройки")
     # retranslateUi
 
