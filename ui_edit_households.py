@@ -55,7 +55,7 @@ class Ui_Form(object):
         owner = self.ownerLineEdit.text()
         address = self.addressLineEdit.text()
         city_pk = self.cityTableWidget.item(self.cityTableWidget.currentRow(), 0).text()
-        pandas_SQL_query = "INSERT INTO household (owner,address,belongs_to_city) VALUES (" + owner + "," + address + "," + city_pk + ")" + "WHERE pk ="
+        pandas_SQL_query = "INSERT INTO household (owner,address,belongs_to_city) VALUES ('" + owner + "','" + address + "','" + city_pk + "')"
         pd.read_sql(text(pandas_SQL_query), self.vet_db_connection).astype(str)
 
     def fill_cities_table(self):
