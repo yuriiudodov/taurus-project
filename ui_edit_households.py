@@ -15,6 +15,7 @@ from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
     QFont, QFontDatabase, QGradient, QIcon,
     QImage, QKeySequence, QLinearGradient, QPainter,
     QPalette, QPixmap, QRadialGradient, QTransform)
+from PySide6.QtSql import QSqlQuery, QSqlDatabase
 from PySide6.QtWidgets import (QApplication, QGridLayout, QHeaderView, QLabel,
     QLineEdit, QPushButton, QSizePolicy, QTableWidget,
     QTableWidgetItem, QWidget)
@@ -52,11 +53,19 @@ class Ui_Form(object):
 
 
     def add_household_to_db(self, ):
+        DB_PATH = settings.DB_PATH  # bezvremennoe reshenie
+        VetDbConnnection = QSqlDatabase.addDatabase("QSQLITE")
+        VetDbConnnection.setDatabaseName(DB_PATH)
+        VetDbConnnection.open()
         owner = self.ownerLineEdit.text()
         address = self.addressLineEdit.text()
         city_pk = self.cityTableWidget.item(self.cityTableWidget.currentRow(), 0).text()
         pandas_SQL_query = "INSERT INTO household (owner,address,belongs_to_city) VALUES ('" + owner + "','" + address + "','" + city_pk + "')"
-        pd.read_sql(text(pandas_SQL_query), self.vet_db_connection).astype(str)
+        qsql_fix = QSqlQuery()
+        qsql_fix.prepare(pandas_SQL_query)
+        print(pandas_SQL_query, qsql_fix.exec())
+        #pd.read_sql(text(pandas_SQL_query), self.vet_db_connection).astype(str)
+        VetDbConnnection.close()
 
     def fill_cities_table(self):
         # loads the table
