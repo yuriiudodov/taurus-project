@@ -129,6 +129,7 @@ class Ui_Form(object):
 
         QMetaObject.connectSlotsByName(Form)
     # setupUi
+        #==========================selector==========================
         rowcount = self.selectSettlementTableWidget.rowCount()
 
         for i in range(0, rowcount):
@@ -137,6 +138,7 @@ class Ui_Form(object):
 
                 self.pidor = i
         self.selectSettlementTableWidget.selectRow(self.pidor)
+        # ==========================selector==========================
 
     def retranslateUi(self, Form):
         Form.setWindowTitle(QCoreApplication.translate("Form", u"\u0420\u0435\u0434\u0430\u043a\u0442\u0438\u0440\u043e\u0432\u0430\u043d\u0438\u0435 \u0433\u043e\u0440\u043e\u0434\u0430", None))
