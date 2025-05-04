@@ -43,7 +43,6 @@ class Ui_Form(object):
     def __init__(self):
         self.vet_db_connection = create_engine(f'sqlite:///{DB_PATH}').connect()
     def create_report(self, selected_items):
-        self.vet_db_connection = create_engine(f'sqlite:///{DB_PATH}').connect()
         settlement      = selected_items['settlement']
         city            = selected_items['city']
         city_name       = db_get_city_name(city)
@@ -73,7 +72,7 @@ class Ui_Form(object):
         
         # ----------------------------------------------------------------------------------создаем диреткории если нет и копируем шаблон, затем заполняем его--------------------------------------------------------------------------------------------------------------------------
         os.makedirs(SAVE_DIR, exist_ok=True)
-        filename       = os.path.join(SAVE_DIR, f'Отчёт{int(time())}.xlsx')
+        filename       = os.path.join(SAVE_DIR, f'{int(time())}.xlsx') 
         shutil.copy(EXCEL_TEMPLATE_PATH, filename)
         current_report = pd.ExcelWriter(filename, engine='openpyxl', mode='a')
         

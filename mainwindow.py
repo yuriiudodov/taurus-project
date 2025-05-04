@@ -1,8 +1,5 @@
 # This Python file uses the following encoding: utf-8
 import sys
-
-import pymongo
-
 import ui_dialog_open
 from PySide6.QtWidgets import QApplication, QMainWindow, QDialog
 
@@ -20,18 +17,7 @@ class vet_db:
     vet_db_connection = create_engine(f'sqlite:///{DB_PATH}').connect()
 
 class MainWindow(QMainWindow):
-    def __init__(self, parent=None, ):
-        # client = pymongo.MongoClient("localhost", 27017)  # mongo penis
-        # db = client["kursach_ais"]
-        # pk_collection = db["primary_keys"]
-        # pk_collection.insertMany([
-        #     {"pk": 0, "kostyl": 'ass', "date": '21.12.2023', "supplier": 1, "customer": 1},
-        #     {"pk": 1, "kostyl": 'ass', "date": '21.12.2023', "supplier": 1, "customer": 1},
-        #     {"pk": 2, "kostyl": 'ass', "date": '21.12.2023', "supplier": 1, "customer": 1},
-        #     {"pk": 3, "kostyl": 'ass', "date": '21.12.2023', "supplier": 1, "customer": 1},
-        #     {"pk": 4, "kostyl": 'ass', "date": '21.12.2023', "supplier": 1, "customer": 1},
-        #     {"pk": 5, "kostyl": 'ass', "date": '21.12.2023', "supplier": 1, "customer": 1},
-        # ]);
+    def __init__(self, parent=None):
         super().__init__(parent)
         self.ui = Ui_MainWindow()
         self.ui.setupUi(self)
@@ -41,7 +27,7 @@ if __name__ == "__main__":
     app = QApplication(sys.argv)
     widget = MainWindow()
     widget.show()
-    widget.setWindowTitle("Система учёта животных домашних хозяйств Build 956")
+    widget.setWindowTitle("Система учёта животных домашних хозяйств Build 1000-7")
 #border verh
 
 

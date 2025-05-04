@@ -96,7 +96,7 @@ class Ui_MainWindow(object):
 
         self.label = QLabel(self.centralwidget)
         self.label.setObjectName(u"label")
-        #self.label.setPixmap(QPixmap(u"./resources/2212_Zodiac_Taurus_Blog_Header_1200x628_EN.png"))
+        self.label.setPixmap(QPixmap(u"./resources/2212_Zodiac_Taurus_Blog_Header_1200x628_EN.png"))
 
         self.gridLayout_2.addWidget(self.label, 0, 0, 1, 1)
 
@@ -131,15 +131,15 @@ class Ui_MainWindow(object):
     # setupUi
 
     def retranslateUi(self, MainWindow):
-        MainWindow.setWindowTitle("LABA 8")
-        self.action.setText("LABA 8")
+        MainWindow.setWindowTitle(QCoreApplication.translate("MainWindow", u"MainWindow", None))
+        self.action.setText(QCoreApplication.translate("MainWindow", u"\u0442\u044b \u043e\u0432\u043e\u0449\u044c?", None))
 #if QT_CONFIG(tooltip)
         self.openHouseholdButton.setToolTip(QCoreApplication.translate("MainWindow", u"\u041f\u0435\u0440\u0435\u0439\u0442\u0438 \u043a \u043e\u0444\u043e\u0440\u043c\u043b\u0435\u043d\u0438\u044e \u0434\u043e\u043a\u0443\u043c\u0435\u043d\u0442\u043e\u0432", None))
 #endif // QT_CONFIG(tooltip)
         self.openHouseholdButton.setText(QCoreApplication.translate("MainWindow", u"-------------------------\n"
 "\u041e\u0444\u043e\u0440\u043c\u043b\u044f\u0442\u044c \u0445\u043e\u0437\u044f\u0439\u0441\u0442\u0432\u0430\n"
 "-------------------------", None))
-        self.label_2.setText("Лабораторная 8")
+        self.label_2.setText(QCoreApplication.translate("MainWindow", u"<html><head/><body><p><span style=\" font-size:48pt; font-weight:700;\">TABP</span></p><p>\u0441\u0430\u043c\u043e\u0435 \u0441\u0442\u0438\u043b\u044c\u043d\u043e\u0435 \u043e\u043a\u043d\u043e \u043d\u0430 \u0434\u0438\u043a\u043e\u043c \u0437\u0430\u043f\u0430\u0434\u0435</p></body></html>", None))
         self.label.setText("")
 #if QT_CONFIG(tooltip)
         self.editDbButton.setToolTip(QCoreApplication.translate("MainWindow", u"\u0414\u043e\u0431\u0430\u0432\u043b\u0435\u043d\u0438\u0435 \u0438 \u0443\u0434\u0430\u043b\u0435\u043d\u0438\u0435 \u0445\u043e\u0437\u044f\u0439\u0441\u0442\u0432 \u0438\u0437 \u0431\u0430\u0437\u044b \u0434\u0430\u043d\u043d\u044b\u0445", None))
@@ -147,8 +147,8 @@ class Ui_MainWindow(object):
         self.editDbButton.setText(QCoreApplication.translate("MainWindow", u"--------------\n"
 "\u041f\u0420\u0410\u0412\u041a\u0410 \u0411\u0410\u0417\n"
 "--------------", None))
-        #self.menu_1.setTitle(QCoreApplication.translate("MainWindow", u"\u0413\u043b\u0430\u0432\u043d\u044b\u0439 \u044d\u043a\u0440\u0430\u043d", None))
-        #self.menu.setTitle("Реквизиты ветеринарной службы")
-       # self.menu_settings.setTitle("Настройки")
+        self.menu_1.setTitle(QCoreApplication.translate("MainWindow", u"\u0413\u043b\u0430\u0432\u043d\u044b\u0439 \u044d\u043a\u0440\u0430\u043d", None))
+        self.menu.setTitle("Реквизиты ветеринарной службы")
+        self.menu_settings.setTitle("Настройки")
     # retranslateUi
 
