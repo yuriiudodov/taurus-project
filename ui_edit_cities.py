@@ -59,7 +59,7 @@ class Ui_Form(object):
         VetTableQuery.bindValue(":pk", pk)
         VetTableQuery.exec()
         VetDbConnnection.close()
-        print(pk, name, belongs_to_settlement, "что происходит при увше")
+        print(pk, name, belongs_to_settlement, "что происходит при edit")
 
     def setupUi(self, Form):
         if not Form.objectName():

@@ -30,7 +30,6 @@ if __name__ == "__main__":
     widget.setWindowTitle("Система учёта животных домашних хозяйств Build 1000-7")
 #border verh
 
-
     #border niz
     sys.exit(app.exec())
 

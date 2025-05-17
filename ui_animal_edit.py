@@ -51,7 +51,7 @@ class Ui_Form(object):
         VetTableQuery.bindValue(":data_from_administration", self.countAdmLineEdit.text())
         VetTableQuery.bindValue(":is_conditions_good", self.containmentConditionsLineEdit.toPlainText())
         uspeh = VetTableQuery.exec()
-        print("USPEH BLYAT&", uspeh)
+        print("USPEH &", uspeh)
         VetDbConnnection.close()
     def setupUi(self, Form):
         if not Form.objectName():

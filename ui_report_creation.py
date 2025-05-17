@@ -72,7 +72,7 @@ class Ui_Form(object):
         
         # ----------------------------------------------------------------------------------создаем диреткории если нет и копируем шаблон, затем заполняем его--------------------------------------------------------------------------------------------------------------------------
         os.makedirs(SAVE_DIR, exist_ok=True)
-        filename       = os.path.join(SAVE_DIR, f'{int(time())}.xlsx') 
+        filename       = os.path.join(SAVE_DIR, f'Отчёт {int(time())}.xlsx')
         shutil.copy(EXCEL_TEMPLATE_PATH, filename)
         current_report = pd.ExcelWriter(filename, engine='openpyxl', mode='a')
         
@@ -119,7 +119,7 @@ class Ui_Form(object):
         #VetTableQuery.bindValue(":deleted_pk", self.tableWidget.item(self.tableWidget.currentRow(), 0))
 
         uspeh = VetTableQuery.exec()
-        print("USPEH UDALENIA BLYAT&", uspeh, VetTableQuery.lastQuery())
+        print("USPEH UDALENIA &", uspeh, VetTableQuery.lastQuery())
         VetDbConnnection.close()
     def open_animals_add(self):
         self.window = QWidget()

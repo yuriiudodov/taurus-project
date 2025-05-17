@@ -1,4 +1,5 @@
 # -*- coding: utf-8 -*-
+from time import sleep
 
 ################################################################################
 ## Form generated from reading UI file 'form.ui'
@@ -20,34 +21,10 @@ from PySide6.QtWidgets import (QApplication, QLabel, QMainWindow, QMenu,
                                QMenuBar, QPushButton, QSizePolicy, QStatusBar,
                                QWidget, QDialog, QTabWidget, QGridLayout)
 
+import ui_details_settings
 import ui_dialog_open #открыть новое окно из файла интерфейса
 import ui_documents_choose_household
 import settings
-def open_households_rus(self):  # RUS open households window
-    self.window = QDialog()
-    self.ui = ui_documents_choose_household.Ui_Dialog()
-    self.ui.setupUi(self.window)
-    self.window.show()
-
-
-def open_dialog_rus(self):  # открыть новое окно из файла интерфейса
-    self.window = QDialog()
-    self.ui = ui_dialog_open.Ui_Dialog()
-    self.ui.setupUi(self.window)
-    self.window.show()
-
-class Ui_MainWindow(object):
-    def open_households_rus(self):  # RUS open households window
-        self.window = QDialog()
-        self.ui = ui_documents_choose_household.Ui_Form()
-        self.ui.setupUi(self.window)
-        self.window.show()
-
-    def open_db_edit_rus(self):  # открыть новое окно из файла интерфейса
-        self.window = QDialog()
-        self.ui = ui_dialog_open.Ui_Dialog()
-        self.ui.setupUi(self.window)
-        self.window.show()
 
 class Ui_MainWindow(object):
 
@@ -60,6 +37,12 @@ class Ui_MainWindow(object):
     def open_db_edit_rus(self):  # открыть новое окно из файла интерфейса
         self.window = QDialog()
         self.ui = ui_dialog_open.Ui_Dialog()
+        self.ui.setupUi(self.window)
+        self.window.show()
+#===============================menu buttons==================================================
+    def open_details_edit(self):
+        self.window = QDialog()
+        self.ui = ui_details_settings.Ui_Form()
         self.ui.setupUi(self.window)
         self.window.show()
 
@@ -110,16 +93,24 @@ class Ui_MainWindow(object):
         self.menubar = QMenuBar(MainWindow)
         self.menubar.setObjectName(u"menubar")
         self.menubar.setGeometry(QRect(0, 0, 673, 22))
+
         self.menu_1 = QMenu(self.menubar)
         self.menu_1.setObjectName(u"menu_1")
         self.menu = QMenu(self.menubar)
         self.menu.setObjectName(u"menu")
         self.menu_settings = QMenu(self.menubar)
         self.menu_settings.setObjectName(u"menu")
+
         MainWindow.setMenuBar(self.menubar)
         self.statusbar = QStatusBar(MainWindow)
         self.statusbar.setObjectName(u"statusbar")
         MainWindow.setStatusBar(self.statusbar)
+
+        self.menuActionOpenSettings = QAction()
+        self.menuActionOpenSettings.triggered.connect(lambda:print("в разрабоке"))
+        self.menuActionOpenSettings.setText("О программе")
+
+        self.menubar.addAction(self.menuActionOpenSettings)
         self.menubar.addAction(self.menu_1.menuAction())
         self.menubar.addAction(self.menu.menuAction())
         self.menubar.addAction(self.menu_settings.menuAction())
@@ -132,14 +123,16 @@ class Ui_MainWindow(object):
 
     def retranslateUi(self, MainWindow):
         MainWindow.setWindowTitle(QCoreApplication.translate("MainWindow", u"MainWindow", None))
-        self.action.setText(QCoreApplication.translate("MainWindow", u"\u0442\u044b \u043e\u0432\u043e\u0449\u044c?", None))
+        self.action.setText("Редактировать реквизиты")
+        self.action.triggered.connect(lambda:self.open_details_edit())
 #if QT_CONFIG(tooltip)
         self.openHouseholdButton.setToolTip(QCoreApplication.translate("MainWindow", u"\u041f\u0435\u0440\u0435\u0439\u0442\u0438 \u043a \u043e\u0444\u043e\u0440\u043c\u043b\u0435\u043d\u0438\u044e \u0434\u043e\u043a\u0443\u043c\u0435\u043d\u0442\u043e\u0432", None))
 #endif // QT_CONFIG(tooltip)
-        self.openHouseholdButton.setText(QCoreApplication.translate("MainWindow", u"-------------------------\n"
-"\u041e\u0444\u043e\u0440\u043c\u043b\u044f\u0442\u044c \u0445\u043e\u0437\u044f\u0439\u0441\u0442\u0432\u0430\n"
-"-------------------------", None))
-        self.label_2.setText(QCoreApplication.translate("MainWindow", u"<html><head/><body><p><span style=\" font-size:48pt; font-weight:700;\">TABP</span></p><p>\u0441\u0430\u043c\u043e\u0435 \u0441\u0442\u0438\u043b\u044c\u043d\u043e\u0435 \u043e\u043a\u043d\u043e \u043d\u0430 \u0434\u0438\u043a\u043e\u043c \u0437\u0430\u043f\u0430\u0434\u0435</p></body></html>", None))
+        self.openHouseholdButton.setText("-------------------\n"
+                                         "Оформление хозяйств\n"
+                                         "-------------------")
+
+        self.label_2.setText(QCoreApplication.translate("MainWindow", u"<html><head/><body><p><span style=\" font-size:48pt; font-weight:700;\">TABP</span></p><p>подсистема поддержки процесса учёта животных ЛПХ</p></body></html>", None))
         self.label.setText("")
 #if QT_CONFIG(tooltip)
         self.editDbButton.setToolTip(QCoreApplication.translate("MainWindow", u"\u0414\u043e\u0431\u0430\u0432\u043b\u0435\u043d\u0438\u0435 \u0438 \u0443\u0434\u0430\u043b\u0435\u043d\u0438\u0435 \u0445\u043e\u0437\u044f\u0439\u0441\u0442\u0432 \u0438\u0437 \u0431\u0430\u0437\u044b \u0434\u0430\u043d\u043d\u044b\u0445", None))

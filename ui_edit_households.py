@@ -35,7 +35,7 @@ class Ui_Form(object):
             self.address = address
             self.belongs_to_city = belongs_to_city
             self.belongs_to_settlement=belongs_to_settlemnent
-            self.pidor = 0  # штука чтобы выбирать строчку в табличке поселений в форме редачки города внизу где то
+            self.threeandforteen = 0  # штука чтобы выбирать строчку в табличке поселений в форме редачки города внизу где то
     #def __init__(self):
     DB_PATH = settings.DB_PATH  # bezvremennoe reshenie
     TABLE_ROW_LIMIT = 10
@@ -213,18 +213,18 @@ class Ui_Form(object):
         for i in range(0, rowcount):
 
             if (self.cityTableWidget.item(i, 0).text() == self.belongs_to_city):
-                self.pidor = i
-        self.cityTableWidget.selectRow(self.pidor)
+                self.threeandforteen = i
+        self.cityTableWidget.selectRow(self.threeandforteen)
 
-        pidor=0
+        threeandforteen=0
 
         rowcount = self.settlementTableWidget.rowCount()
 
         for i in range(0, rowcount):
 
             if (self.settlementTableWidget.item(i, 0).text() == self.belongs_to_settlement):
-                self.pidor = i
-        self.settlementTableWidget.selectRow(self.pidor)
+                self.threeandforteen = i
+        self.settlementTableWidget.selectRow(self.threeandforteen)
 
 
     def retranslateUi(self, Form):

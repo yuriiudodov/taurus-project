@@ -35,11 +35,20 @@ class transfer_data:
 
 class Ui_Dialog(object):
     selected_table=0
+
+    def clean_table(self, tablewidget):
+        tablewidget.setColumnCount(0)
+        tablewidget.setRowCount(0)
+
     def set_edit_method(self, editmethod):
         self.selected_table=editmethod
 
     def current_household(self):
         return self.householdTableWidget.item(self.householdTableWidget.currentRow(),0)
+
+    def delete_item(self):
+        print("ne implemented")
+
 
     def edit_button_pressed(self):
         if(self.selected_table==0):
@@ -69,6 +78,7 @@ class Ui_Dialog(object):
         self.window.show()
 
     def fill_cities_table(self):
+        self.clean_table(self.householdTableWidget)
         # loads the table
         DB_PATH = settings.DB_PATH  # bezvremennoe reshenie
         TABLE_ROW_LIMIT = 10
@@ -204,11 +214,20 @@ class Ui_Dialog(object):
         self.pushButton.setObjectName(u"pushButton")
         self.pushButton.setGeometry(QRect(30, 530, 181, 31))
 
-        # hyeta dlya knopki vibora
+#pryachyshayasa knopka udalenia
+        self.deletePushButton = QPushButton(Form, clicked= lambda:self.delete_item())
+        self.deletePushButton.setObjectName(u"pushButton_2")
+        self.deletePushButton.setGeometry(QRect(754, 530, 181, 31))
+        self.deletePushButton.setText("Удалить выбранное")
+        self.settlementTableWidget.cellClicked.connect(lambda:self.deletePushButton.hide())
+        self.cityTableWidget.cellClicked.connect(lambda: self.deletePushButton.show())
+        self.householdTableWidget.cellClicked.connect(lambda: self.deletePushButton.show())
+
+        #  dlya knopki vibora
         self.settlementTableWidget.itemSelectionChanged.connect(lambda: self.set_edit_method(0))
         self.cityTableWidget.itemSelectionChanged.connect(lambda: self.set_edit_method(1))
         self.householdTableWidget.itemSelectionChanged.connect(lambda: self.set_edit_method(2))
-        # hyeta dlya knopki vibora
+        #  dlya knopki vibora
 
         self.retranslateUi(Form)
 
