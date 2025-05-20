@@ -19,7 +19,7 @@ from PySide6.QtGui import (QAction, QBrush, QColor, QConicalGradient,
     QTransform)
 from PySide6.QtWidgets import (QApplication, QLabel, QMainWindow, QMenu,
                                QMenuBar, QPushButton, QSizePolicy, QStatusBar,
-                               QWidget, QDialog, QTabWidget, QGridLayout)
+                               QWidget, QDialog, QTabWidget, QGridLayout, QFileDialog)
 
 import ui_details_settings
 import ui_dialog_open #открыть новое окно из файла интерфейса
@@ -45,6 +45,11 @@ class Ui_MainWindow(object):
         self.ui = ui_details_settings.Ui_Form()
         self.ui.setupUi(self.window)
         self.window.show()
+    def open_utilities_database_merger(self):
+        print("indev merg")
+
+    def open_utilities_vet_organiization_choose(self):
+        print("indev vet")
 
     def open_settings_window(self):
         print("nety")
@@ -106,11 +111,25 @@ class Ui_MainWindow(object):
         self.statusbar.setObjectName(u"statusbar")
         MainWindow.setStatusBar(self.statusbar)
 
-        self.menuActionOpenSettings = QAction()
-        self.menuActionOpenSettings.triggered.connect(lambda:print("в разрабоке"))
-        self.menuActionOpenSettings.setText("О программе")
 
-        self.menubar.addAction(self.menuActionOpenSettings)
+        #Utils=========================================================
+        self.menuActionUtilitiesDatabasesMerger = QAction()
+        self.menuActionUtilitiesDatabasesMerger.triggered.connect(lambda:self.open_utilities_database_merger())
+        self.menuActionUtilitiesDatabasesMerger.setText("Объединитель баз")
+
+        self.menuActionUtilitiesDatabasesMerger = QAction()
+        self.menuActionUtilitiesDatabasesMerger.triggered.connect(lambda: self.open_utilities_database_merger())
+        self.menuActionUtilitiesDatabasesMerger.setText("Объединитель баз")
+
+
+
+        #exxxxperimentyyyy=====================================
+        self.utilitiesMenu =self.menubar.addMenu("Другие утилиты")
+        self.utilitiesMenu.addAction(self.menuActionUtilitiesDatabasesMerger)
+        # exxxxperimentyyyy=====================================
+
+        # Utils=========================================================
+
         self.menubar.addAction(self.menu_1.menuAction())
         self.menubar.addAction(self.menu.menuAction())
         self.menubar.addAction(self.menu_settings.menuAction())
@@ -144,4 +163,5 @@ class Ui_MainWindow(object):
         self.menu.setTitle("Реквизиты ветеринарной службы")
         self.menu_settings.setTitle("Настройки")
     # retranslateUi
+
 

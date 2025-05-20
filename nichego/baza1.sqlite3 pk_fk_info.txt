@@ -1,0 +1,12 @@
+{
+    "gay_clubs": {
+        "pk": "pk",
+        "fks": {}
+    },
+    "porno": {
+        "pk": "pk",
+        "fks": {
+            "gay_clubs": "gay_clubs"
+        }
+    }
+}

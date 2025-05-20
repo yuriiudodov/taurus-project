@@ -1,4 +1,4 @@
-DB_PATH                 = 'MainDatabaseVet'
+DB_PATH                 = 'MainDatabaseVet.sqlite3'
 EXCEL_TEMPLATE_PATH     = 'template.xlsx'
 EXCEL_HEADER_ROWS       = 5
 MAIN_REPORT_PAGE        = 'Отчет'
