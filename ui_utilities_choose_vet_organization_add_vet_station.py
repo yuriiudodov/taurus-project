@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-
+import pandas as pd
 ################################################################################
 ## Form generated from reading UI file 'utilities_choose_vet_organization_add_vet_stationSxAlxh.ui'
 ##
@@ -18,8 +18,14 @@ from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
 from PySide6.QtWidgets import (QApplication, QHeaderView, QLabel, QLineEdit,
     QPushButton, QSizePolicy, QTableWidget, QTableWidgetItem,
     QTextEdit, QWidget)
+from sqlalchemy import create_engine, text
+
+import db_utils
+from settings import DB_PATH
+
 
 class Ui_Form(object):
+
     def setupUi(self, Form):
         if not Form.objectName():
             Form.setObjectName(u"Form")
@@ -53,6 +59,8 @@ class Ui_Form(object):
         self.label_4.setGeometry(QRect(20, 240, 111, 21))
 
         self.retranslateUi(Form)
+
+        db_utils.refresh_table(self.vetUpravlenieTableWidget,"vet_administration")
 
         QMetaObject.connectSlotsByName(Form)
     # setupUi

@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-
+from PySide6 import QtWidgets
 ################################################################################
 ## Form generated from reading UI file 'database_mergerATGYHk.ui'
 ##
@@ -16,9 +16,16 @@ from PySide6.QtGui import (QBrush, QColor, QConicalGradient, QCursor,
     QImage, QKeySequence, QLinearGradient, QPainter,
     QPalette, QPixmap, QRadialGradient, QTransform)
 from PySide6.QtWidgets import (QApplication, QCheckBox, QGroupBox, QLabel,
-    QLineEdit, QPushButton, QSizePolicy, QWidget)
+                               QLineEdit, QPushButton, QSizePolicy, QWidget, QFileDialog)
 
 class Ui_Form(object):
+
+    def select_directory_dialog(self):
+        file_dialog = QFileDialog()
+        file_dialog.setFileMode(QtWidgets.QFileDialog.Directory)
+        file_dialog.setWindowTitle("Выбор файла базы данных")
+        goooool = file_dialog.getOpenFileName(caption="Выбор файла базы данных")
+        return goooool
 
     def change_nonstandart_database_box_visibility(self):
         if self.nonStandartDatabaseCheckBox.checkState().value ==2:
@@ -67,7 +74,7 @@ class Ui_Form(object):
         self.filenameLabel_2 = QLabel(self.groupBox_2)
         self.filenameLabel_2.setObjectName(u"filenameLabel_2")
         self.filenameLabel_2.setGeometry(QRect(210, 20, 151, 20))
-        self.filenameChoosePushButton_1 = QPushButton(self.groupBox_2)
+        self.filenameChoosePushButton_1 = QPushButton(self.groupBox_2, clicked = lambda:self.select_directory_dialog())
         self.filenameChoosePushButton_1.setObjectName(u"filenameChoosePushButton_1")
         self.filenameChoosePushButton_1.setGeometry(QRect(10, 60, 151, 51))
         self.filenameLabel_1 = QLabel(self.groupBox_2)
@@ -98,7 +105,7 @@ class Ui_Form(object):
 
     def retranslateUi(self, Form):
         Form.setWindowTitle(QCoreApplication.translate("Form", u"Form", None))
-        self.titleLabel.setText("Выбор предприятия")
+        self.titleLabel.setText("Объединитель баз данных")
         self.groupBox.setTitle(QCoreApplication.translate("Form", u"\u041d\u0435\u0441\u0442\u0430\u043d\u0434\u0430\u0440\u0442\u043d\u0430\u044f \u0431\u0430\u0437\u0430 \u0434\u0430\u043d\u043d\u044b\u0445", None))
         self.schemeGeneratePushButton.setText(QCoreApplication.translate("Form", u"\u0413\u0435\u043d\u0435\u0440\u0430\u0446\u0438\u044f \u0441\u0445\u0435\u043c\u044b", None))
         self.schemeFilenameChoosePushButton.setText(QCoreApplication.translate("Form", u"\u0412\u044b\u0431\u0440\u0430\u0442\u044c \u0444\u0430\u0439\u043b", None))

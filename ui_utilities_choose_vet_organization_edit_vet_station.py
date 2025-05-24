@@ -19,6 +19,9 @@ from PySide6.QtWidgets import (QApplication, QCheckBox, QHeaderView, QLabel,
     QLineEdit, QPushButton, QSizePolicy, QTableWidget,
     QTableWidgetItem, QTextEdit, QWidget)
 
+import db_utils
+
+
 class Ui_Form(object):
     def setupUi(self, Form):
         if not Form.objectName():
@@ -56,6 +59,8 @@ class Ui_Form(object):
         self.isMainCheckBox.setGeometry(QRect(350, 20, 111, 31))
 
         self.retranslateUi(Form)
+
+        db_utils.refresh_table(self.vetUpravlenieTableWidget, "vet_administration")
 
         QMetaObject.connectSlotsByName(Form)
     # setupUi
