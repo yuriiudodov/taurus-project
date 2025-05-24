@@ -19,6 +19,12 @@ from PySide6.QtWidgets import (QApplication, QCheckBox, QGroupBox, QLabel,
     QLineEdit, QPushButton, QSizePolicy, QWidget)
 
 class Ui_Form(object):
+
+    def change_nonstandart_database_box_visibility(self):
+        if self.nonStandartDatabaseCheckBox.checkState().value ==2:
+            self.groupBox.show()
+        if self.nonStandartDatabaseCheckBox.checkState().value ==0:
+            self.groupBox.hide()
     def setupUi(self, Form):
         if not Form.objectName():
             Form.setObjectName(u"Form")
@@ -32,6 +38,7 @@ class Ui_Form(object):
         self.groupBox = QGroupBox(Form)
         self.groupBox.setObjectName(u"groupBox")
         self.groupBox.setGeometry(QRect(20, 270, 391, 201))
+        self.groupBox.hide()
         self.schemeGeneratePushButton = QPushButton(self.groupBox)
         self.schemeGeneratePushButton.setObjectName(u"schemeGeneratePushButton")
         self.schemeGeneratePushButton.setGeometry(QRect(210, 140, 151, 51))
@@ -50,9 +57,10 @@ class Ui_Form(object):
         self.groupBox_2 = QGroupBox(Form)
         self.groupBox_2.setObjectName(u"groupBox_2")
         self.groupBox_2.setGeometry(QRect(20, 60, 391, 201))
-        self.nonStandartDatabaseCheckBox = QCheckBox(self.groupBox_2)
+        self.nonStandartDatabaseCheckBox = QCheckBox(self.groupBox_2,stateChanged=lambda:self.change_nonstandart_database_box_visibility())
         self.nonStandartDatabaseCheckBox.setObjectName(u"nonStandartDatabaseCheckBox")
         self.nonStandartDatabaseCheckBox.setGeometry(QRect(10, 170, 191, 20))
+
         self.filenameChoosePushButton_2 = QPushButton(self.groupBox_2)
         self.filenameChoosePushButton_2.setObjectName(u"filenameChoosePushButton_2")
         self.filenameChoosePushButton_2.setGeometry(QRect(200, 60, 151, 51))
@@ -90,7 +98,7 @@ class Ui_Form(object):
 
     def retranslateUi(self, Form):
         Form.setWindowTitle(QCoreApplication.translate("Form", u"Form", None))
-        self.titleLabel.setText(QCoreApplication.translate("Form", u"\u041e\u0431\u044a\u0435\u0434\u0438\u043d\u0438\u0442\u0435\u043b\u044c \u0431\u0430\u0437 \u0434\u0430\u043d\u043d\u044b\u0445 TAU", None))
+        self.titleLabel.setText("Выбор предприятия")
         self.groupBox.setTitle(QCoreApplication.translate("Form", u"\u041d\u0435\u0441\u0442\u0430\u043d\u0434\u0430\u0440\u0442\u043d\u0430\u044f \u0431\u0430\u0437\u0430 \u0434\u0430\u043d\u043d\u044b\u0445", None))
         self.schemeGeneratePushButton.setText(QCoreApplication.translate("Form", u"\u0413\u0435\u043d\u0435\u0440\u0430\u0446\u0438\u044f \u0441\u0445\u0435\u043c\u044b", None))
         self.schemeFilenameChoosePushButton.setText(QCoreApplication.translate("Form", u"\u0412\u044b\u0431\u0440\u0430\u0442\u044c \u0444\u0430\u0439\u043b", None))

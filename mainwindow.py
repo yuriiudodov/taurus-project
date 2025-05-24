@@ -10,7 +10,7 @@ from PySide6.QtWidgets import QApplication, QMainWindow, QDialog
 import settings
 from sqlalchemy import create_engine
 
-from ui_form import Ui_MainWindow
+from ui_main_window import Ui_MainWindow
 class vet_db:
     DB_PATH = settings.DB_PATH
     TABLE_ROW_LIMIT = 10
