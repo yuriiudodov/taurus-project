@@ -122,14 +122,14 @@ class Ui_Form(object):
         ___qtablewidgetitem = self.settlementTableWidget.horizontalHeaderItem(0)
         ___qtablewidgetitem.setText(QCoreApplication.translate("Form", u"\u041f\u041a", None));
         ___qtablewidgetitem1 = self.settlementTableWidget.horizontalHeaderItem(1)
-        ___qtablewidgetitem1.setText(QCoreApplication.translate("Form", u"\u0420\u0430\u0439\u043e\u043d", None));
+        ___qtablewidgetitem1.setText("Поселение");
         self.label_5.setText(QCoreApplication.translate("Form", u"\u041f\u043e\u0441\u0435\u043b\u0435\u043d\u0438\u0435", None))
         ___qtablewidgetitem2 = self.cityTableWidget.horizontalHeaderItem(0)
         ___qtablewidgetitem2.setText(QCoreApplication.translate("Form", u"\u041f\u041a", None));
         ___qtablewidgetitem3 = self.cityTableWidget.horizontalHeaderItem(1)
         ___qtablewidgetitem3.setText(QCoreApplication.translate("Form", u"\u041d\u043e\u0432\u044b\u0439 \u0441\u0442\u043e\u043b\u0431\u0435\u0446", None));
         ___qtablewidgetitem4 = self.cityTableWidget.horizontalHeaderItem(2)
-        ___qtablewidgetitem4.setText(QCoreApplication.translate("Form", u"\u0420\u0430\u0439\u043e\u043d", None));
+        ___qtablewidgetitem4.setText("Поселение");
         self.label_2.setText(QCoreApplication.translate("Form", u"\u0410\u0434\u0440\u0435\u0441", None))
         self.label.setText(QCoreApplication.translate("Form", u"\u0412\u043b\u0430\u0434\u0435\u043b\u0435\u0446 ", None))
         self.label_4.setText(QCoreApplication.translate("Form", u"\u0413\u043e\u0440\u043e\u0434", None))

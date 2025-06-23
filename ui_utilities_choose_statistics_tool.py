@@ -79,7 +79,7 @@ class Ui_Form(object):
     def retranslateUi(self, Form):
         Form.setWindowTitle(QCoreApplication.translate("Form", u"Form", None))
         self.label.setText(QCoreApplication.translate("Form", u"\u0418\u043d\u0441\u0442\u0440\u0443\u043c\u0435\u043d\u0442\u044b \u0441\u0442\u0430\u0442\u0438\u0441\u0442\u0438\u043a\u0438", None))
-
+        #self.graphLabel.setText("Выберитте данные для построения графика")
         self.chooseDataPushButton.setText(QCoreApplication.translate("Form", u"\u0412\u044b\u0431\u0440\u0430\u0442\u044c \u0434\u0430\u043d\u043d\u044b\u0435", None))
         self.drawGraphPushButton.setText(QCoreApplication.translate("Form", u"\u041f\u043e\u0441\u0442\u0440\u043e\u0438\u0442\u044c \u0433\u0440\u0430\u0444\u0438\u043a", None))
         self.createReportPushButton.setText(QCoreApplication.translate("Form", u"\u0412\u044b\u0432\u0435\u0441\u0442\u0438 \u043e\u0442\u0447\u0435\u0442", None))

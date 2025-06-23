@@ -202,7 +202,7 @@ class Ui_Form(object):
         ___qtablewidgetitem7 = self.settlementTableWidget.horizontalHeaderItem(0)
         ___qtablewidgetitem7.setText(QCoreApplication.translate("Form", u"\u041f\u041a", None));
         ___qtablewidgetitem8 = self.settlementTableWidget.horizontalHeaderItem(1)
-        ___qtablewidgetitem8.setText(QCoreApplication.translate("Form", u"\u0420\u0430\u0439\u043e\u043d", None));
+        ___qtablewidgetitem8.setText("Поселение");
         self.label_3.setText(
             QCoreApplication.translate("Form", u"\u0425\u043e\u0437\u044f\u0439\u0441\u0442\u0432\u043e", None))
         self.label_4.setText(QCoreApplication.translate("Form", u"\u0413\u043e\u0440\u043e\u0434", None))
